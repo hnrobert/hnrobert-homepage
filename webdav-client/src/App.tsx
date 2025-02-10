@@ -136,10 +136,18 @@ function App() {
     }
   };
 
+  const handleErrorClear = () => {
+    setError("");
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8">
-        <PageHeader selectedImage={selectedImage} error={error} />
+        <PageHeader
+          selectedImage={selectedImage}
+          error={error}
+          onErrorClear={handleErrorClear}
+        />
         <BackButton currentPath={currentPath} onBack={handleBackClick} />
         <FileList
           files={files}
