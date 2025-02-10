@@ -14,6 +14,18 @@ function App() {
     controller?: AbortController;
   } | null>(null);
 
+  const separateFilesAndFolders = (items: FileStat[]) => {
+    const folders = items.filter((item) => item.type === "directory");
+    const files = items.filter((item) => item.type !== "directory");
+    return { folders, files };
+  };
+
+  const getParentPath = (path: string) => {
+    const parts = path.split("/").filter(Boolean);
+    parts.pop();
+    return "/" + parts.join("/");
+  };
+
   useEffect(() => {
     const checkImageSize = () => {
       const width = window.innerWidth;
@@ -135,14 +147,63 @@ function App() {
           </div>
         )}
 
+        {/* Back Button - Only show if not in root directory */}
+        {currentPath !== "/" && (
+          <div className="mb-4">
+            <button
+              onClick={() =>
+                (window.location.href = getParentPath(currentPath))
+              }
+              className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 transition-colors duration-200"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              <span>Back to Parent Directory</span>
+            </button>
+          </div>
+        )}
+
+        {/* Folders Section */}
+        <div className="mb-8">
+          {separateFilesAndFolders(files).folders.map((folder) => (
+            <FileItem
+              key={folder.filename}
+              file={folder}
+              downloadStatus={downloadStatus}
+              onFileClick={handleFileClick}
+              onCancelDownload={() => downloadStatus?.controller?.abort()}
+              displayStyle="row"
+            />
+          ))}
+        </div>
+
+        {/* Separator */}
+        {separateFilesAndFolders(files).folders.length > 0 &&
+          separateFilesAndFolders(files).files.length > 0 && (
+            <div className="border-b border-gray-200 mb-8"></div>
+          )}
+
+        {/* Files Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {files.map((file) => (
+          {separateFilesAndFolders(files).files.map((file) => (
             <FileItem
               key={file.filename}
               file={file}
               downloadStatus={downloadStatus}
               onFileClick={handleFileClick}
               onCancelDownload={() => downloadStatus?.controller?.abort()}
+              displayStyle="grid"
             />
           ))}
         </div>

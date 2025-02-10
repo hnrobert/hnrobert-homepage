@@ -11,6 +11,7 @@ interface FileItemProps {
   } | null;
   onFileClick: (file: FileStat) => void;
   onCancelDownload: () => void;
+  displayStyle: "row" | "grid";
 }
 
 export const FileItem: React.FC<FileItemProps> = ({
@@ -18,12 +19,17 @@ export const FileItem: React.FC<FileItemProps> = ({
   downloadStatus,
   onFileClick,
   onCancelDownload,
+  displayStyle,
 }) => {
   const isDownloading = downloadStatus?.filename === file.basename;
 
+  const baseStyles =
+    "bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 " +
+    (displayStyle === "row" ? "mb-2 w-full" : "");
+
   return (
     <div
-      className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
+      className={baseStyles}
       onClick={() => !downloadStatus && onFileClick(file)}
       style={{
         cursor: downloadStatus ? "default" : "pointer",
@@ -50,7 +56,7 @@ export const FileItem: React.FC<FileItemProps> = ({
           </button>
         )}
       </div>
-      {file.type !== "directory" && (
+      {file.type !== "directory" && displayStyle === "grid" && (
         <div className="mt-2 text-sm text-gray-500">
           <div className="flex justify-between items-center">
             <span>Size: {formatFileSize(file.size)}</span>
