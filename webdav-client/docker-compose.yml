@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  webdav-client:
+    container_name: Web-Server
+    build: .
+    ports:
+      - "9970:9970"
+    volumes:
+      - ./assets:/usr/share/nginx/html/assets
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
