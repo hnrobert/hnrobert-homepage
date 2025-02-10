@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FileStat } from "webdav";
 import { client, downloadFile } from "./services/webdav";
-import { FileItem } from "./components/FileItem";
+import { BackButton } from "./components/BackButton";
+import { PageHeader } from "./components/PageHeader";
+import { FileList } from "./components/FileList";
 
 function App() {
   const [files, setFiles] = useState<FileStat[]>([]);
@@ -27,6 +29,10 @@ function App() {
     return "/" + parts.join("/");
   };
 
+  const handleBackClick = (path: string) => {
+    window.location.href = encodeURI(getParentPath(path));
+  };
+
   useEffect(() => {
     const checkImageSize = () => {
       const width = window.innerWidth;
@@ -43,11 +49,6 @@ function App() {
 
     const getFiles = async () => {
       try {
-        const isAvailable = await client.exists("/").catch(() => false);
-        if (!isAvailable) {
-          throw new Error(`Directory "${path}" not found`);
-        }
-
         const directoryItems = await client.getDirectoryContents(path);
         setFiles(
           Array.isArray(directoryItems) ? directoryItems : directoryItems.data
@@ -138,80 +139,13 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center mb-8">
-          <img
-            src={selectedImage}
-            alt="Title"
-            className="w-auto max-w-[600px] min-w-[300px]"
-          />
-        </div>
-
-        {error && (
-          <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        {/* Back Button - Only show if not in root directory */}
-        {currentPath !== "/" && (
-          <div className="mb-4">
-            <button
-              onClick={() =>
-                (window.location.href = encodeURI(getParentPath(currentPath)))
-              }
-              className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 transition-colors duration-200"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              <span>Back to Parent Directory</span>
-            </button>
-          </div>
-        )}
-
-        {/* Folders Section */}
-        <div className="mb-8">
-          {separateFilesAndFolders(files).folders.map((folder) => (
-            <FileItem
-              key={folder.filename}
-              file={folder}
-              downloadStatus={downloadStatus}
-              onFileClick={handleFileClick}
-              onCancelDownload={() => downloadStatus?.controller?.abort()}
-              displayStyle="row"
-            />
-          ))}
-        </div>
-
-        {/* Separator */}
-        {separateFilesAndFolders(files).folders.length > 0 &&
-          separateFilesAndFolders(files).files.length > 0 && (
-            <div className="border-b border-gray-200 mb-8"></div>
-          )}
-
-        {/* Files Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {separateFilesAndFolders(files).files.map((file) => (
-            <FileItem
-              key={file.filename}
-              file={file}
-              downloadStatus={downloadStatus}
-              onFileClick={handleFileClick}
-              onCancelDownload={() => downloadStatus?.controller?.abort()}
-              displayStyle="grid"
-            />
-          ))}
-        </div>
+        <PageHeader selectedImage={selectedImage} error={error} />
+        <BackButton currentPath={currentPath} onBack={handleBackClick} />
+        <FileList
+          files={files}
+          downloadStatus={downloadStatus}
+          onFileClick={handleFileClick}
+        />
       </div>
     </div>
   );
