@@ -24,8 +24,8 @@ export const FileItem: React.FC<FileItemProps> = ({
   const isDownloading = downloadStatus?.filename === file.basename;
 
   const baseStyles =
-    "bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 " +
-    (displayStyle === "row" ? "mb-2 w-full" : "");
+    "bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col justify-between " +
+    (displayStyle === "row" ? "mb-2 w-full" : "h-[120px]");
 
   return (
     <div
@@ -37,10 +37,12 @@ export const FileItem: React.FC<FileItemProps> = ({
         pointerEvents: downloadStatus && !isDownloading ? "none" : "auto",
       }}
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <FileIcon isDirectory={file.type === "directory"} />
-          <span className="text-gray-700 truncate hover:text-blue-600">
+      <div className="flex items-start justify-between w-full">
+        <div className="flex items-start space-x-2 min-w-0 flex-1 overflow-hidden">
+          <div className="flex-shrink-0">
+            <FileIcon isDirectory={file.type === "directory"} />
+          </div>
+          <span className="text-gray-700 hover:text-blue-600 break-all min-w-0 pr-2">
             {file.basename}
           </span>
         </div>
@@ -50,14 +52,15 @@ export const FileItem: React.FC<FileItemProps> = ({
               e.stopPropagation();
               onCancelDownload();
             }}
-            className="px-2 py-1 text-sm text-red-600 hover:text-red-800 rounded"
+            className="px-2 py-1 text-sm text-red-600 hover:text-red-800 rounded flex-shrink-0 ml-2"
           >
             Cancel
           </button>
         )}
       </div>
-      {file.type !== "directory" && displayStyle === "grid" && (
-        <div className="mt-2 text-sm text-gray-500">
+
+      {file.type !== "directory" && (
+        <div className="text-sm text-gray-500">
           <div className="flex justify-between items-center">
             <span>Size: {formatFileSize(file.size)}</span>
             {isDownloading && (

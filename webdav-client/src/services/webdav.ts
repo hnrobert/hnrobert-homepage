@@ -12,7 +12,12 @@ export const downloadFile = async (
   const controller = new AbortController();
   const credentials = btoa("web:web");
 
-  const response = await fetch(`http://192.168.50.146:9970${filename}`, {
+  const encodedUrl = `http://192.168.50.146:9970${encodeURI(filename).replace(
+    /%2F/g,
+    "/"
+  )}`;
+
+  const response = await fetch(encodedUrl, {
     headers: {
       Authorization: `Basic ${credentials}`,
     },

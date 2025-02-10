@@ -21,7 +21,8 @@ function App() {
   };
 
   const getParentPath = (path: string) => {
-    const parts = path.split("/").filter(Boolean);
+    const decodedPath = decodeURIComponent(path);
+    const parts = decodedPath.split("/").filter(Boolean);
     parts.pop();
     return "/" + parts.join("/");
   };
@@ -37,7 +38,7 @@ function App() {
     checkImageSize();
     window.addEventListener("resize", checkImageSize);
 
-    const path = window.location.pathname || "/";
+    const path = decodeURIComponent(window.location.pathname) || "/";
     setCurrentPath(path);
 
     const getFiles = async () => {
@@ -67,13 +68,17 @@ function App() {
 
   const handleFileClick = async (file: FileStat) => {
     if (file.type === "directory") {
-      window.location.href = file.filename;
+      const encodedPath = encodeURIComponent(file.filename).replace(
+        /%2F/g,
+        "/"
+      );
+      window.location.href = encodedPath;
       return;
     }
 
     try {
       const { response, controller } = await downloadFile(
-        file.filename,
+        encodeURI(file.filename),
         (progress) => {
           setDownloadStatus((prev) => ({
             ...prev!,
@@ -152,7 +157,7 @@ function App() {
           <div className="mb-4">
             <button
               onClick={() =>
-                (window.location.href = getParentPath(currentPath))
+                (window.location.href = encodeURI(getParentPath(currentPath)))
               }
               className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 transition-colors duration-200"
             >
