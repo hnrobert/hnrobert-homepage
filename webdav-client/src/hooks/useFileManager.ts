@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FileStat } from "webdav";
 import { client } from "../services/webdav";
+import { filterSystemFiles } from "../utils/fileFilters";
 
 export const useFileManager = () => {
   const [files, setFiles] = useState<FileStat[]>([]);
@@ -30,9 +31,11 @@ export const useFileManager = () => {
     const getFiles = async () => {
       try {
         const directoryItems = await client.getDirectoryContents(path);
-        setFiles(
-          Array.isArray(directoryItems) ? directoryItems : directoryItems.data
-        );
+        const items = Array.isArray(directoryItems)
+          ? directoryItems
+          : directoryItems.data;
+        const filteredItems = filterSystemFiles(items);
+        setFiles(filteredItems);
         setError("");
       } catch (error) {
         const errorMessage =
