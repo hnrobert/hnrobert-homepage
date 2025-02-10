@@ -2,6 +2,7 @@ import React from "react";
 import { FileStat } from "webdav";
 import { FileIcon } from "./FileIcon";
 import { formatFileSize } from "../utils/formatters";
+import { getFileType } from "../utils/fileTypes";
 
 interface FileItemProps {
   file: FileStat;
@@ -40,7 +41,9 @@ export const FileItem: React.FC<FileItemProps> = ({
       <div className="flex items-start justify-between w-full">
         <div className="flex items-start space-x-2 min-w-0 flex-1 overflow-hidden">
           <div className="flex-shrink-0">
-            <FileIcon isDirectory={file.type === "directory"} />
+            <FileIcon
+              type={getFileType(file.basename, file.type === "directory")}
+            />
           </div>
           <span className="text-gray-700 hover:text-blue-600 break-all min-w-0 pr-2">
             {file.basename}
