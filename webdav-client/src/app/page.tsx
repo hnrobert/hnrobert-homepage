@@ -44,6 +44,10 @@ export default function Page() {
     await handleFileDownload(file);
   };
 
+  const handleNavigate = (path: string) => {
+    handleDirectoryClick(path);
+  };
+
   return (
     <>
       <PageHeader
@@ -51,7 +55,11 @@ export default function Page() {
         error={error}
         onErrorClear={() => setError("")}
       />
-      <BackButton currentPath={currentPath} onBack={handleBackClick} />
+      <BackButton
+        currentPath={currentPath}
+        onBack={handleBackClick}
+        onNavigate={handleNavigate}
+      />
       <FileList
         files={files}
         downloadStatus={downloadStatus}
