@@ -13,14 +13,19 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, onNavigate }) => {
   }
 
   return (
-    <div className="flex p-2 items-center space-x-2 text-gray-600">
+    <div className="flex flex-wrap p-2 items-center gap-2 text-gray-600">
       {segments.map((segment, index) => {
         const currentPath = "/" + segments.slice(0, index + 1).join("/");
+        const isLastSegment = index === segments.length - 1;
+
         return (
           <React.Fragment key={currentPath}>
-            {index > 0 && <span className="text-gray-400">/</span>}
+            {index > 0 && <span className="text-gray-400 shrink-0">/</span>}
             <span
-              className="hover:text-blue-600 cursor-pointer"
+              className={`hover:text-blue-600 cursor-pointer ${
+                isLastSegment ? "flex-grow break-all" : "truncate max-w-[200px]"
+              }`}
+              title={segment}
               onClick={() => onNavigate(currentPath)}
             >
               {segment}

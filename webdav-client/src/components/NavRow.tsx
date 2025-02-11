@@ -1,4 +1,5 @@
 import React from "react";
+import { BackButton } from "./BackButton";
 import { Breadcrumb } from "./Breadcrumb";
 import { SortSelector, SortType } from "./SortSelector";
 
@@ -21,14 +22,7 @@ export const NavRow: React.FC<NavRowProps> = ({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          {currentPath !== "/" && (
-            <button
-              onClick={() => onBack(currentPath)}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg transition-colors duration-200"
-            >
-              ← Back
-            </button>
-          )}
+          <BackButton currentPath={currentPath} onBack={onBack} />
         </div>
         <SortSelector sortType={sortType} onSortChange={onSortChange} />
       </div>

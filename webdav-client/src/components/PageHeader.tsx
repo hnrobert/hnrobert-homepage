@@ -4,20 +4,23 @@ interface PageHeaderProps {
   selectedImage: string;
   error?: string;
   onErrorClear: () => void;
+  onNavigateHome: () => void;
 }
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
   selectedImage,
   error,
   onErrorClear,
+  onNavigateHome,
 }) => {
   return (
     <>
-      <div className="flex justify-center mb-8">
+      <div className="flex justify-center mb-8 w-full px-4">
         <img
           src={selectedImage}
           alt="Title"
-          className="w-auto max-w-[600px] min-w-[300px]"
+          className="w-[30vw] min-w-[300px] max-w-[800px] h-auto cursor-pointer hover:opacity-80 transition-opacity duration-200"
+          onClick={onNavigateHome}
         />
       </div>
 
