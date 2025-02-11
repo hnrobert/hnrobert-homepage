@@ -1,6 +1,7 @@
 import React from "react";
 import { FileStat } from "webdav";
 import { FileItem } from "./FileItem";
+import { sortFiles } from "../utils/sorting";
 
 interface FileListProps {
   files: FileStat[];
@@ -58,7 +59,7 @@ export const FileList: React.FC<FileListProps> = ({
 };
 
 const separateFilesAndFolders = (items: FileStat[]) => {
-  const folders = items.filter((item) => item.type === "directory");
-  const files = items.filter((item) => item.type !== "directory");
+  const folders = sortFiles(items.filter((item) => item.type === "directory"));
+  const files = sortFiles(items.filter((item) => item.type !== "directory"));
   return { folders, files };
 };
