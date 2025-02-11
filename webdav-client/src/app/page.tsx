@@ -1,13 +1,15 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { FileStat } from "webdav";
 
-import { BackButton } from "./components/BackButton";
-import { PageHeader } from "./components/PageHeader";
-import { FileList } from "./components/FileList";
-import { useFileManager } from "./hooks/useFileManager";
-import { useFileDownloader } from "./hooks/useFileDownloader";
+import { BackButton } from "../components/BackButton";
+import { PageHeader } from "../components/PageHeader";
+import { FileList } from "../components/FileList";
+import { useFileManager } from "../hooks/useFileManager";
+import { useFileDownloader } from "../hooks/useFileDownloader";
 
-function App() {
+export default function Page() {
   const [selectedImage, setSelectedImage] = useState<string>("");
 
   const {
@@ -43,22 +45,18 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8">
-        <PageHeader
-          selectedImage={selectedImage}
-          error={error}
-          onErrorClear={() => setError("")}
-        />
-        <BackButton currentPath={currentPath} onBack={handleBackClick} />
-        <FileList
-          files={files}
-          downloadStatus={downloadStatus}
-          onFileClick={handleFileClick}
-        />
-      </div>
-    </div>
+    <>
+      <PageHeader
+        selectedImage={selectedImage}
+        error={error}
+        onErrorClear={() => setError("")}
+      />
+      <BackButton currentPath={currentPath} onBack={handleBackClick} />
+      <FileList
+        files={files}
+        downloadStatus={downloadStatus}
+        onFileClick={handleFileClick}
+      />
+    </>
   );
 }
-
-export default App;
