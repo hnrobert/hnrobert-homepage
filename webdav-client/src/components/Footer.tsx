@@ -64,13 +64,13 @@ export const Footer: React.FC = () => {
                 className="object-contain"
               />
             </span>
-            hnrobert@qq.com
+            HNRobert@qq.com
           </a>
         </div>
 
         {/* Tech Stack */}
         <div className="flex flex-wrap justify-center gap-4 text-gray-600">
-          <span className="text-sm">Powered by:</span>
+          <span className="text-sm flex items-center">Powered by:</span>
           <div className="flex gap-4">
             <span className="group flex items-center gap-1">
               <span className={iconContainerClass}>
