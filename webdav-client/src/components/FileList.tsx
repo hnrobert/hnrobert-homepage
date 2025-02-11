@@ -2,6 +2,7 @@ import React from "react";
 import { FileStat } from "webdav";
 import { FileItem } from "./FileItem";
 import { sortFiles } from "../utils/sorting";
+import { SortType } from "./SortSelector";
 
 interface FileListProps {
   files: FileStat[];
@@ -11,14 +12,19 @@ interface FileListProps {
     controller?: AbortController;
   } | null;
   onFileClick: (file: FileStat) => void;
+  sortType: SortType;
 }
 
 export const FileList: React.FC<FileListProps> = ({
   files,
   downloadStatus,
   onFileClick,
+  sortType,
 }) => {
-  const { folders, files: fileItems } = separateFilesAndFolders(files);
+  const { folders, files: fileItems } = separateFilesAndFolders(
+    files,
+    sortType
+  );
 
   return (
     <>
@@ -58,8 +64,14 @@ export const FileList: React.FC<FileListProps> = ({
   );
 };
 
-const separateFilesAndFolders = (items: FileStat[]) => {
-  const folders = sortFiles(items.filter((item) => item.type === "directory"));
-  const files = sortFiles(items.filter((item) => item.type !== "directory"));
+const separateFilesAndFolders = (items: FileStat[], sortType: SortType) => {
+  const folders = sortFiles(
+    items.filter((item) => item.type === "directory"),
+    sortType
+  );
+  const files = sortFiles(
+    items.filter((item) => item.type !== "directory"),
+    sortType
+  );
   return { folders, files };
 };

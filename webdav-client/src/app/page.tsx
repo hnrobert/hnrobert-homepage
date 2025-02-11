@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { FileStat } from "webdav";
+import { SortType } from "../components/SortSelector";
 
-import { BackButton } from "../components/BackButton";
+import { BackButton } from "../components/NavRow";
 import { PageHeader } from "../components/PageHeader";
 import { FileList } from "../components/FileList";
 import { useFileManager } from "../hooks/useFileManager";
@@ -11,6 +12,7 @@ import { useFileDownloader } from "../hooks/useFileDownloader";
 
 export default function Page() {
   const [selectedImage, setSelectedImage] = useState<string>("");
+  const [sortType, setSortType] = useState<SortType>("name");
 
   const {
     files,
@@ -59,11 +61,14 @@ export default function Page() {
         currentPath={currentPath}
         onBack={handleBackClick}
         onNavigate={handleNavigate}
+        sortType={sortType}
+        onSortChange={setSortType}
       />
       <FileList
         files={files}
         downloadStatus={downloadStatus}
         onFileClick={handleFileClick}
+        sortType={sortType}
       />
     </>
   );
