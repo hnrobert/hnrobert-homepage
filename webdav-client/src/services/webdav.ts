@@ -1,6 +1,6 @@
 import { createClient } from "webdav";
 
-export const client = createClient("http://192.168.50.146:9970", {
+export const client = createClient("https://hnrobert.space", {
   username: "web",
   password: "web",
 });
@@ -12,7 +12,7 @@ export const downloadFile = async (
   const controller = new AbortController();
   const credentials = btoa("web:web");
 
-  const encodedUrl = `http://192.168.50.146:9970${encodeURI(filename).replace(
+  const encodedUrl = `https://hnrobert.space${encodeURI(filename).replace(
     /%2F/g,
     "/"
   )}`;

@@ -19,7 +19,7 @@
     "@craco/craco": "^5.9.0"
   },
   "scripts": {
-    "start": "PORT=9970 craco start",
+    "start": "DISABLE_WEBSOCKET=true FAST_REFRESH=false PORT=9970 craco start",
     "build": "craco build"
   },
   "resolutions": {
