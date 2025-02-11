@@ -12,11 +12,12 @@ export const downloadFile = async (
   const controller = new AbortController();
   const credentials = btoa("web:web");
 
-  const encodedUrl = `https://hnrobert.space${encodeURI(filename).replace(
-    /%2F/g,
-    "/"
-  )}`;
+  const decodedFilename = decodeURIComponent(filename);
+  const encodedUrl = `https://hnrobert.space${encodeURI(
+    decodedFilename
+  ).replace(/%2F/g, "/")}`;
 
+  console.log("Downloading file:", encodedUrl);
   const response = await fetch(encodedUrl, {
     headers: {
       Authorization: `Basic ${credentials}`,

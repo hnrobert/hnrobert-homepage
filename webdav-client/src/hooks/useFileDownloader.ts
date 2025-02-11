@@ -12,7 +12,7 @@ export const useFileDownloader = (onError: (message: string) => void) => {
   const handleFileDownload = async (file: FileStat) => {
     try {
       const { response, controller } = await downloadFile(
-        encodeURI(file.filename),
+        file.filename,
         (progress) => {
           setDownloadStatus((prev) => ({
             ...prev!,
