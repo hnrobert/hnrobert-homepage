@@ -10,3 +10,15 @@ export const formatFileSize = (bytes: number): string => {
 
   return `${size.toFixed(2)} ${units[unitIndex]}`;
 };
+
+export const formatDate = (lastmod: string | undefined) => {
+  if (!lastmod) return "Unknown date";
+  const date = new Date(lastmod);
+  return date.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};

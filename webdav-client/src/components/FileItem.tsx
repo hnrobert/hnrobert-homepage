@@ -1,7 +1,7 @@
 import React from "react";
 import { FileStat } from "webdav";
 import { FileIcon } from "./FileIcon";
-import { formatFileSize } from "../utils/formatters";
+import { formatFileSize, formatDate } from "../utils/formatters";
 import { getFileType } from "../utils/fileTypes";
 
 interface FileItemProps {
@@ -66,19 +66,25 @@ export const FileItem: React.FC<FileItemProps> = ({
         <div className="text-sm text-gray-500">
           <div className="flex justify-between items-center">
             <span>Size: {formatFileSize(file.size)}</span>
-            {isDownloading && (
-              <span className="text-blue-500">
-                {downloadStatus.progress.toFixed(1)}%
-              </span>
-            )}
+            <span className="text-xs text-gray-400">
+              {formatDate(file.lastmod)}
+            </span>
           </div>
+
           {isDownloading && (
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-              <div
-                className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${downloadStatus.progress}%` }}
-              />
-            </div>
+            <>
+              <div className="flex justify-end mt-1">
+                <span className="text-blue-500">
+                  {downloadStatus.progress.toFixed(1)}%
+                </span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                <div
+                  className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${downloadStatus.progress}%` }}
+                />
+              </div>
+            </>
           )}
         </div>
       )}

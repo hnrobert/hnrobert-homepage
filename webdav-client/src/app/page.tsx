@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FileStat } from "webdav";
 import { SortType } from "../components/SortSelector";
 
-import { BackButton } from "../components/NavRow";
+import { NavRow } from "../components/NavRow";
 import { PageHeader } from "../components/PageHeader";
 import { FileList } from "../components/FileList";
 import { useFileManager } from "../hooks/useFileManager";
@@ -57,7 +57,7 @@ export default function Page() {
         error={error}
         onErrorClear={() => setError("")}
       />
-      <BackButton
+      <NavRow
         currentPath={currentPath}
         onBack={handleBackClick}
         onNavigate={handleNavigate}

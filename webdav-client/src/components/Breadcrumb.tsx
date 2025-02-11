@@ -13,7 +13,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ path, onNavigate }) => {
   }
 
   return (
-    <div className="flex items-center space-x-2 text-gray-600">
+    <div className="flex p-2 items-center space-x-2 text-gray-600">
       {segments.map((segment, index) => {
         const currentPath = "/" + segments.slice(0, index + 1).join("/");
         return (

@@ -2,7 +2,7 @@ import React from "react";
 import { Breadcrumb } from "./Breadcrumb";
 import { SortSelector, SortType } from "./SortSelector";
 
-interface BackButtonProps {
+interface NavRowProps {
   currentPath: string;
   onBack: (path: string) => void;
   onNavigate: (path: string) => void;
@@ -10,7 +10,7 @@ interface BackButtonProps {
   onSortChange: (type: SortType) => void;
 }
 
-export const BackButton: React.FC<BackButtonProps> = ({
+export const NavRow: React.FC<NavRowProps> = ({
   currentPath,
   onBack,
   onNavigate,
