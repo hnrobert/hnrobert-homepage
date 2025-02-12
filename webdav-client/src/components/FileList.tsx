@@ -9,6 +9,7 @@ interface FileListProps {
   downloadStatus: {
     filename: string;
     progress: number;
+    speed: number;
     controller?: AbortController;
   } | null;
   onFileClick: (file: FileStat) => Promise<void>;

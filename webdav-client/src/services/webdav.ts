@@ -51,7 +51,7 @@ const MAX_RETRIES = 10;
 
 export const downloadFileInChunks = async (
   filename: string,
-  onProgress: (progress: number) => void,
+  onProgress: (progress: number, receivedBytes: number) => void,
   controller: AbortController
 ) => {
   const credentials = btoa("web:web");
@@ -96,7 +96,7 @@ export const downloadFileInChunks = async (
         const chunk = await response.arrayBuffer();
         chunks.push(new Uint8Array(chunk));
         receivedLength += chunk.byteLength;
-        onProgress((receivedLength / contentLength) * 100);
+        onProgress((receivedLength / contentLength) * 100, receivedLength);
         break; // Success, exit retry loop
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") {

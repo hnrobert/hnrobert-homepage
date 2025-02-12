@@ -2,12 +2,17 @@ import { useState } from "react";
 import { FileStat } from "webdav";
 import { downloadFileInChunks } from "../services/webdav";
 
+interface DownloadStatus {
+  filename: string;
+  progress: number;
+  speed: number; // bytes per second
+  controller?: AbortController;
+}
+
 export const useFileDownloader = (onError: (message: string) => void) => {
-  const [downloadStatus, setDownloadStatus] = useState<{
-    filename: string;
-    progress: number;
-    controller?: AbortController;
-  } | null>(null);
+  const [downloadStatus, setDownloadStatus] = useState<DownloadStatus | null>(
+    null
+  );
 
   const cancelDownload = () => {
     if (downloadStatus?.controller) {
@@ -19,19 +24,32 @@ export const useFileDownloader = (onError: (message: string) => void) => {
   const handleFileDownload = async (file: FileStat) => {
     try {
       const controller = new AbortController();
+      let lastUpdate = Date.now();
+      let lastBytes = 0;
+
       setDownloadStatus({
         filename: file.basename,
         progress: 0,
+        speed: 0,
         controller,
       });
 
       const { blob } = await downloadFileInChunks(
         file.filename,
-        (progress) => {
+        (progress, receivedBytes) => {
+          const now = Date.now();
+          const timeDiff = (now - lastUpdate) / 1000; // convert to seconds
+          const bytesDiff = receivedBytes - lastBytes;
+          const speed = timeDiff > 0 ? bytesDiff / timeDiff : 0;
+
           setDownloadStatus((prev) => ({
             ...prev!,
             progress: Math.min(progress, 100),
+            speed: speed,
           }));
+
+          lastUpdate = now;
+          lastBytes = receivedBytes;
         },
         controller
       );

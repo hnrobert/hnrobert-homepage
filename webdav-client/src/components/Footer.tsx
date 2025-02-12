@@ -32,7 +32,7 @@ export const Footer: React.FC = () => {
             <span className={iconContainerClass}>
               <FaGithub size={iconSize} />
             </span>
-            GitHub: HNRobert
+            HNRobert
           </a>
           <a
             href="https://space.bilibili.com/523023049"
@@ -49,7 +49,7 @@ export const Footer: React.FC = () => {
                 className="object-contain"
               />
             </span>
-            Bilibili: HNRobert
+            HNRobert
           </a>
           <a
             href="mailto:hnrobert@qq.com"
@@ -64,7 +64,7 @@ export const Footer: React.FC = () => {
                 className="object-contain"
               />
             </span>
-            HNRobert@qq.com
+            hnrobert@qq.com
           </a>
         </div>
 
