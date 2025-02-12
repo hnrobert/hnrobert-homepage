@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { FileStat } from "webdav";
 import { FileIcon } from "./FileIcon";
 import { formatFileSize, formatDate } from "../utils/formatters";
@@ -22,11 +22,22 @@ export const FileItem: React.FC<FileItemProps> = ({
   onCancelDownload,
   displayStyle,
 }) => {
+  const [cardHeight, setCardHeight] = useState<string>("auto");
+  const fileNameRef = useRef<HTMLSpanElement>(null);
   const isDownloading = downloadStatus?.filename === file.basename;
+
+  useEffect(() => {
+    if (displayStyle === "grid" && fileNameRef.current) {
+      const fileNameHeight = fileNameRef.current.offsetHeight;
+      const baseHeight = 120;
+      const extraHeight = Math.max(0, fileNameHeight - 24);
+      setCardHeight(`${baseHeight + extraHeight}px`);
+    }
+  }, [file.basename, displayStyle]);
 
   const baseStyles =
     "bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col justify-between " +
-    (displayStyle === "row" ? "mb-2 w-full" : "h-[120px]");
+    (displayStyle === "row" ? "mb-2 w-full" : "");
 
   return (
     <div
@@ -36,6 +47,7 @@ export const FileItem: React.FC<FileItemProps> = ({
         cursor: downloadStatus ? "default" : "pointer",
         opacity: downloadStatus && !isDownloading ? 0.7 : 1,
         pointerEvents: downloadStatus && !isDownloading ? "none" : "auto",
+        height: displayStyle === "grid" ? cardHeight : "auto",
       }}
     >
       <div className="flex items-start justify-between w-full">
@@ -45,7 +57,10 @@ export const FileItem: React.FC<FileItemProps> = ({
               type={getFileType(file.basename, file.type === "directory")}
             />
           </div>
-          <span className="text-gray-700 hover:text-blue-600 break-all min-w-0 pr-2">
+          <span
+            ref={fileNameRef}
+            className="text-gray-700 hover:text-blue-600 break-all min-w-0 pr-2"
+          >
             {file.basename}
           </span>
         </div>
@@ -63,7 +78,7 @@ export const FileItem: React.FC<FileItemProps> = ({
       </div>
 
       {file.type !== "directory" && (
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-500 mt-auto">
           <div className="flex justify-between items-center">
             <span>Size: {formatFileSize(file.size)}</span>
             <span className="text-xs text-gray-400">

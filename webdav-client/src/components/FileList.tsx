@@ -11,7 +11,7 @@ interface FileListProps {
     progress: number;
     controller?: AbortController;
   } | null;
-  onFileClick: (file: FileStat) => void;
+  onFileClick: (file: FileStat) => Promise<void>;
   onCancelDownload: () => void;
   sortType: SortType;
 }
@@ -20,7 +20,6 @@ export const FileList: React.FC<FileListProps> = ({
   files,
   downloadStatus,
   onFileClick,
-  onCancelDownload,
   sortType,
 }) => {
   const { folders, files: fileItems } = separateFilesAndFolders(
@@ -38,7 +37,7 @@ export const FileList: React.FC<FileListProps> = ({
             file={folder}
             downloadStatus={downloadStatus}
             onFileClick={onFileClick}
-            onCancelDownload={onCancelDownload}
+            onCancelDownload={() => downloadStatus?.controller?.abort()}
             displayStyle="row"
           />
         ))}
@@ -57,7 +56,7 @@ export const FileList: React.FC<FileListProps> = ({
             file={file}
             downloadStatus={downloadStatus}
             onFileClick={onFileClick}
-            onCancelDownload={onCancelDownload}
+            onCancelDownload={() => downloadStatus?.controller?.abort()}
             displayStyle="grid"
           />
         ))}
