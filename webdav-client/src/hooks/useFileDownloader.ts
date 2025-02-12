@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FileStat } from "webdav";
-import { downloadFile } from "../services/webdav";
+import { downloadFileInChunks } from "../services/webdav";
 
 export const useFileDownloader = (onError: (message: string) => void) => {
   const [downloadStatus, setDownloadStatus] = useState<{
@@ -9,44 +9,38 @@ export const useFileDownloader = (onError: (message: string) => void) => {
     controller?: AbortController;
   } | null>(null);
 
+  const cancelDownload = () => {
+    if (downloadStatus?.controller) {
+      downloadStatus.controller.abort();
+      setDownloadStatus(null);
+    }
+  };
+
   const handleFileDownload = async (file: FileStat) => {
     try {
-      const { response, controller } = await downloadFile(
-        file.filename,
-        (progress) => {
-          setDownloadStatus((prev) => ({
-            ...prev!,
-            progress,
-          }));
-        }
-      );
-
+      const controller = new AbortController();
       setDownloadStatus({
         filename: file.basename,
         progress: 0,
         controller,
       });
 
-      const contentLength = Number(response.headers.get("Content-Length")) || 0;
-      const reader = response.body?.getReader();
-      const chunks: Uint8Array[] = [];
-      let receivedLength = 0;
+      const { blob } = await downloadFileInChunks(
+        file.filename,
+        (progress) => {
+          setDownloadStatus((prev) => ({
+            ...prev!,
+            progress: Math.min(progress, 100),
+          }));
+        },
+        controller
+      );
 
-      while (true && reader) {
-        const { done, value } = await reader.read();
-        if (done) break;
+      setDownloadStatus((prev) => ({
+        ...prev!,
+        controller,
+      }));
 
-        chunks.push(value);
-        receivedLength += value.length;
-
-        const progress = (receivedLength / contentLength) * 100;
-        setDownloadStatus((prev) => ({
-          ...prev!,
-          progress: Math.min(progress, 100),
-        }));
-      }
-
-      const blob = new Blob(chunks);
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -57,12 +51,21 @@ export const useFileDownloader = (onError: (message: string) => void) => {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      if (error instanceof Error && error.name === "AbortError") {
-        console.log("Download cancelled");
-        onError("Download cancelled");
+      if (error instanceof Error) {
+        if (error.name === "AbortError") {
+          console.log("Download cancelled");
+          onError("Download cancelled");
+        } else {
+          console.error("Download error details:", {
+            error: error.message,
+            name: error.name,
+            stack: error.stack,
+          });
+          onError(`Failed to download ${file.basename}: ${error.message}`);
+        }
       } else {
-        console.error("Download error:", error);
-        onError(`Failed to download ${file.basename}: ${error}`);
+        console.error("Unknown download error:", error);
+        onError(`Failed to download ${file.basename}: Unknown error`);
       }
     } finally {
       setDownloadStatus(null);
@@ -72,5 +75,6 @@ export const useFileDownloader = (onError: (message: string) => void) => {
   return {
     downloadStatus,
     handleFileDownload,
+    cancelDownload,
   };
 };

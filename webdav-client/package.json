@@ -22,7 +22,11 @@
   },
   "scripts": {
     "start": "DISABLE_WEBSOCKET=true FAST_REFRESH=false PORT=9970 craco start",
-    "build": "craco build"
+    "start:dev": "REACT_APP_ENV=development DISABLE_WEBSOCKET=true FAST_REFRESH=false PORT=9970 craco start",
+    "start:prod": "REACT_APP_ENV=production DISABLE_WEBSOCKET=true FAST_REFRESH=false PORT=9970 craco start",
+    "build": "craco build",
+    "build:dev": "REACT_APP_ENV=development craco build",
+    "build:prod": "REACT_APP_ENV=production craco build"
   },
   "resolutions": {
     "typescript": "3.9.10"

@@ -26,7 +26,8 @@ export default function Page() {
     handleDirectoryClick,
   } = useFileManager();
 
-  const { downloadStatus, handleFileDownload } = useFileDownloader(setError);
+  const { downloadStatus, handleFileDownload, cancelDownload } =
+    useFileDownloader(setError);
 
   useEffect(() => {
     const checkImageSize = () => {
@@ -110,6 +111,7 @@ export default function Page() {
           files={files}
           downloadStatus={downloadStatus}
           onFileClick={handleFileClick}
+          onCancelDownload={cancelDownload}
           sortType={sortType}
         />
       </div>
