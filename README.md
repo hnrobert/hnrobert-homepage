@@ -23,14 +23,9 @@ A web application for managing and accessing files through WebDAV, featuring a m
 
 ## Development Setup
 
-1. Install dependencies:
+1. Install dependencies: `cd webdav-client && npm install`
 
-```bash
-cd webdav-client
-npm install
-```
-
-2. Start a WebDAV Host at port 9976 (in this case)
+2. Start a WebDAV Host at port 5005 (in this case)
 
 3. Start development server:
 
