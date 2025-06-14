@@ -2,57 +2,70 @@
 
 A web application for managing and accessing files through WebDAV, featuring a modern React-based interface.
 
-> Visit [Here](https://hnrobert.space) to see the effect
+> Visit [My Actual Home Page](https://hnrobert.space) to see the effect
 
 ## Project Structure
 
-- `webdav-client/` - React-based frontend application
-  - `src/services/` - WebDAV client implementation
-  - `src/components/` - React components
-  - `src/hooks/` - Custom React hooks
-  - `src/app/` - Root page routing
+- wip
 
 ## Features
 
-- File browsing and navigation
-- File download with progress tracking
-- Responsive design
-- Chunked file downloads
-- Retry mechanism for failed downloads
-- Sorting options for files and directories
+- wip
 
 ## Development Setup
 
-1. Install dependencies: `cd webdav-client && npm install`
+- wip
 
-2. Start a WebDAV Host at port 5005 (in this case)
+## Docker Compose Deployment
 
-3. Start development server:
+### Prerequisites
 
-```bash
-npm run start:dev
+- Docker and Docker Compose installed on your system
+- SSL certificates (optional, self-signed certificates will be created if not provided)
+
+### Setup Instructions
+
+1. Clone this repository:
+
+ ```bash
+git clone https://github.com/HNRobert/hnrobert-homepage.git
+cd hnrobert-homepage
 ```
 
-The application will be available at `http://localhost:9970`
-
-## Build
-
-For development build:
+2. Start the services:
 
 ```bash
-npm run build:dev
+docker-compose up -d
 ```
 
-For production build:
+3. Access the application:
+   - Web interface: `http://localhost:9970` or `https://localhost:9977` (if SSL configured)
+
+### Troubleshooting
+
+- If the services fail to start, check the logs:
 
 ```bash
-npm run build:prod
+docker-compose logs
+```
+
+- If you need to restart the services:
+
+```bash
+docker-compose restart
+```
+
+- To stop the services:
+
+```bash
+docker-compose down
 ```
 
 ## Technical Stack
 
 - React 18
 - TypeScript
-- WebDAV client library
 - Tailwind CSS for styling
 - Craco for build configuration
+- Docker for containerization
+- Nginx as reverse proxy
