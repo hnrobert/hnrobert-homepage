@@ -17,7 +17,7 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
 
   return (
     <nav className="glass-nav">
-      <div className="container nav-container flex items-center justify-between">
+      <div className="container nav-container">
         <Link href="/" className="nav-brand">
           <div className="nav-logo">H</div>
           <span className="nav-title">HNRobert</span>

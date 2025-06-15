@@ -49,13 +49,13 @@ export default function FilesPage() {
   const getFileIcon = (type: string) => {
     switch (type) {
       case "document":
-        return <HiDocumentText className="text-red-500" />;
+        return <HiDocumentText className="file-icon-red" />;
       case "image":
-        return <HiPhotograph className="text-green-500" />;
+        return <HiPhotograph className="file-icon-green" />;
       case "video":
-        return <HiFilm className="text-purple-500" />;
+        return <HiFilm className="file-icon-purple" />;
       default:
-        return <HiDocumentText className="text-blue-500" />;
+        return <HiDocumentText className="file-icon-blue" />;
     }
   };
 
@@ -66,18 +66,14 @@ export default function FilesPage() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="page-layout">
       <Navigation />
 
-      <main className="flex-1 container mx-auto px-6 py-12">
-        <div className="text-center mb-16">
+      <main className="main-container">
+        <div className="page-header">
           <h1 className="page-title">File Sharing</h1>
-
-          {/* Search Bar */}
-          <div className="max-w-lg mx-auto relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <HiSearch className="h-6 w-6 text-gray-400" />
-            </div>
+          <div className="search-container">
+            <HiSearch className="search-icon" />
             <input
               type="text"
               placeholder="Search files..."
@@ -88,27 +84,24 @@ export default function FilesPage() {
           </div>
         </div>
 
-        {/* Files List */}
-        <div className="glass-card p-8">
-          <div className="space-y-6">
+        <div className="glass-card">
+          <div className="files-list">
             {filteredFiles.map((file, index) => (
               <div key={index} className="file-item">
-                <div className="relative z-10 flex items-center justify-between w-full">
-                  <div className="flex items-center space-x-6">
-                    <div className="text-3xl">{getFileIcon(file.type)}</div>
-                    <div>
-                      <h3 className="font-bold text-gray-800 text-lg">
-                        {file.name}
-                      </h3>
-                      <p className="text-gray-600 mt-1">{file.description}</p>
+                <div className="file-content">
+                  <div className="file-info">
+                    <div className="file-icon-container">
+                      {getFileIcon(file.type)}
+                    </div>
+                    <div className="file-details">
+                      <h3 className="file-name">{file.name}</h3>
+                      <p className="file-description">{file.description}</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-6">
-                    <span className="text-sm text-gray-500 font-medium">
-                      {file.size}
-                    </span>
+                  <div className="file-actions">
+                    <span className="file-size">{file.size}</span>
                     <a href={file.url} className="download-btn">
-                      <HiDownload className="text-lg" />
+                      <HiDownload />
                       <span>Download</span>
                     </a>
                   </div>
@@ -119,9 +112,11 @@ export default function FilesPage() {
         </div>
 
         {filteredFiles.length === 0 && (
-          <div className="text-center text-gray-500 mt-16">
-            <div className="glass-card-subtle p-8 max-w-md mx-auto">
-              <p className="text-lg">No files found matching your search.</p>
+          <div className="no-results">
+            <div className="no-results-card">
+              <p className="no-results-text">
+                No files found matching your search.
+              </p>
             </div>
           </div>
         )}

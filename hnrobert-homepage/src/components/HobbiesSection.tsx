@@ -3,8 +3,8 @@ import { GiShuttlecock } from "react-icons/gi";
 
 export const HobbiesSection: React.FC = () => {
   return (
-    <section className="mb-20">
-      <div className="glass-card p-10">
+    <section className="section">
+      <div className="glass-card">
         <h2 className="section-title">Hobbies</h2>
         <div className="hobbies-container">
           <a
@@ -14,21 +14,21 @@ export const HobbiesSection: React.FC = () => {
             className="hobby-item"
           >
             <FaBicycle className="hobby-icon" style={{ color: "#f97316" }} />
-            <span className="font-medium">Cycling</span>
+            <span className="hobby-label">Cycling</span>
           </a>
           <div className="hobby-item">
             <GiShuttlecock
               className="hobby-icon"
               style={{ color: "#22c55e" }}
             />
-            <span className="font-medium">Badminton</span>
+            <span className="hobby-label">Badminton</span>
           </div>
           <div className="hobby-item">
             <FaTableTennis
               className="hobby-icon"
               style={{ color: "#3b82f6" }}
             />
-            <span className="font-medium">Table Tennis</span>
+            <span className="hobby-label">Table Tennis</span>
           </div>
         </div>
       </div>

@@ -1,14 +1,17 @@
 import React from "react";
 import { FaGithub, FaReact } from "react-icons/fa";
+import { SiGithub, SiBilibili, SiTencentqq } from "react-icons/si";
 
 export const Footer: React.FC = () => {
   const iconSize = 20;
+  const iconContainerClass =
+    "transition-transform duration-700 group-hover:rotate-360";
 
   return (
     <footer className="footer">
       <div className="footer-content">
         {/* ICP info */}
-        <div className="text-center text-gray-500 mb-4">
+        <div className="footer-icp">
           <a
             href="https://beian.miit.gov.cn/"
             target="_blank"
@@ -25,54 +28,40 @@ export const Footer: React.FC = () => {
             href="https://github.com/HNRobert"
             target="_blank"
             rel="noopener noreferrer"
-            className="footer-link"
+            className="footer-link group"
           >
-            <FaGithub size={iconSize} />
+            <div className={iconContainerClass}>
+              <FaGithub size={iconSize} />
+            </div>
             HNRobert
           </a>
           <a
             href="https://space.bilibili.com/523023049"
             target="_blank"
             rel="noopener noreferrer"
-            className="footer-link"
+            className="footer-link group"
           >
-            <img
-              src="/assets/bilibili.ico"
-              alt="Bilibili"
-              width={iconSize}
-              height={iconSize}
-              style={{ objectFit: "contain" }}
-            />
+            <div className={iconContainerClass}>
+              <SiBilibili size={iconSize} />
+            </div>
             HNRobert
           </a>
-          <a href="mailto:hnrobert@qq.com" className="footer-link">
-            <img
-              src="/assets/qqmail.png"
-              alt="Email"
-              width={iconSize}
-              height={iconSize}
-              style={{ objectFit: "contain" }}
-            />
+          <a href="mailto:hnrobert@qq.com" className="footer-link group">
+            <div className={iconContainerClass}>
+              <SiTencentqq size={iconSize} />
+            </div>
             hnrobert@qq.com
           </a>
         </div>
 
         {/* Tech Stack */}
         <div className="footer-tech">
-          <span className="text-sm">Powered by:</span>
-          <div className="footer-tech-item">
-            <FaReact size={iconSize} style={{ color: "#29bee8" }} />
+          <span className="footer-tech-label">Powered by:</span>
+          <div className="footer-tech-item group">
+            <div className={iconContainerClass}>
+              <FaReact size={iconSize} style={{ color: "#29bee8" }} />
+            </div>
             React
-          </div>
-          <div className="footer-tech-item">
-            <img
-              src="/assets/webdav.jpg"
-              alt="WebDAV"
-              width={iconSize}
-              height={iconSize}
-              style={{ objectFit: "contain" }}
-            />
-            WebDAV
           </div>
         </div>
       </div>
