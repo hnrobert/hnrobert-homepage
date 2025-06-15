@@ -4,6 +4,33 @@
         "Craco",
         "keepalive",
         "sendfile",
-        "webdav"
+        "Tencentqq",
+        "webdav",
+        "Wechat"
+    ],
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "eslint.workingDirectories": [
+        "hnrobert-homepage"
+    ],
+    "debug.node.autoAttach": "disabled",
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "typescript": "typescriptreact"
+    },
+    "tailwindCSS.includeLanguages": {
+        "typescript": "typescript",
+        "typescriptreact": "typescriptreact"
+    },
+    "tailwindCSS.experimental.classRegex": [
+        [
+            "clsx\\(([^)]*)\\)",
+            "(?:'|\"|`)([^']*)(?:'|\"|`)"
+        ]
     ]
 }

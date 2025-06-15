@@ -1,4 +1,11 @@
 import React from "react";
+import "./globals.css";
+
+export const metadata = {
+  title: "HNRobert - Full Stack Developer",
+  description:
+    "Personal website of HNRobert, a full-stack developer passionate about creating innovative solutions.",
+};
 
 export default function RootLayout({
   children,
@@ -6,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8">{children}</div>
-    </div>
+    <html lang="en">
+      <body>{children}</body>
+    </html>
   );
 }
