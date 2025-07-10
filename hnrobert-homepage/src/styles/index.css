@@ -1,0 +1,43 @@
+/* ===== MAIN STYLES IMPORT ===== */
+
+/* base */
+@import "./base.css";
+
+/* visual */
+@import "./glass.css";
+
+/* navigation */
+@import "./navigation.css";
+
+/* title */
+@import "./typography.css";
+
+/* hero */
+@import "./hero.css";
+
+/* cards */
+@import "./cards.css";
+
+/* projects */
+@import "./projects.css";
+
+/* grid layouts */
+@import "./grids.css";
+
+/* interactive */
+@import "./interactive.css";
+
+/* searching */
+@import "./search-tools.css";
+
+/* filesystem */
+@import "./files.css";
+
+/* footer */
+@import "./footer.css";
+
+/* utils */
+@import "./utilities.css";
+
+/* responsive */
+@import "./responsive.css";
