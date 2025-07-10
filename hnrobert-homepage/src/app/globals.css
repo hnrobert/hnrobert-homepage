@@ -100,6 +100,13 @@ body {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
+.nav-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
 .nav-title {
   font-size: 1.25rem;
   font-weight: bold;
@@ -192,7 +199,14 @@ body {
 
 .hero-avatar:hover {
   box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
-  transform: scale(1.1) rotate(6deg);
+  transform: scale(1.1) rotate(-6deg);
+}
+
+.hero-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .hero-subtitle {
@@ -597,9 +611,16 @@ body {
   background: white;
 }
 
+.footer-icp {
+  margin: auto;
+  justify-content: center;
+  display: flex;
+  color: #6b7280;
+}
+
 .footer-content {
   max-width: 64rem;
-  margin: 0 auto;
+  margin: auto;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -615,7 +636,8 @@ body {
 
 .footer-link {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  margin: 0, 0, 0, 10;
   gap: 0.5rem;
   color: inherit;
   text-decoration: none;

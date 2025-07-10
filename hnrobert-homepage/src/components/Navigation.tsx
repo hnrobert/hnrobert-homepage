@@ -19,7 +19,9 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
     <nav className="glass-nav">
       <div className="container nav-container">
         <Link href="/" className="nav-brand">
-          <div className="nav-logo">H</div>
+          <div className="nav-logo">
+            <img src="/assets/avt.jpg" alt="HNRobert" className="nav-avatar" />
+          </div>
           <span className="nav-title">HNRobert</span>
         </Link>
 
