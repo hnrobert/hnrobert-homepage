@@ -1,4 +1,4 @@
-import { techStackData } from "../data/techStack";
+import configData from "../configs/hnrobert.json";
 
 export const TechStackSection: React.FC = () => {
   return (
@@ -6,7 +6,7 @@ export const TechStackSection: React.FC = () => {
       <div className="glass-card">
         <h2 className="section-title">Tech Stack</h2>
         <div className="tech-badges">
-          {techStackData.map((tech, index) => (
+          {configData.techStack.map((tech, index) => (
             <span key={index} className="tech-badge">
               {tech}
             </span>

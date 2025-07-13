@@ -2,45 +2,143 @@
 .projects-container {
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden;
   gap: 2rem;
-  padding: 1rem;
+  padding: 2rem 1rem 3rem 1rem;
+  margin: -1rem;
+  /* 隐藏滚动条 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.projects-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* 水平滚动功能 */
+#featured-projects {
+  scroll-snap-type: x mandatory;
 }
 
 .project-card {
-  min-width: 320px;
+  /* 动态计算最小宽度以确保标题和星数不换行 */
+  min-width: max(350px, fit-content);
+  max-width: 400px;
   padding: 2rem;
   backdrop-filter: blur(20px);
+  /* 完全透明的边框，让阴影可见 */
   background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid transparent;
   border-radius: 24px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  /* 增强阴影效果 */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15),
+    0 10px 25px -5px rgba(0, 0, 0, 0.1);
   transition: all 0.5s;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  scroll-snap-align: center;
+  flex-shrink: 0;
 }
 
 .project-card:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  /* 悬停时增强阴影 */
+  box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.25),
+    0 15px 35px -8px rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 0.7);
   transform: scale(1.05) translateY(-8px);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  /* 确保内容不换行 */
+  flex-wrap: nowrap;
 }
 
 .project-title {
   font-size: 1.25rem;
   font-weight: bold;
   color: #1f2937;
-  margin-bottom: 1rem;
+  margin: 0;
+  flex: 1;
+  /* 防止标题换行 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.project-status {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-stable {
+  background: rgba(34, 197, 94, 0.1);
+  color: #166534;
+}
+
+.status-experimental {
+  background: rgba(245, 158, 11, 0.1);
+  color: #92400e;
+}
+
+.version-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(99, 102, 241, 0.1);
+  color: #4338ca;
+  border-radius: 12px;
+  font-weight: 500;
 }
 
 .project-description {
   color: #6b7280;
-  margin-bottom: 1.5rem;
   line-height: 1.625;
+  flex: 1;
+}
+
+.project-languages {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.languages-label {
+  font-size: 0.875rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.language-tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(16, 185, 129, 0.1);
+  color: #047857;
+  border-radius: 8px;
+  font-weight: 500;
 }
 
 .project-tech {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 1.5rem;
+  align-items: center;
 }
 
 .project-tech-tag {
@@ -51,4 +149,217 @@
   border-radius: 9999px;
   font-weight: 500;
   backdrop-filter: blur(4px);
+}
+
+.tech-more {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.project-actions {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-size: 0.875rem;
+}
+
+.project-link:hover {
+  color: #1d4ed8;
+  transform: translateX(4px);
+}
+
+/* Loading and Error States */
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+  gap: 1rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(99, 102, 241, 0.1);
+  border-top: 3px solid #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.retry-button {
+  padding: 0.5rem 1rem;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.retry-button:hover {
+  background: #4f46e5;
+}
+
+/* New Badge Types */
+.stars-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(251, 191, 36, 0.1);
+  color: #d97706;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.language-more {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Project Stats */
+.project-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(229, 231, 235, 0.5);
+}
+
+.stat-item {
+  font-size: 0.75rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Status Badge Variants */
+.status-active {
+  background: rgba(34, 197, 94, 0.1);
+  color: #166534;
+}
+
+.status-archived {
+  background: rgba(156, 163, 175, 0.1);
+  color: #4b5563;
+}
+
+/* Skeleton Loading Animations */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.1) 25%,
+    rgba(0, 0, 0, 0.05) 50%,
+    rgba(0, 0, 0, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite ease-in-out;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  width: 70%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-badge {
+  height: 1.5rem;
+  width: 4rem;
+  border-radius: 12px;
+}
+
+.skeleton-description {
+  height: 3rem;
+  width: 100%;
+  margin: 0.75rem 0;
+}
+
+.skeleton-language-tag {
+  height: 1.5rem;
+  width: 3rem;
+  border-radius: 8px;
+}
+
+.skeleton-tech-tag {
+  height: 1.5rem;
+  width: 4rem;
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+}
+
+.skeleton-stat {
+  height: 1rem;
+  width: 5rem;
+  margin-right: 0.75rem;
+}
+
+.project-card.loading {
+  opacity: 0.8;
+}
+
+/* Project Error Display */
+.project-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid #ef4444;
+  border-radius: 6px;
+}
+
+.error-label {
+  font-size: 0.75rem;
+  color: #dc2626;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.error-text {
+  font-size: 0.75rem;
+  color: #7f1d1d;
+  line-height: 1.4;
+  word-break: break-word;
 }

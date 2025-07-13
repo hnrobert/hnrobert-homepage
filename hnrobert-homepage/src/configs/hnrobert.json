@@ -1,0 +1,32 @@
+{
+  "techStack": [
+    "Python",
+    "C/C++",
+    "Unity+C#",
+    ".NET",
+    "Swift",
+    "HTML/JavaScript/CSS",
+    "TypeScript",
+    "React",
+    "Vue",
+    "Electron",
+    "VSCode Extensions"
+  ],
+  "featuredProjects": [
+    "https://github.com/HNRobert/CMD-Media-Player",
+    "https://github.com/HNRobert/I-Wanna-English",
+    "https://github.com/HNRobert/MultiScreenCapturer",
+    "https://github.com/HNRobert/Click-to-JumpaJump",
+    "https://github.com/HNRobert/pvzHE-Archiver",
+    "https://github.com/HNRobert/Movefile"
+  ],
+  "hobbies": [
+    "🚴 Cycling",
+    "🥾 Hiking",
+    "🏃‍♂️ Running",
+    "🏸 Badminton",
+    "🏓 Table Tennis",
+    "📽️ Watching Movies",
+    "✂️ Video Editing"
+  ]
+}

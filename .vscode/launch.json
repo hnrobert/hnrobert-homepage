@@ -11,6 +11,10 @@
         "-p",
         "9970"
       ],
+      "runtimeArgs": [
+        "-r",
+        "dotenv/config"
+      ],
       "cwd": "${workspaceFolder}/hnrobert-homepage",
       "console": "integratedTerminal",
       "skipFiles": [
@@ -18,48 +22,7 @@
       ],
       "env": {
         "NODE_OPTIONS": "--inspect"
-      }
-    },
-    {
-      "name": "Next.js: debug client-side",
-      "type": "chrome",
-      "request": "launch",
-      "url": "http://localhost:9970",
-      "webRoot": "${workspaceFolder}/hnrobert-homepage",
-      "sourceMapPathOverrides": {
-        "webpack://_N_E/./*": "${webRoot}/*",
-        "webpack:///./*": "${webRoot}/*"
-      }
-    },
-    {
-      "name": "Next.js: debug full stack",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/hnrobert-homepage/node_modules/next/dist/bin/next",
-      "args": [
-        "dev",
-        "-p",
-        "9970"
-      ],
-      "cwd": "${workspaceFolder}/hnrobert-homepage",
-      "console": "integratedTerminal",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "serverReadyAction": {
-        "pattern": "- Local:.+(https?://.+)",
-        "uriFormat": "%s",
-        "action": "debugWithChrome"
-      }
-    },
-    {
-      "name": "Next.js: attach to running server",
-      "type": "node",
-      "request": "attach",
-      "port": 9229,
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      },
     },
     {
       "name": "Next.js: debug build",
@@ -71,6 +34,10 @@
         "-p",
         "9970"
       ],
+      "runtimeArgs": [
+        "-r",
+        "dotenv/config"
+      ],
       "cwd": "${workspaceFolder}/hnrobert-homepage",
       "console": "integratedTerminal",
       "skipFiles": [
@@ -78,17 +45,7 @@
       ],
       "env": {
         "NODE_ENV": "production"
-      }
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Next.js: debug client and server",
-      "configurations": [
-        "Next.js: debug server-side",
-        "Next.js: debug client-side"
-      ],
-      "stopAll": true
+      },
     }
   ]
 }

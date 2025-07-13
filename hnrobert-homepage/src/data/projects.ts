@@ -1,23 +1,88 @@
+import configData from "../configs/hnrobert.json";
+import { gitHubAPIService, type ProjectInfo } from "../services/githubAPI";
+
+// Legacy interface for backward compatibility
 export interface Project {
+  id: string;
   title: string;
   description: string;
   tech: string[];
+  category: string;
+  repository: string;
+  languages: string[];
+  features: string[];
+  status: string;
+  version?: string;
+  license: string;
+  platform?: string;
+  targetGame?: string;
 }
 
-export const projectsData: Project[] = [
-  {
-    title: "Project Alpha",
-    description: "A revolutionary app built with React and TypeScript",
-    tech: ["React", "TypeScript", "Node.js"],
-  },
-  {
-    title: "Unity Game Engine",
-    description: "3D game development with advanced physics",
-    tech: ["Unity", "C#", "3D Graphics"],
-  },
-  {
-    title: "VSCode Extension",
-    description: "Productivity extension for developers",
-    tech: ["TypeScript", "VSCode API"],
-  },
-];
+// New interface that uses GitHub API
+export type WebProject = ProjectInfo;
+
+// Convert project to legacy format for compatibility
+function projectToLegacy(project: ProjectInfo): Project {
+  return {
+    id: project.id,
+    title: project.title,
+    description: project.description,
+    tech: project.languages.length > 0 ? project.languages : [project.language],
+    category: project.topics[0] || "software",
+    repository: project.repository,
+    languages: project.languages,
+    features: [],
+    status: project.status,
+    license: "Unknown",
+  };
+}
+
+// Cache for loaded projects
+let projectsCache: ProjectInfo[] | null = null;
+let lastCacheTime = 0;
+const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
+
+export async function loadProjects(): Promise<ProjectInfo[]> {
+  // Return cached data if available and fresh
+  if (projectsCache && Date.now() - lastCacheTime < CACHE_DURATION) {
+    return projectsCache;
+  }
+
+  try {
+    const projectUrls = configData.featuredProjects as string[];
+    const projects = await gitHubAPIService.enrichProjects(projectUrls);
+
+    // Cache the results
+    projectsCache = projects;
+    lastCacheTime = Date.now();
+
+    return projects;
+  } catch (error) {
+    console.error("Failed to load projects:", error);
+
+    // Return cached data if available, even if expired
+    if (projectsCache) {
+      return projectsCache;
+    }
+
+    // Fallback: return placeholder data
+    const projectUrls = configData.featuredProjects as string[];
+    return projectUrls.map((url) =>
+      gitHubAPIService.getPlaceholderProject(url)
+    );
+  }
+}
+
+export function getPlaceholderProjects(): ProjectInfo[] {
+  const projectUrls = configData.featuredProjects as string[];
+  return projectUrls.map((url) => gitHubAPIService.getPlaceholderProject(url));
+}
+
+// Legacy export for backward compatibility
+export async function loadLegacyProjects(): Promise<Project[]> {
+  const projects = await loadProjects();
+  return projects.map(projectToLegacy);
+}
+
+// Export project URLs for direct access
+export const projectUrlList: string[] = configData.featuredProjects as string[];

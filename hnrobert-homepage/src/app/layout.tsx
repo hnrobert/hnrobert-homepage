@@ -2,7 +2,7 @@ import React from "react";
 import "./globals.css";
 
 export const metadata = {
-  title: "HNRobert - Full Stack Developer",
+  title: "HNRobert's Homepage",
   description:
     "Personal website of HNRobert",
 };

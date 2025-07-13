@@ -65,7 +65,5 @@ docker-compose down
 
 - React 18
 - TypeScript
-- Tailwind CSS for styling
-- Craco for build configuration
 - Docker for containerization
 - Nginx as reverse proxy

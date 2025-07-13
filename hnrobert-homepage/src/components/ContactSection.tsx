@@ -1,5 +1,6 @@
 import {
   SiGithub,
+  SiStrava,
   SiDiscord,
   SiBilibili,
   SiTencentqq,
@@ -43,8 +44,17 @@ export const ContactSection: React.FC = () => {
             className="contact-item contact-item-span"
           >
             <SiGithub className="contact-icon" style={{ color: "#1f2937" }} />
-            <span className="contact-label">github.com/HNRobert</span>
+            <span className="contact-label">HNRobert</span>
           </a>
+            <a
+            href="http://strava.com/athletes/hnrobert"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-item contact-item-span"
+            >
+            <SiStrava className="contact-icon" style={{ color: "#fc4c02" }} />
+            <span className="contact-label">Sunying - Robert He</span>
+            </a>
         </div>
       </div>
     </section>
