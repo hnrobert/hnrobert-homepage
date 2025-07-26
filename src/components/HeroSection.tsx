@@ -10,7 +10,7 @@ export const HeroSection: React.FC = () => {
       </div>
       <h1 className="page-title">Hello, I'm Robert He</h1>
       <p className="hero-subtitle">Full-stack developer</p>
-      <p className="hero-subtitle">Create what I like & what you need</p>
+      <p className="hero-subtitle">Creating what I like & what you need</p>
     </section>
   );
 };

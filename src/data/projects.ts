@@ -1,5 +1,9 @@
 import configData from "../configs/hnrobert.json";
-import { gitHubAPIService, type ProjectInfo } from "../services/githubAPI";
+import {
+  internalGitHubAPIService,
+  type ProjectInfo,
+} from "../services/internalGitHubAPI";
+import { gitHubAPIService } from "../services/githubAPI"; // 保持向后兼容
 
 // Legacy interface for backward compatibility
 export interface Project {
@@ -50,7 +54,8 @@ export async function loadProjects(): Promise<ProjectInfo[]> {
 
   try {
     const projectUrls = configData.featuredProjects as string[];
-    const projects = await gitHubAPIService.enrichProjects(projectUrls);
+    // 优先使用内部API服务，提供更好的认证和缓存
+    const projects = await internalGitHubAPIService.enrichProjects(projectUrls);
 
     // Cache the results
     projectsCache = projects;
@@ -58,24 +63,45 @@ export async function loadProjects(): Promise<ProjectInfo[]> {
 
     return projects;
   } catch (error) {
-    console.error("Failed to load projects:", error);
-
-    // Return cached data if available, even if expired
-    if (projectsCache) {
-      return projectsCache;
-    }
-
-    // Fallback: return placeholder data
-    const projectUrls = configData.featuredProjects as string[];
-    return projectUrls.map((url) =>
-      gitHubAPIService.getPlaceholderProject(url)
+    console.error(
+      "Failed to load projects with internal API, falling back to direct API:",
+      error
     );
+
+    try {
+      // 回退到直接GitHub API调用
+      const projectUrls = configData.featuredProjects as string[];
+      const projects = await gitHubAPIService.enrichProjects(projectUrls);
+
+      projectsCache = projects;
+      lastCacheTime = Date.now();
+
+      return projects;
+    } catch (fallbackError) {
+      console.error(
+        "Failed to load projects with fallback API:",
+        fallbackError
+      );
+
+      // Return cached data if available, even if expired
+      if (projectsCache) {
+        return projectsCache;
+      }
+
+      // Fallback: return placeholder data
+      const projectUrls = configData.featuredProjects as string[];
+      return projectUrls.map((url) =>
+        internalGitHubAPIService.getPlaceholderProject(url)
+      );
+    }
   }
 }
 
 export function getPlaceholderProjects(): ProjectInfo[] {
   const projectUrls = configData.featuredProjects as string[];
-  return projectUrls.map((url) => gitHubAPIService.getPlaceholderProject(url));
+  return projectUrls.map((url) =>
+    internalGitHubAPIService.getPlaceholderProject(url)
+  );
 }
 
 // Legacy export for backward compatibility
