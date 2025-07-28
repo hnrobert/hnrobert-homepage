@@ -266,4 +266,3 @@ class InternalGitHubAPIService {
 }
 
 export const internalGitHubAPIService = new InternalGitHubAPIService();
-export { gitHubAPIService } from "./githubAPI"; // 保持向后兼容

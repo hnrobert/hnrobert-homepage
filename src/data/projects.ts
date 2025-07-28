@@ -3,7 +3,6 @@ import {
   internalGitHubAPIService,
   type ProjectInfo,
 } from "../services/internalGitHubAPI";
-import { gitHubAPIService } from "../services/githubAPI"; // 保持向后兼容
 
 // Legacy interface for backward compatibility
 export interface Project {
@@ -64,36 +63,15 @@ export async function loadProjects(): Promise<ProjectInfo[]> {
     return projects;
   } catch (error) {
     console.error(
-      "Failed to load projects with internal API, falling back to direct API:",
+      "Failed to load projects with internal API",
       error
     );
 
-    try {
-      // 回退到直接GitHub API调用
-      const projectUrls = configData.featuredProjects as string[];
-      const projects = await gitHubAPIService.enrichProjects(projectUrls);
-
-      projectsCache = projects;
-      lastCacheTime = Date.now();
-
-      return projects;
-    } catch (fallbackError) {
-      console.error(
-        "Failed to load projects with fallback API:",
-        fallbackError
-      );
-
-      // Return cached data if available, even if expired
-      if (projectsCache) {
-        return projectsCache;
-      }
-
-      // Fallback: return placeholder data
-      const projectUrls = configData.featuredProjects as string[];
-      return projectUrls.map((url) =>
-        internalGitHubAPIService.getPlaceholderProject(url)
-      );
-    }
+    // Fallback: return placeholder data
+    const projectUrls = configData.featuredProjects as string[];
+    return projectUrls.map((url) =>
+      internalGitHubAPIService.getPlaceholderProject(url)
+    );
   }
 }
 
