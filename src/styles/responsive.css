@@ -1,24 +1,244 @@
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* 小屏幕设备 (手机横屏) */
+@media (max-width: 480px) {
+  .container,
+  .main-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .main-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  /* 导航响应式 */
   .nav-container {
     flex-direction: column;
     gap: 1rem;
+    padding: 1rem;
   }
 
-  .hobbies-container {
-    flex-direction: column;
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  /* Hero 区域响应式 */
+  .hero-section {
+    margin-bottom: 3rem;
+  }
+
+  .hero-avatar {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0 1rem;
+  }
+
+  /* 项目卡片响应式 */
+  .projects-container {
+    padding: 1rem 0.5rem 2rem 1rem;
     gap: 1rem;
   }
 
-  .contact-grid {
-    grid-template-columns: 1fr;
+  .project-card {
+    min-width: 280px;
+    max-width: 320px;
+    padding: 1.5rem;
+    margin: 0.5rem;
   }
 
-  .projects-container {
+  .project-title {
+    font-size: 1.125rem;
+  }
+
+  /* 爱好区域响应式 */
+  .hobbies-container {
     flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  /* 联系方式响应式 */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  /* 技术栈响应式 */
+  .tech-stack-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* 中屏幕设备 (手机竖屏和小平板) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .container,
+  .main-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .main-container {
+    padding-top: 2.5rem;
+  }
+
+  .section {
+    margin-bottom: 4rem;
+  }
+
+  /* 导航响应式 */
+  .nav-container {
+    padding: 1rem 1.5rem;
+  }
+
+  .nav-links {
+    gap: 0.75rem;
+  }
+
+  /* Hero 区域响应式 */
+  .hero-avatar {
+    width: 128px;
+    height: 128px;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  /* 项目卡片响应式 */
+  .projects-container {
+    padding: 1.5rem 1rem 2.5rem 2rem;
+    gap: 1.5rem;
   }
 
   .project-card {
-    min-width: auto;
+    min-width: 320px;
+    max-width: 360px;
+  }
+
+  /* 爱好区域响应式 */
+  .hobbies-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* 联系方式响应式 */
+  .contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* 技术栈响应式 */
+  .tech-stack-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 大屏幕设备优化 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container,
+  .main-container {
+    max-width: 900px;
+  }
+
+  /* 项目卡片响应式 */
+  .projects-container {
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    min-width: 340px;
+    max-width: 380px;
+  }
+
+  /* 联系方式响应式 */
+  .contact-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* 技术栈响应式 */
+  .tech-stack-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 超大屏幕优化 */
+@media (min-width: 1400px) {
+  .container,
+  .main-container {
+    max-width: 1400px;
+  }
+
+  /* 项目卡片响应式 */
+  .project-card {
+    min-width: 360px;
+    max-width: 420px;
+  }
+
+  /* 联系方式响应式 */
+  .contact-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* 技术栈响应式 */
+  .tech-stack-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* 横屏手机特殊处理 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    margin-bottom: 2rem;
+  }
+
+  .hero-avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .section {
+    margin-bottom: 2rem;
+  }
+
+  .main-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 }

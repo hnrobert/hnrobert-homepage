@@ -26,6 +26,7 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .main-container {
@@ -33,6 +34,35 @@ body {
   padding: 3rem 1.5rem;
 }
 
+.container {
+  padding: 0 1.5rem;
+}
+
 .section {
   margin-bottom: 5rem;
+  width: 100%;
+}
+
+/* 响应式容器 */
+@media (max-width: 1280px) {
+  .main-container,
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-container,
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container,
+  .container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }

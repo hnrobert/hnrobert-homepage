@@ -2,6 +2,7 @@
 .hero-section {
   text-align: center;
   margin-bottom: 5rem;
+  padding: 0 1rem;
 }
 
 .hero-avatar {
@@ -38,4 +39,60 @@
   color: #6b7280;
   max-width: 42rem;
   margin: 0 auto;
+}
+
+/* Hero 响应式设计 */
+@media (max-width: 768px) {
+  .hero-section {
+    margin-bottom: 3rem;
+    padding: 0 0.5rem;
+  }
+  
+  .hero-avatar {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    margin-bottom: 2.5rem;
+  }
+  
+  .hero-avatar {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0 0.5rem;
+  }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    margin-bottom: 2rem;
+  }
+  
+  .hero-avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
 }

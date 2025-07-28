@@ -41,3 +41,6 @@
 
 /* responsive */
 @import "./responsive.css";
+
+/* mobile optimizations */
+@import "./mobile.css";

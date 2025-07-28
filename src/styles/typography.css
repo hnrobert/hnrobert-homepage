@@ -6,6 +6,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  line-height: 1.2;
 }
 
 .page-title {
@@ -22,4 +23,54 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* 排版响应式设计 */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.375rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .page-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
 }
