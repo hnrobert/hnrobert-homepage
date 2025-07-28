@@ -16,11 +16,12 @@
 
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 1.5rem;
   max-width: 64rem;
   margin: 0 auto;
   width: 100%;
+  padding: 0 1rem;
 }
 
 .tools-grid {
@@ -43,23 +44,24 @@
   .grid-container {
     gap: 1rem;
   }
-  
+
   .hobbies-container {
     flex-direction: column;
     gap: 2rem;
   }
-  
+
   .contact-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 1rem;
     max-width: 100%;
+    padding: 0 0.5rem;
   }
-  
+
   .tools-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .tech-stack-grid {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 1rem;
@@ -70,23 +72,32 @@
   .grid-container {
     gap: 0.75rem;
   }
-  
+
   .hobbies-container {
     gap: 1.5rem;
   }
-  
+
   .contact-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
+    padding: 0 0.25rem;
   }
-  
+
   .tools-grid {
     gap: 1rem;
   }
-  
+
   .tech-stack-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    padding: 0;
   }
 }
 
@@ -94,7 +105,7 @@
   .contact-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .tech-stack-grid {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -104,7 +115,7 @@
   .contact-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .tech-stack-grid {
     grid-template-columns: repeat(5, 1fr);
   }
@@ -114,7 +125,7 @@
   .contact-grid {
     grid-template-columns: repeat(4, 1fr);
   }
-  
+
   .tech-stack-grid {
     grid-template-columns: repeat(6, 1fr);
   }

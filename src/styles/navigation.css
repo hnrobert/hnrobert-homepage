@@ -138,7 +138,7 @@
   .mobile-menu-toggle {
     display: flex;
   }
-  
+
   .nav-links {
     position: absolute;
     top: 100%;
@@ -157,13 +157,13 @@
     transition: all 0.3s ease;
     z-index: 1000;
   }
-  
+
   .nav-links.mobile-open {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
   }
-  
+
   .nav-link {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -177,16 +177,16 @@
     justify-content: space-between;
     padding: 0.75rem 1rem;
   }
-  
+
   .nav-logo {
     width: 40px;
     height: 40px;
   }
-  
+
   .nav-title {
     font-size: 1.125rem;
   }
-  
+
   .mobile-menu-toggle {
     width: 28px;
     height: 28px;

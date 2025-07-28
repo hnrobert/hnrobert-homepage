@@ -36,17 +36,23 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
         </Link>
 
         {/* 移动端菜单按钮 */}
-        <button 
+        <button
           className="mobile-menu-toggle md:hidden"
           onClick={toggleMobileMenu}
           aria-label="Toggle mobile menu"
         >
-          <span className={`hamburger-line ${isMobileMenuOpen ? 'active' : ''}`}></span>
-          <span className={`hamburger-line ${isMobileMenuOpen ? 'active' : ''}`}></span>
-          <span className={`hamburger-line ${isMobileMenuOpen ? 'active' : ''}`}></span>
+          <span
+            className={`hamburger-line ${isMobileMenuOpen ? "active" : ""}`}
+          ></span>
+          <span
+            className={`hamburger-line ${isMobileMenuOpen ? "active" : ""}`}
+          ></span>
+          <span
+            className={`hamburger-line ${isMobileMenuOpen ? "active" : ""}`}
+          ></span>
         </button>
 
-        <div className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+        <div className={`nav-links ${isMobileMenuOpen ? "mobile-open" : ""}`}>
           <Link
             href="/"
             className={`nav-link ${isActive("/") ? "active" : ""}`}
@@ -54,7 +60,26 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
           >
             Me
           </Link>
-          {/* 其他导航链接可以在这里添加 */}
+          {/* 
+          <Link
+            href="/blog"
+            className={`nav-link ${isActive("/blog") ? "active" : ""}`}
+          >
+            Blog
+          </Link>
+          <Link
+            href="/tools"
+            className={`nav-link ${isActive("/tools") ? "active" : ""}`}
+          >
+            Tools
+          </Link>
+          <Link
+            href="/files"
+            className={`nav-link ${isActive("/files") ? "active" : ""}`}
+          >
+            Files
+          </Link>
+          */}
         </div>
       </div>
     </nav>

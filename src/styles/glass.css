@@ -19,6 +19,29 @@
   transform: scale(1.02);
 }
 
+/* Glass卡片响应式设计 */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .glass-card:hover {
+    transform: scale(1.01);
+  }
+}
+
+@media (max-width: 360px) {
+  .glass-card {
+    padding: 1.25rem 0.75rem;
+  }
+}
+
 .glass-nav {
   backdrop-filter: blur(40px);
   background: rgba(255, 255, 255, 0.85);

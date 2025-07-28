@@ -1,7 +1,8 @@
 /* ===== MOBILE SPECIFIC OPTIMIZATIONS ===== */
 
 /* 防止水平滚动 */
-html, body {
+html,
+body {
   overflow-x: hidden;
   width: 100%;
 }
@@ -21,19 +22,19 @@ html, body {
   .hero-avatar:hover {
     transform: scale(1.05) rotate(-3deg);
   }
-  
+
   .project-card:hover {
     transform: scale(1.02) translateY(-4px);
   }
-  
+
   .card-hover:hover {
     transform: scale(1.02) translateY(-2px);
   }
-  
+
   .tech-badge:hover {
     transform: scale(1.02);
   }
-  
+
   /* 优化点击区域 */
   .nav-link {
     min-height: 44px;
@@ -41,18 +42,20 @@ html, body {
     align-items: center;
     justify-content: center;
   }
-  
+
   /* 改善可读性 */
   body {
     font-size: 16px;
     line-height: 1.5;
   }
-  
+
   /* 优化表单和输入 */
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     font-size: 16px; /* 防止iOS缩放 */
   }
-  
+
   /* 优化滚动 */
   .projects-container {
     -webkit-overflow-scrolling: touch;
@@ -67,25 +70,34 @@ html, body {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
   }
-  
+
   .section {
     margin-bottom: 2.5rem;
   }
-  
+
   /* 优化可点击区域 */
   .nav-link {
     padding: 0.75rem 1rem;
     min-width: 60px;
   }
-  
+
   /* 改善视觉层次 */
   .hero-subtitle {
     margin-bottom: 0.75rem;
   }
-  
+
   /* 优化项目卡片在小屏幕上的显示 */
   .project-card {
     scroll-snap-align: start;
+  }
+
+  /* 联系方式在小屏幕上的优化 */
+  .contact-grid {
+    padding: 0 0.25rem;
+  }
+
+  .contact-item {
+    min-height: 90px;
   }
 }
 
@@ -95,19 +107,29 @@ html, body {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }
-  
+
   .hero-section {
     padding: 0 0.25rem;
   }
-  
+
   .projects-container {
     padding: 1rem 0.125rem 1.5rem 0.5rem;
   }
-  
+
   .project-card {
     min-width: max(260px, fit-content);
     max-width: 280px;
     padding: 1rem;
+  }
+
+  /* 超小屏幕联系方式优化 */
+  .contact-grid {
+    padding: 0;
+    gap: 0.5rem;
+  }
+
+  .contact-item {
+    min-height: 80px;
   }
 }
 
@@ -117,23 +139,23 @@ html, body {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
-  
+
   .hero-section {
     margin-bottom: 1.5rem;
   }
-  
+
   .section {
     margin-bottom: 1.5rem;
   }
-  
+
   .nav-container {
     padding: 0.5rem 1rem;
   }
-  
+
   .hero-avatar {
     margin-bottom: 0.5rem;
   }
-  
+
   .hero-subtitle {
     margin-bottom: 0.25rem;
   }
@@ -183,7 +205,7 @@ html, body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   .hero-avatar:hover,
   .project-card:hover,
   .card-hover:hover,
