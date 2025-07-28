@@ -1,22 +1,10 @@
 import configData from "../configs/config.json";
 
-export interface ProfileInfo {
-  name: string;
-  title: string;
-  bio: string;
-}
-
-export interface ContactInfo {
-  github: string;
-  email: string;
-}
-
 export interface ConfigData {
-  profile: ProfileInfo;
   techStack: string[];
   featuredProjects: any[];
   hobbies: string[];
-  contact: ContactInfo;
+  fileSourceLink: string;
 }
 
 class ConfigService {
@@ -24,10 +12,6 @@ class ConfigService {
 
   constructor() {
     this.config = configData as ConfigData;
-  }
-
-  getProfile(): ProfileInfo {
-    return this.config.profile;
   }
 
   getTechStack(): string[] {
@@ -42,13 +26,10 @@ class ConfigService {
     return this.config.hobbies;
   }
 
-  getContact(): ContactInfo {
-    return this.config.contact;
+  getFileSourceLink(): string {
+    return this.config.fileSourceLink;
   }
 
-  getFullConfig(): ConfigData {
-    return this.config;
-  }
 }
 
 export const configService = new ConfigService();
