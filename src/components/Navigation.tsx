@@ -37,7 +37,7 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
 
         {/* 移动端菜单按钮 */}
         <button
-          className="mobile-menu-toggle md:hidden"
+          className="mobile-menu-toggle"
           onClick={toggleMobileMenu}
           aria-label="Toggle mobile menu"
         >

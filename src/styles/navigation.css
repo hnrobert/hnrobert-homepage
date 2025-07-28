@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 1rem;
   position: relative;
 }
@@ -135,8 +135,22 @@
 
 /* 移动端导航优化 */
 @media (max-width: 768px) {
+  .nav-container {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .nav-brand {
+    order: 1;
+    flex: 0 1 auto;
+  }
+  
   .mobile-menu-toggle {
     display: flex;
+    order: 2;
+    flex: 0 0 auto;
   }
 
   .nav-links {
@@ -156,6 +170,8 @@
     visibility: hidden;
     transition: all 0.3s ease;
     z-index: 1000;
+    order: 3;
+    width: 100%;
   }
 
   .nav-links.mobile-open {
@@ -176,6 +192,12 @@
   .nav-container {
     justify-content: space-between;
     padding: 0.75rem 1rem;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  
+  .nav-brand {
+    flex: none;
   }
 
   .nav-logo {
@@ -190,5 +212,7 @@
   .mobile-menu-toggle {
     width: 28px;
     height: 28px;
+    margin-left: auto;
+    flex-shrink: 0;
   }
 }
