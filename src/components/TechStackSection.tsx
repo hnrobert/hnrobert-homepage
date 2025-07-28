@@ -1,4 +1,4 @@
-import configData from "../configs/hnrobert.json";
+import configData from "../configs/config.json";
 
 export const TechStackSection: React.FC = () => {
   return (
