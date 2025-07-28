@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Parallax } from "react-scroll-parallax";
 import {
   loadProjects,
   getPlaceholderProjects,
@@ -39,12 +38,10 @@ export const ProjectsSection: React.FC = () => {
         position: "relative",
       }}
     >
-      <Parallax onExit={() => {}} />
       <div className="glass-card">
         <h2 className="section-title">Featured Projects</h2>
         <ProjectsList projects={projects} />
       </div>
-      <Parallax onEnter={() => {}} />
     </section>
   );
 };
