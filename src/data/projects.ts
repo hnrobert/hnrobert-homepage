@@ -62,10 +62,7 @@ export async function loadProjects(): Promise<ProjectInfo[]> {
 
     return projects;
   } catch (error) {
-    console.error(
-      "Failed to load projects with internal API",
-      error
-    );
+    console.error("Failed to load projects with internal API", error);
 
     // Fallback: return placeholder data
     const projectUrls = configData.featuredProjects as string[];

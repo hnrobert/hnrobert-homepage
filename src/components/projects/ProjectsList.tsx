@@ -89,7 +89,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
               data-project-id={project.id}
               style={{
                 width: "100%",
-                marginBottom: "1.5rem",
+                marginBottom: "0.8rem",
               }}
             >
               {isVisible ? (
@@ -152,7 +152,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                   <Parallax
                     translateX={index === 0 ? [-150, 0] : [150, 0]}
                     opacity={[0, 1]}
-                    easing={[0.5,1,0,1]}
+                    easing={[0.5, 1, 0, 1]}
                     speed={-3}
                     shouldAlwaysCompleteAnimation={true}
                     style={{

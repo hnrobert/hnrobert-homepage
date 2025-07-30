@@ -141,12 +141,12 @@
     gap: 1rem;
     align-items: center;
   }
-  
+
   .nav-brand {
     order: 1;
     flex: 0 1 auto;
   }
-  
+
   .mobile-menu-toggle {
     display: flex;
     order: 2;
@@ -195,7 +195,7 @@
     flex-wrap: nowrap;
     align-items: center;
   }
-  
+
   .nav-brand {
     flex: none;
   }

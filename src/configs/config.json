@@ -1,16 +1,29 @@
 {
   "techStack": [
+    "Git",
     "Python",
     "C/C++",
-    "Unity+C#",
+    "Unity",
+    "C#",
     ".NET",
     "Swift",
-    "HTML/JavaScript/CSS",
+    "HTML",
+    "JavaScript",
+    "CSS",
     "TypeScript",
     "React",
+    "Node.js",
+    "Next.js",
     "Vue",
     "Electron",
-    "VSCode Extensions"
+    "VSCode Extensions",
+    "Docker",
+    "Debian Linux",
+    "Kali Linux",
+    "OpenCV",
+    "SQLite",
+    "MySQL",
+    "ROS2"
   ],
   "featuredProjects": [
     "https://github.com/HNRobert/CMD-Media-Player",
@@ -18,7 +31,8 @@
     "https://github.com/HNRobert/MultiScreenCapturer",
     "https://github.com/HNRobert/Click-to-JumpaJump",
     "https://github.com/HNRobert/pvzHE-Archiver",
-    "https://github.com/HNRobert/Movefile"
+    "https://github.com/HNRobert/Movefile",
+    "https://github.com/HNRobert/hnrobert-homepage"
   ],
   "hobbies": [
     "🚴 Cycling",
@@ -26,6 +40,7 @@
     "🏃‍♂️ Running",
     "🏸 Badminton",
     "🏓 Table Tennis",
+    "🎱 Pool",
     "📽️ Watching Movies",
     "✂️ Video Editing"
   ],
