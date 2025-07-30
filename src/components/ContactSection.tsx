@@ -34,7 +34,7 @@ export const ContactSection: React.FC = () => {
             rel="noopener noreferrer"
             className="contact-item"
           >
-            <SiBilibili className="contact-icon" style={{ color: "#ec4899" }} />
+            <SiBilibili className="contact-icon" style={{ color: "#ff6699" }} />
             <span className="contact-label">HNRobert</span>
           </a>
           <a

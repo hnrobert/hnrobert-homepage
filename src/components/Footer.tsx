@@ -1,11 +1,10 @@
 import React from "react";
 import { FaGithub, FaReact } from "react-icons/fa";
-import { SiGithub, SiBilibili, SiTencentqq } from "react-icons/si";
+import { SiBilibili, SiTencentqq, SiNextdotjs, SiStrava } from "react-icons/si";
 
 export const Footer: React.FC = () => {
   const iconSize = 20;
-  const iconContainerClass =
-    "transition-transform duration-700 group-hover:rotate-360";
+  const iconContainerClass = "footer-icon-container";
 
   return (
     <footer className="footer">
@@ -31,7 +30,7 @@ export const Footer: React.FC = () => {
             className="footer-link group"
           >
             <div className={iconContainerClass}>
-              <FaGithub size={iconSize} />
+              <FaGithub size={iconSize} color="#000" />
             </div>
             HNRobert
           </a>
@@ -42,15 +41,31 @@ export const Footer: React.FC = () => {
             className="footer-link group"
           >
             <div className={iconContainerClass}>
-              <SiBilibili size={iconSize} />
+              <SiBilibili size={iconSize} color="#ff6699" />
             </div>
             HNRobert
           </a>
-          <a href="mailto:hnrobert@qq.com" className="footer-link group">
+          <a
+            href="mailto:hnrobert@qq.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link group"
+          >
             <div className={iconContainerClass}>
-              <SiTencentqq size={iconSize} />
+              <SiTencentqq size={iconSize} color="#3b82f6" />
             </div>
             hnrobert@qq.com
+          </a>
+          <a
+            href="http://strava.com/athletes/hnrobert"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link group"
+          >
+            <div className={iconContainerClass}>
+              <SiStrava size={iconSize} color="#fc4c02" />
+            </div>
+            Sunying - Robert He
           </a>
         </div>
 
@@ -62,6 +77,12 @@ export const Footer: React.FC = () => {
               <FaReact size={iconSize} style={{ color: "#29bee8" }} />
             </div>
             React
+          </div>
+          <div className="footer-tech-item group">
+            <div className={iconContainerClass}>
+              <SiNextdotjs size={iconSize} style={{ color: "#000" }} />
+            </div>
+            Next.js
           </div>
         </div>
       </div>
