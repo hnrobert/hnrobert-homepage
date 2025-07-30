@@ -56,8 +56,8 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
-  /* 确保内容不换行 */
-  flex-wrap: nowrap;
+  /* 允许换行以适应长标题 */
+  flex-wrap: wrap;
 }
 
 .project-title {
@@ -66,11 +66,13 @@
   color: #1f2937;
   margin: 0;
   flex: 1;
-  /* 防止标题换行 */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* 允许标题换行，但限制最大行数 */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.4;
   min-width: 0;
+  /* 当空间不足时，标题占用100%宽度 */
+  min-width: 200px;
 }
 
 .project-status {
@@ -78,7 +80,74 @@
   gap: 0.5rem;
   align-items: center;
   flex-shrink: 0;
-  white-space: nowrap;
+  /* 当标题过长时，状态标签换行居中显示 */
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 当标题过长导致换行时的特殊样式 */
+@media (max-width: 400px) {
+  .project-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .project-title {
+    width: 100%;
+    text-align: center;
+    min-width: unset;
+  }
+
+  .project-status {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* 针对长标题的容器查询样式 */
+.project-card {
+  container-type: inline-size;
+}
+
+/* 堆叠布局样式 */
+.project-header-stacked {
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  gap: 0.75rem !important;
+}
+
+.project-header-stacked .project-title {
+  width: 100% !important;
+  text-align: center !important;
+  min-width: unset !important;
+}
+
+.project-header-stacked .project-status {
+  width: 100% !important;
+  justify-content: center !important;
+}
+
+@container (max-width: 350px) {
+  .project-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .project-title {
+    width: 100%;
+    text-align: center;
+    min-width: unset;
+  }
+
+  .project-status {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .status-badge {
