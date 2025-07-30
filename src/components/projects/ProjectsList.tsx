@@ -40,8 +40,8 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
 
     const observerOptions = {
       root: null,
-      rootMargin: "0px 0px -30% 0px", // 元素进入视口 70% 时触发
-      threshold: 0.2, // 元素至少 20% 可见时触发
+      rootMargin: "0px 0px 0% 0px", // 元素进入时触发
+      threshold: 0, // 元素至少 0% 可见时触发
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -96,7 +96,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                 <Parallax
                   translateX={index % 2 === 0 ? [-120, 0] : [120, 0]}
                   opacity={[0, 1]}
-                  easing="easeOutQuart"
+                  easing={[0.5, 1, 0, 1]}
                   speed={-3}
                   shouldAlwaysCompleteAnimation={true}
                   style={{
@@ -152,7 +152,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                   <Parallax
                     translateX={index === 0 ? [-150, 0] : [150, 0]}
                     opacity={[0, 1]}
-                    easing="easeOutQuart"
+                    easing={[0.5,1,0,1]}
                     speed={-3}
                     shouldAlwaysCompleteAnimation={true}
                     style={{
