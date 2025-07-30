@@ -1,5 +1,8 @@
 /* ===== MAIN STYLES IMPORT ===== */
 
+/* theme system */
+@import "./theme.css";
+
 /* base */
 @import "./base.css";
 

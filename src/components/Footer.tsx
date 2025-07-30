@@ -1,10 +1,17 @@
 import React from "react";
 import { FaGithub, FaReact } from "react-icons/fa";
-import { SiBilibili, SiTencentqq, SiNextdotjs, SiStrava } from "react-icons/si";
+import { SiBilibili, SiTencentqq, SiNextdotjs } from "react-icons/si";
+import { useTheme } from "../contexts/ThemeContext";
 
 export const Footer: React.FC = () => {
+  const { theme } = useTheme();
   const iconSize = 20;
   const iconContainerClass = "footer-icon-container";
+
+  // 根据主题调整图标颜色
+  const getIconColor = (lightColor: string, darkColor: string = "#ffffff") => {
+    return theme === "dark" ? darkColor : lightColor;
+  };
 
   return (
     <footer className="footer">
@@ -30,7 +37,7 @@ export const Footer: React.FC = () => {
             className="footer-link group"
           >
             <div className={iconContainerClass}>
-              <FaGithub size={iconSize} color="#000" />
+              <FaGithub size={iconSize} color={getIconColor("#000")} />
             </div>
             HNRobert
           </a>
@@ -45,27 +52,11 @@ export const Footer: React.FC = () => {
             </div>
             HNRobert
           </a>
-          <a
-            href="mailto:hnrobert@qq.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer-link group"
-          >
+          <a href="mailto:hnrobert@qq.com" className="footer-link group">
             <div className={iconContainerClass}>
               <SiTencentqq size={iconSize} color="#3b82f6" />
             </div>
             hnrobert@qq.com
-          </a>
-          <a
-            href="http://strava.com/athletes/hnrobert"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer-link group"
-          >
-            <div className={iconContainerClass}>
-              <SiStrava size={iconSize} color="#fc4c02" />
-            </div>
-            Sunying - Robert He
           </a>
         </div>
 
@@ -80,7 +71,7 @@ export const Footer: React.FC = () => {
           </div>
           <div className="footer-tech-item group">
             <div className={iconContainerClass}>
-              <SiNextdotjs size={iconSize} style={{ color: "#000" }} />
+              <SiNextdotjs size={iconSize} color={getIconColor("#000")} />
             </div>
             Next.js
           </div>

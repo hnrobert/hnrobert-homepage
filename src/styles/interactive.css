@@ -7,19 +7,19 @@
   padding: 1.5rem;
   border-radius: 16px;
   backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   transition: all 0.3s;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px var(--card-shadow);
   cursor: pointer;
   text-decoration: none;
-  color: inherit;
+  color: var(--text-primary);
 }
 
 .interactive-item:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--card-bg);
   transform: scale(1.05) translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 25px -5px var(--card-shadow);
 }
 
 .item-icon {
@@ -41,19 +41,19 @@
   padding: 1.5rem;
   border-radius: 16px;
   backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   transition: all 0.3s;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px var(--card-shadow);
   cursor: pointer;
   text-decoration: none;
-  color: inherit;
+  color: var(--text-primary);
 }
 
 .hobby-item:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--card-bg);
   transform: scale(1.05) translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 25px -5px var(--card-shadow);
 }
 
 .hobby-icon {
@@ -70,6 +70,7 @@
 .hobby-label {
   font-weight: 500;
   font-size: 0.875rem;
+  color: var(--text-primary);
 }
 
 /* Contact Items */
@@ -81,21 +82,21 @@
   padding: 1.5rem;
   border-radius: 16px;
   backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   transition: all 0.3s;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px var(--card-shadow);
   cursor: pointer;
   text-decoration: none;
-  color: inherit;
+  color: var(--text-primary);
   min-width: 0;
   width: 100%;
 }
 
 .contact-item:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--card-bg);
   transform: scale(1.05) translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 25px -5px var(--card-shadow);
 }
 
 .contact-item-span {

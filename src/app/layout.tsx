@@ -1,5 +1,6 @@
 import React from "react";
 import "./globals.css";
+import { ThemeProvider } from "../contexts/ThemeContext";
 
 export const metadata = {
   title: "HNRobert's Homepage",
@@ -36,7 +37,7 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: "#3b82f6",
+  themeColor: "#222222",
 };
 
 export default function RootLayout({
@@ -46,7 +47,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -6,8 +6,15 @@ import {
   SiTencentqq,
   SiWechat,
 } from "react-icons/si";
+import { useTheme } from "../contexts/ThemeContext";
 
 export const ContactSection: React.FC = () => {
+  const { theme } = useTheme();
+
+  // 根据主题调整GitHub图标颜色
+  const getGithubIconColor = () => {
+    return theme === "dark" ? "#ffffff" : "#1f2937";
+  };
   return (
     <section className="section">
       <div className="glass-card">
@@ -43,18 +50,21 @@ export const ContactSection: React.FC = () => {
             rel="noopener noreferrer"
             className="contact-item contact-item-span"
           >
-            <SiGithub className="contact-icon" style={{ color: "#1f2937" }} />
+            <SiGithub
+              className="contact-icon"
+              style={{ color: getGithubIconColor() }}
+            />
             <span className="contact-label">HNRobert</span>
           </a>
-            <a
+          <a
             href="http://strava.com/athletes/hnrobert"
             target="_blank"
             rel="noopener noreferrer"
             className="contact-item contact-item-span"
-            >
+          >
             <SiStrava className="contact-icon" style={{ color: "#fc4c02" }} />
             <span className="contact-label">Sunying - Robert He</span>
-            </a>
+          </a>
         </div>
       </div>
     </section>

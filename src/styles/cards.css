@@ -1,18 +1,18 @@
 /* ===== INTERACTIVE CARDS ===== */
 .card-base {
   backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px var(--card-shadow);
   transition: all 0.3s;
   width: 100%;
 }
 
 .card-hover:hover {
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--card-bg);
   transform: scale(1.05) translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 25px -5px var(--card-shadow);
 }
 
 /* Tech Stack */
@@ -31,25 +31,39 @@
     rgba(59, 130, 246, 0.2),
     rgba(139, 92, 246, 0.2)
   );
-  color: #1f2937;
+  color: var(--text-primary);
   border-radius: 16px;
   font-size: 0.875rem;
   font-weight: 500;
   border: 1px solid rgba(59, 130, 246, 0.4);
   backdrop-filter: blur(12px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px var(--card-shadow);
   transition: all 0.3s;
   text-align: center;
   white-space: nowrap;
 }
 
-.tech-badge:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  transform: scale(1.05);
+/* Dark mode tech badges */
+:root.dark .tech-badge {
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.3),
-    rgba(139, 92, 246, 0.3)
+    rgba(15, 23, 42, 0.8),
+    rgba(30, 41, 59, 0.8)
+  );
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: var(--text-primary);
+}
+
+.tech-badge:hover {
+  box-shadow: 0 20px 25px -5px var(--card-shadow);
+  transform: scale(1.05);
+}
+
+:root.dark .tech-badge:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.9),
+    rgba(30, 41, 59, 0.9)
   );
 }
 

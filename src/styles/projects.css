@@ -32,26 +32,27 @@
   padding: 2rem;
   margin: 1rem;
   backdrop-filter: blur(20px);
-  /* 完全透明的边框，让阴影可见 */
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid transparent;
+  /* 使用CSS变量 */
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 24px;
   /* 增强阴影效果 */
-  box-shadow: 0 12px 15px -8px rgba(0, 0, 0, 0.25),
-    0 15px 15px -10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 15px -8px var(--card-shadow),
+    0 15px 15px -10px var(--card-shadow);
   transition: all 0.5s;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   scroll-snap-align: center;
   flex-shrink: 0;
+  color: var(--text-primary);
 }
 
 .project-card:hover {
   /* 悬停时增强阴影 */
-  box-shadow: 0 15px 20px -9px rgba(0, 0, 0, 0.25),
-    0 15px 25px -8px rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 15px 20px -9px var(--card-shadow),
+    0 15px 25px -8px var(--card-shadow);
+  background: var(--card-bg);
   transform: scale(1.05) translateY(-8px);
 }
 
@@ -67,7 +68,7 @@
 .project-title {
   font-size: 1.25rem;
   font-weight: bold;
-  color: #1f2937;
+  color: var(--text-primary);
   margin: 0;
   flex: 1;
   /* 允许标题换行，但限制最大行数 */
@@ -158,18 +159,21 @@
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
+  border: 1px solid transparent;
 }
 
 .status-stable {
-  background: rgba(34, 197, 94, 0.1);
-  color: #166534;
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 .status-experimental {
-  background: rgba(245, 158, 11, 0.1);
-  color: #92400e;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-yellow);
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 /* 项目区域响应式设计 */
@@ -248,14 +252,15 @@
 .version-badge {
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
-  background: rgba(99, 102, 241, 0.1);
-  color: #4338ca;
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--accent-blue);
+  border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: 12px;
   font-weight: 500;
 }
 
 .project-description {
-  color: #6b7280;
+  color: var(--text-secondary);
   line-height: 1.625;
   flex: 1;
 }
@@ -269,17 +274,18 @@
 
 .languages-label {
   font-size: 0.875rem;
-  color: #374151;
-  font-weight: 500;
+  color: var(--text-secondary);
+  font-weight: 600;
 }
 
 .language-tag {
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
-  background: rgba(16, 185, 129, 0.1);
-  color: #047857;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.2);
   border-radius: 8px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .project-tech {
@@ -292,17 +298,19 @@
 .project-tech-tag {
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;
-  background: rgba(59, 130, 246, 0.1);
-  color: #1e40af;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-blue);
+  border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 9999px;
-  font-weight: 500;
+  font-weight: 600;
   backdrop-filter: blur(4px);
 }
 
 .tech-more {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-muted);
   font-style: italic;
+  font-weight: 500;
 }
 
 .project-actions {
@@ -313,15 +321,15 @@
 .project-link {
   display: inline-flex;
   align-items: center;
-  color: #2563eb;
-  font-weight: 500;
+  color: var(--accent-blue);
+  font-weight: 600;
   text-decoration: none;
   transition: all 0.3s;
   font-size: 0.875rem;
 }
 
 .project-link:hover {
-  color: #1d4ed8;
+  color: var(--accent-blue-hover);
   transform: translateX(4px);
 }
 
@@ -342,8 +350,8 @@
 .loading-spinner {
   width: 32px;
   height: 32px;
-  border: 3px solid rgba(99, 102, 241, 0.1);
-  border-top: 3px solid #6366f1;
+  border: 3px solid var(--border-color);
+  border-top: 3px solid var(--accent-blue);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -358,39 +366,41 @@
 }
 
 .error-message {
-  color: #dc2626;
-  font-weight: 500;
+  color: var(--accent-red);
+  font-weight: 600;
 }
 
 .retry-button {
   padding: 0.5rem 1rem;
-  background: #6366f1;
-  color: white;
+  background: var(--accent-blue);
+  color: var(--bg-primary);
   border: none;
   border-radius: 8px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .retry-button:hover {
-  background: #4f46e5;
+  background: var(--accent-blue-hover);
 }
 
 /* New Badge Types */
 .stars-badge {
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
-  background: rgba(251, 191, 36, 0.1);
-  color: #d97706;
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--accent-yellow);
+  border: 1px solid rgba(251, 191, 36, 0.2);
   border-radius: 12px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .language-more {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-muted);
   font-style: italic;
+  font-weight: 500;
 }
 
 /* Project Stats */
@@ -401,35 +411,38 @@
   align-items: center;
   margin-top: 0.75rem;
   padding-top: 0.75rem;
-  border-top: 1px solid rgba(229, 231, 235, 0.5);
+  border-top: 1px solid var(--border-color);
 }
 
 .stat-item {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  font-weight: 500;
 }
 
 /* Status Badge Variants */
 .status-active {
-  background: rgba(34, 197, 94, 0.1);
-  color: #166534;
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 .status-archived {
-  background: rgba(156, 163, 175, 0.1);
-  color: #4b5563;
+  background: rgba(156, 163, 175, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(156, 163, 175, 0.2);
 }
 
 /* Skeleton Loading Animations */
 .skeleton {
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.1) 25%,
-    rgba(0, 0, 0, 0.05) 50%,
-    rgba(0, 0, 0, 0.1) 75%
+    var(--border-color) 25%,
+    var(--bg-secondary) 50%,
+    var(--border-color) 75%
   );
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s infinite ease-in-out;
@@ -494,8 +507,9 @@
   margin: 0.75rem 0;
   padding: 0.75rem;
   background: rgba(239, 68, 68, 0.1);
-  border-left: 3px solid #ef4444;
+  border-left: 3px solid var(--accent-red);
   border-radius: 6px;
+  color: var(--accent-red);
 }
 
 .error-label {
@@ -644,6 +658,48 @@
 .project-card-wrapper-mobile > *,
 .project-card-wrapper-desktop > * {
   transition: inherit;
+}
+
+/* 深色模式下增强对比度 */
+:root.dark .language-tag {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+:root.dark .project-tech-tag {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+:root.dark .status-active {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+:root.dark .status-archived {
+  background: rgba(156, 163, 175, 0.2);
+  border-color: rgba(156, 163, 175, 0.4);
+}
+
+:root.dark .stars-badge {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+:root.dark .version-badge {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+/* 深色模式下文字增强 */
+:root.dark .languages-label {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+:root.dark .project-description {
+  color: var(--text-secondary);
+  font-weight: 400;
 }
 
 /* 项目卡片的整体过渡效果 */

@@ -1,12 +1,5 @@
 /* ===== MOBILE SPECIFIC OPTIMIZATIONS ===== */
 
-/* 防止水平滚动 */
-html,
-body {
-  overflow-x: hidden;
-  width: 100%;
-}
-
 /* 改善触摸体验 */
 .nav-link,
 .tech-badge,

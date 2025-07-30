@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface NavigationProps {
   activeSection?: string;
@@ -28,13 +29,6 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
   return (
     <nav className="glass-nav">
       <div className="container nav-container">
-        <Link href="/" className="nav-brand" onClick={closeMobileMenu}>
-          <div className="nav-logo">
-            <img src="/assets/avt.jpg" alt="HNRobert" className="nav-avatar" />
-          </div>
-          <span className="nav-title">HNRobert</span>
-        </Link>
-
         {/* 移动端菜单按钮 */}
         <button
           className="mobile-menu-toggle"
@@ -51,6 +45,13 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
             className={`hamburger-line ${isMobileMenuOpen ? "active" : ""}`}
           ></span>
         </button>
+
+        <Link href="/" className="nav-brand" onClick={closeMobileMenu}>
+          <div className="nav-logo">
+            <img src="/assets/avt.jpg" alt="HNRobert" className="nav-avatar" />
+          </div>
+          <span className="nav-title">HNRobert</span>
+        </Link>
 
         <div className={`nav-links ${isMobileMenuOpen ? "mobile-open" : ""}`}>
           <Link
@@ -81,6 +82,9 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
           </Link>
           */}
         </div>
+
+        {/* Theme Toggle - 保持在右侧 */}
+        <ThemeToggle />
       </div>
     </nav>
   );

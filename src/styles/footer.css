@@ -2,8 +2,8 @@
 .footer {
   width: 100%;
   padding: 2rem 1rem;
-  border-top: 1px solid #e5e7eb;
-  background: white;
+  border-top: 1px solid var(--border-color);
+  background: var(--footer-bg);
 }
 
 .footer-content {
@@ -18,7 +18,7 @@
   margin: auto;
   justify-content: center;
   display: flex;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .footer-links,
@@ -27,7 +27,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 1.5rem;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .footer-tech {
@@ -45,7 +45,7 @@
 }
 
 .footer-link:hover {
-  color: #1f2937;
+  color: var(--text-primary);
 }
 
 .footer-tech-item {
@@ -55,7 +55,7 @@
 }
 
 .footer-tech-item:hover {
-  color: #1f2937;
+  color: var(--text-primary);
 }
 
 /* Footer icon animation styles */

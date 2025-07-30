@@ -7,6 +7,45 @@
   flex-wrap: nowrap;
   gap: 1rem;
   position: relative;
+  min-height: 60px;
+  background: var(--nav-bg);
+}
+
+/* 移动端布局调整 */
+@media (max-width: 768px) {
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .mobile-menu-toggle {
+    order: 1;
+    flex: 0 0 auto;
+  }
+
+  .nav-brand {
+    order: 2;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .theme-toggle {
+    order: 3;
+    flex: 0 0 auto;
+  }
+
+  .nav-links {
+    order: 4;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+  }
 }
 
 .nav-brand {
@@ -47,13 +86,13 @@
 .nav-title {
   font-size: 1.25rem;
   font-weight: bold;
-  color: #1f2937;
+  color: var(--text-primary);
   transition: color 0.3s;
   white-space: nowrap;
 }
 
 .nav-brand:hover .nav-title {
-  color: #2563eb;
+  color: var(--accent-blue);
 }
 
 /* 移动端菜单按钮 */
@@ -73,20 +112,20 @@
 }
 
 .mobile-menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--glass-bg);
 }
 
 .hamburger-line {
   width: 100%;
   height: 3px;
-  background: #1f2937;
+  background: var(--text-primary);
   border-radius: 2px;
   transition: all 0.3s ease;
   transform-origin: center;
 }
 
 .mobile-menu-toggle:hover .hamburger-line {
-  background: #2563eb;
+  background: var(--accent-blue);
 }
 
 /* 汉堡菜单动画 */
@@ -106,11 +145,18 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
 }
 
 .nav-link {
-  color: #6b7280;
+  color: var(--text-secondary);
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 12px;
@@ -121,35 +167,80 @@
 }
 
 .nav-link:hover {
-  color: #1f2937;
-  background: rgba(255, 255, 255, 0.5);
+  color: var(--text-primary);
+  background: var(--glass-bg);
   backdrop-filter: blur(4px);
 }
 
 .nav-link.active {
-  color: #2563eb;
+  color: var(--accent-blue);
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  box-shadow: 0 4px 6px -1px var(--card-shadow);
+}
+
+/* Medium screen adjustments */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .nav-links {
+    gap: 0.25rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Desktop navigation */
+@media (min-width: 769px) {
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+
+  .nav-links {
+    position: static;
+    background: transparent;
+    backdrop-filter: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    flex-direction: row;
+    padding: 0;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    overflow-x: auto;
+  }
 }
 
 /* 移动端导航优化 */
 @media (max-width: 768px) {
   .nav-container {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
-    gap: 1rem;
-    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    min-height: 60px;
   }
 
   .nav-brand {
-    order: 1;
-    flex: 0 1 auto;
+    order: 2;
+    flex: 1 1 auto;
+    justify-content: center;
+    min-width: 0; /* 允许收缩 */
   }
 
   .mobile-menu-toggle {
     display: flex;
-    order: 2;
+    order: 1;
+    flex: 0 0 auto;
+  }
+
+  .theme-toggle {
+    order: 3;
     flex: 0 0 auto;
   }
 
@@ -158,20 +249,21 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--nav-bg);
     backdrop-filter: blur(20px);
     border-radius: 0 0 16px 16px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px -3px var(--card-shadow);
+    border: 1px solid var(--glass-border);
+    border-top: none;
     flex-direction: column;
     gap: 0.5rem;
     padding: 1rem;
-    transform: translateY(-100%);
+    transform: translateY(-10px);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
     z-index: 1000;
-    order: 3;
-    width: 100%;
+    overflow-x: visible;
   }
 
   .nav-links.mobile-open {
@@ -190,14 +282,14 @@
 
 @media (max-width: 640px) {
   .nav-container {
-    justify-content: space-between;
     padding: 0.75rem 1rem;
-    flex-wrap: nowrap;
-    align-items: center;
+    gap: 0.5rem;
   }
 
   .nav-brand {
-    flex: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: center;
   }
 
   .nav-logo {
@@ -207,12 +299,20 @@
 
   .nav-title {
     font-size: 1.125rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .mobile-menu-toggle {
     width: 28px;
     height: 28px;
-    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle {
+    width: 2rem;
+    height: 2rem;
     flex-shrink: 0;
   }
 }
