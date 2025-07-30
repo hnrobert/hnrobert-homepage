@@ -39,7 +39,9 @@ export const ProjectsSection: React.FC = () => {
       }}
     >
       <div className="glass-card">
-        <h2 className="section-title">Featured Projects</h2>
+        <h2 className="section-title project-section-title">
+          Featured Projects
+        </h2>
         <ProjectsList projects={projects} />
       </div>
     </section>

@@ -16,6 +16,10 @@
   display: none; /* Chrome, Safari, Opera */
 }
 
+.project-section-title {
+  margin-bottom: 0;
+}
+
 /* 水平滚动功能 */
 #featured-projects {
   scroll-snap-type: x mandatory;
