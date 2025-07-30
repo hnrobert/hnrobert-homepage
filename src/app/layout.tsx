@@ -7,6 +7,16 @@ export const metadata = {
   robots: "index, follow",
   keywords: "HNRobert, developer, full-stack, portfolio, website",
   authors: [{ name: "HNRobert" }],
+  icons: {
+    icon: [
+      {
+        url: "/assets/favicon.ico",
+        sizes: "any",
+      },
+    ],
+    shortcut: "/assets/favicon.ico",
+    apple: "/assets/favicon.ico",
+  },
   openGraph: {
     title: "HNRobert's Homepage",
     description: "Personal website of HNRobert - Full-stack developer",
