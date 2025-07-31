@@ -66,7 +66,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
   // 渲染移动端项目的通用函数
   const renderMobileProjects = (projectsList: WebProject[]) => {
     return (
-      <div className="projects-container-mobile">
+      <div className="projects-container-mobile" key={`mobile-${projectsList.length}`}>
         {projectsList.map((project, index) => {
           return (
             <div
@@ -83,6 +83,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                 easing={[0.5, 1, 0, 1]}
                 speed={-3}
                 shouldAlwaysCompleteAnimation={true}
+                disabled={false}
                 style={{
                   width: "100%",
                 }}
@@ -106,7 +107,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
     }
 
     return (
-      <div className="projects-container-desktop">
+      <div className="projects-container-desktop" key={`desktop-${projectsList.length}`}>
         {projectPairs.map((pair, pairIndex) => (
           <div key={pairIndex} className="project-pair">
             {pair.map((project, index) => {
@@ -125,6 +126,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                     easing={[0.5, 1, 0, 1]}
                     speed={-3}
                     shouldAlwaysCompleteAnimation={true}
+                    disabled={false}
                     style={{
                       width: "100%",
                     }}
@@ -146,7 +148,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
   if (!isClient || isMobile === null) {
     // 在加载状态下也使用 Parallax 效果，但不依赖 intersection observer
     // 默认假设为桌面端，客户端挂载后会自动切换到正确的布局
-    renderDesktopProjects(projects);
+    return renderDesktopProjects(projects);
   }
 
   if (isMobile) {

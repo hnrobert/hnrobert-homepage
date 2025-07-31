@@ -13,12 +13,14 @@ export const ProjectsSection: React.FC = () => {
     getPlaceholderProjects()
   );
   const [loading, setLoading] = useState(true);
+  const [key, setKey] = useState(0); // 用于强制重新渲染
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const projectsData = await loadProjects();
         setProjects(projectsData);
+        setKey(prev => prev + 1); // 强制重新渲染以触发parallax动画
       } catch (err) {
         console.error("Failed to load projects:", err);
         // Keep placeholder data if loading fails
@@ -42,7 +44,7 @@ export const ProjectsSection: React.FC = () => {
         <h2 className="section-title project-section-title">
           Featured Projects
         </h2>
-        <ProjectsList projects={projects} />
+        <ProjectsList projects={projects} key={key} />
       </div>
     </section>
   );

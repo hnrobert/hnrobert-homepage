@@ -46,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -59,15 +59,6 @@ export default function RootLayout({
                   
                   document.documentElement.classList.remove('light', 'dark');
                   document.documentElement.classList.add(theme);
-                  
-                  // 设置基础样式防止闪烁
-                  if (theme === 'dark') {
-                    document.documentElement.style.backgroundColor = '#0f172a';
-                    document.documentElement.style.color = '#f8fafc';
-                  } else {
-                    document.documentElement.style.backgroundColor = '#ffffff';
-                    document.documentElement.style.color = '#1f2937';
-                  }
                 }
                 
                 setInitialTheme();
@@ -76,7 +67,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
