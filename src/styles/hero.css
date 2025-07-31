@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  transition: all 0.5s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 4px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(4px);
   overflow: hidden;

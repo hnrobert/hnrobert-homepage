@@ -7,6 +7,7 @@
   border-radius: 24px;
   box-shadow: 0 25px 50px -12px var(--card-shadow);
   transition: all 0.3s ease-out;
+  overflow: visible;
 }
 
 .glass-card {

@@ -9,6 +9,7 @@
   position: relative;
   min-height: 60px;
   background: var(--nav-bg);
+  overflow: visible;
 }
 
 /* 移动端布局调整 */
@@ -147,8 +148,11 @@
   gap: 0.5rem;
   flex-wrap: nowrap;
   overflow-x: auto;
+  overflow-y: visible;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  padding: 0.5rem 0.5rem;
+  position: relative;
 }
 
 .nav-links::-webkit-scrollbar {
@@ -164,19 +168,27 @@
   transition: all 0.3s;
   white-space: nowrap;
   text-align: center;
+  position: relative;
+  z-index: 5;
 }
 
 .nav-link:hover {
   color: var(--text-primary);
   background: var(--glass-bg);
   backdrop-filter: blur(4px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px -2px var(--card-shadow);
 }
 
 .nav-link.active {
   color: var(--accent-blue);
   font-weight: 600;
   background: var(--card-bg);
-  box-shadow: 0 4px 6px -1px var(--card-shadow);
+  box-shadow: 0 4px 6px -1px var(--card-shadow),
+    0 2px 4px -1px var(--card-shadow);
+  position: relative;
+  z-index: 10;
+  border: 1px solid var(--glass-border);
 }
 
 /* Medium screen adjustments */
@@ -205,12 +217,13 @@
     box-shadow: none;
     border: none;
     flex-direction: row;
-    padding: 0;
+    padding: 0.5rem 0.5rem;
     transform: none;
     opacity: 1;
     visibility: visible;
     transition: none;
     overflow-x: auto;
+    overflow-y: visible;
   }
 }
 
@@ -263,7 +276,11 @@
     visibility: hidden;
     transition: all 0.3s ease;
     z-index: 1000;
-    overflow-x: visible;
+    overflow: visible;
+  }
+
+  .nav-links::before {
+    display: none;
   }
 
   .nav-links.mobile-open {
@@ -277,6 +294,13 @@
     padding: 0.75rem 1rem;
     font-size: 0.875rem;
     text-align: center;
+  }
+
+  .nav-link.active {
+    background: var(--card-bg);
+    box-shadow: 0 4px 6px -1px var(--card-shadow),
+      0 2px 4px -1px var(--card-shadow);
+    border: 1px solid var(--glass-border);
   }
 }
 

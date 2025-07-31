@@ -26,8 +26,8 @@
 :root {
   /* Light mode colors */
   --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
+  --bg-secondary: #dbeafe;
+  --bg-tertiary: #fae8ff;
   --text-primary: #1f2937;
   --text-secondary: #6b7280;
   --text-muted: #9ca3af;
@@ -80,8 +80,8 @@
 :root.light {
   /* Light mode colors - 显式设置，覆盖媒体查询 */
   --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
+  --bg-secondary: #dbeafe;
+  --bg-tertiary: #fae8ff;
   --text-primary: #1f2937;
   --text-secondary: #6b7280;
   --text-muted: #9ca3af;
@@ -189,6 +189,80 @@ html.theme-loaded .version-badge {
 
 html.theme-loaded .retry-button {
   transition: background-color 0.3s ease, var(--theme-transition);
+}
+
+/* 保持hero-avatar的原有动画效果 */
+html.theme-loaded .hero-avatar {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, var(--theme-transition);
+}
+
+/* 保持移动端导航动画 */
+html.theme-loaded .nav-links {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .mobile-menu-toggle {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .hamburger-line {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+/* 保持导航品牌logo动画 */
+html.theme-loaded .nav-brand {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .nav-logo {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .nav-title {
+  transition: color 0.3s ease, var(--theme-transition);
+}
+
+/* 保持主题切换按钮动画 */
+html.theme-loaded .theme-toggle {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .theme-toggle-icon {
+  transition: transform 0.3s ease, var(--theme-transition);
+}
+
+/* 保持导航链接动画 */
+html.theme-loaded .nav-link {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+/* 保持项目卡片动画 */
+html.theme-loaded .project-card {
+  transition: all 0.5s ease, var(--theme-transition);
+}
+
+/* 保持项目链接动画 */
+html.theme-loaded .project-link {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+/* 保持交互元素动画 */
+html.theme-loaded .interactive-item,
+html.theme-loaded .hobby-item,
+html.theme-loaded .contact-item {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+/* 保持卡片动画 */
+html.theme-loaded .glass-card,
+html.theme-loaded .card-hover {
+  transition: all 0.3s ease-out, var(--theme-transition);
+}
+
+/* 保持图标动画 */
+html.theme-loaded .footer-icon {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    var(--theme-transition);
 }
 
 /* 确保在主题加载前，只禁用主题相关的过渡效果 */

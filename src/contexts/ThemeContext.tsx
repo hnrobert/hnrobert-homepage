@@ -28,22 +28,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>("dark"); // 默认深色模式
   const [isClient, setIsClient] = useState(false);
 
-  // 客户端挂载时检查本地存储和系统偏好
+  // 客户端挂载时获取已经设置的主题
   useEffect(() => {
     setIsClient(true);
 
-    // 检查本地存储中的主题设置
-    const savedTheme = localStorage.getItem("theme") as Theme;
-
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      // 检查系统偏好
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      setTheme(prefersDark ? "dark" : "light");
-    }
+    // 从DOM中读取当前主题（已经在HTML头部设置）
+    const currentTheme = document.documentElement.classList.contains("light")
+      ? "light"
+      : "dark";
+    setTheme(currentTheme);
   }, []);
 
   // 监听系统主题变化
@@ -73,12 +66,16 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     // 添加当前主题类
     root.classList.add(theme);
 
+    // 清除内联样式，让CSS变量接管
+    root.style.backgroundColor = "";
+    root.style.color = "";
+
     // 启用过渡效果
     root.classList.add("theme-loaded");
 
     // 保存到本地存储
     localStorage.setItem("theme", theme);
-  }, [theme, isClient]);
+  }, [isClient, theme]);
 
   const toggleTheme = () => {
     // 启用手动切换的过渡效果
@@ -106,13 +103,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }, 300);
   };
 
-  const value = {
-    theme,
-    toggleTheme,
-    setTheme: handleSetTheme,
-  };
-
   return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        toggleTheme,
+        setTheme: handleSetTheme,
+      }}
+    >
+      {children}
+    </ThemeContext.Provider>
   );
 };

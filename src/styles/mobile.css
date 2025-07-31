@@ -205,4 +205,8 @@
   .tech-badge:hover {
     transform: none;
   }
+
+  .hero-avatar {
+    transition: none;
+  }
 }

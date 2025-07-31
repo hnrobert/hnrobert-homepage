@@ -61,13 +61,13 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
           >
             Me
           </Link>
-          {/* 
           <Link
             href="/blog"
             className={`nav-link ${isActive("/blog") ? "active" : ""}`}
           >
             Blog
           </Link>
+          {/* 
           <Link
             href="/tools"
             className={`nav-link ${isActive("/tools") ? "active" : ""}`}
