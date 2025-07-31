@@ -20,7 +20,7 @@ export const ProjectsSection: React.FC = () => {
       try {
         const projectsData = await loadProjects();
         setProjects(projectsData);
-        setKey(prev => prev + 1); // 强制重新渲染以触发parallax动画
+        setKey((prev) => prev + 1); // 强制重新渲染以触发parallax动画
       } catch (err) {
         console.error("Failed to load projects:", err);
         // Keep placeholder data if loading fails

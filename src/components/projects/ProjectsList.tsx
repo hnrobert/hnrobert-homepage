@@ -66,7 +66,10 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
   // 渲染移动端项目的通用函数
   const renderMobileProjects = (projectsList: WebProject[]) => {
     return (
-      <div className="projects-container-mobile" key={`mobile-${projectsList.length}`}>
+      <div
+        className="projects-container-mobile"
+        key={`mobile-${projectsList.length}`}
+      >
         {projectsList.map((project, index) => {
           return (
             <div
@@ -107,7 +110,10 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
     }
 
     return (
-      <div className="projects-container-desktop" key={`desktop-${projectsList.length}`}>
+      <div
+        className="projects-container-desktop"
+        key={`desktop-${projectsList.length}`}
+      >
         {projectPairs.map((pair, pairIndex) => (
           <div key={pairIndex} className="project-pair">
             {pair.map((project, index) => {
