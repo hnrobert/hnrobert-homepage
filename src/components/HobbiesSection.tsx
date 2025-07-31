@@ -1,22 +1,44 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { configService } from "../data/config";
+import { HobbiesList, HobbyData, processHobbiesData } from "./hobbies";
 
 export const HobbiesSection: React.FC = () => {
-  const hobbies = configService.getHobbies();
+  const [isClient, setIsClient] = useState(false);
+  const [hobbiesData, setHobbiesData] = useState<HobbyData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsClient(true);
+
+    try {
+      const hobbies = configService.getHobbies();
+      const processedData = processHobbiesData(hobbies);
+      setHobbiesData(processedData);
+    } catch (error) {
+      console.error("Error loading hobbies data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  if (!isClient || isLoading) {
+    return (
+      <section className="section">
+        <div className="glass-card">
+          <h2 className="section-title">Hobbies</h2>
+          <div className="hobbies-loading">Loading hobbies...</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section className="section">
+    <section className="section" id="hobbies">
       <div className="glass-card">
         <h2 className="section-title">Hobbies</h2>
-        <div className="hobbies-container">
-          {hobbies.map((hobby, index) => (
-            <div key={index} className="hobby-item">
-              <span className="hobby-emoji">{hobby.split(" ")[0]}</span>
-              <span className="hobby-label">
-                {hobby.split(" ").slice(1).join(" ")}
-              </span>
-            </div>
-          ))}
-        </div>
+        <HobbiesList hobbies={hobbiesData} />
       </div>
     </section>
   );
