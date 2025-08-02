@@ -19,7 +19,8 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
     <div className="hobby-card-with-image" data-hobby-id={`hobby-${index}`}>
       <Parallax
         translateY={[-20, 20]}
-        easing="easeOut"
+        opacity={[0.5, 1.5]}
+        easing={[0.78, 0, 0.22, 1]}
         speed={-1}
         shouldAlwaysCompleteAnimation={true}
         disabled={false}
@@ -33,6 +34,16 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
               alt={hobby.name}
               className="background-img"
               loading="lazy"
+              onLoad={(e) => {
+                const img = e.target as HTMLImageElement;
+                const card = img.closest(".hobby-card") as HTMLElement;
+                if (card && img.naturalHeight > 0) {
+                  const aspectRatio = img.naturalWidth / img.naturalHeight;
+                  const cardWidth = card.offsetWidth;
+                  const minHeight = Math.max(400, cardWidth / aspectRatio);
+                  card.style.minHeight = `${minHeight}px`;
+                }
+              }}
             />
             <div className="image-gradient-overlay"></div>
           </div>

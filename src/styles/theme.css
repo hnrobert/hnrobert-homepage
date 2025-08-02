@@ -47,6 +47,12 @@
   --footer-bg: #ffffff;
   --hero-gradient-start: #3b82f6;
   --hero-gradient-end: #1d4ed8;
+  --hobby-gradient-start: rgba(255, 255, 255, 0.85);
+  --hobby-gradient-middle: rgba(255, 255, 255, 0.6);
+  --hobby-gradient-end: rgba(255, 255, 255, 0.2);
+  --hobby-gradient-hover-start: rgba(255, 255, 255, 0.9);
+  --hobby-gradient-hover-middle: rgba(255, 255, 255, 0.7);
+  --hobby-gradient-hover-end: rgba(255, 255, 255, 0.3);
 }
 
 /* 默认深色模式变量 */
@@ -74,6 +80,12 @@
     --footer-bg: #1e293b;
     --hero-gradient-start: #60a5fa;
     --hero-gradient-end: #3b82f6;
+    --hobby-gradient-start: rgba(10, 10, 10, 0.85);
+    --hobby-gradient-middle: rgba(15, 15, 15, 0.6);
+    --hobby-gradient-end: rgba(20, 20, 20, 0.2);
+    --hobby-gradient-hover-start: rgba(5, 5, 5, 0.9);
+    --hobby-gradient-hover-middle: rgba(10, 10, 10, 0.7);
+    --hobby-gradient-hover-end: rgba(15, 15, 15, 0.3);
   }
 }
 
@@ -101,6 +113,12 @@
   --footer-bg: #ffffff;
   --hero-gradient-start: #3b82f6;
   --hero-gradient-end: #1d4ed8;
+  --hobby-gradient-start: rgba(255, 255, 255, 0.85);
+  --hobby-gradient-middle: rgba(255, 255, 255, 0.6);
+  --hobby-gradient-end: rgba(255, 255, 255, 0.2);
+  --hobby-gradient-hover-start: rgba(255, 255, 255, 0.9);
+  --hobby-gradient-hover-middle: rgba(255, 255, 255, 0.7);
+  --hobby-gradient-hover-end: rgba(255, 255, 255, 0.3);
 }
 
 :root.light,
@@ -133,6 +151,12 @@
   --footer-bg: #1e293b;
   --hero-gradient-start: #60a5fa;
   --hero-gradient-end: #3b82f6;
+  --hobby-gradient-start: rgba(10, 10, 10, 0.85);
+  --hobby-gradient-middle: rgba(15, 15, 15, 0.6);
+  --hobby-gradient-end: rgba(20, 20, 20, 0.2);
+  --hobby-gradient-hover-start: rgba(5, 5, 5, 0.9);
+  --hobby-gradient-hover-middle: rgba(10, 10, 10, 0.7);
+  --hobby-gradient-hover-end: rgba(15, 15, 15, 0.3);
 }
 
 :root.dark,
