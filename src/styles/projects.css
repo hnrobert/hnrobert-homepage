@@ -46,6 +46,8 @@
   scroll-snap-align: center;
   flex-shrink: 0;
   color: var(--text-primary);
+  will-change: transform, box-shadow, background;
+  transform: translateZ(0);
 }
 
 .project-card:hover {

@@ -62,9 +62,9 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.4s ease;
-  will-change: transform, box-shadow, background, opacity;
+  will-change: transform, box-shadow, background;
+  transform: translateZ(0); /* Promote to its own layer */
   opacity: 0;
-  transform: translateY(50px);
   animation: fadeInUpWithOpacity 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   display: flex;
   flex-direction: column;
@@ -117,8 +117,9 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transform: scale(1);
+  transform: scale(1) translateZ(0); /* Promote to its own layer */
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
 }
 
 .hobby-card:hover .background-img {
@@ -277,9 +278,10 @@
 .hobby-emoji-large {
   font-size: 4rem;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-  transform: scale(1) rotate(0deg);
+  transform: scale(1) rotate(0deg) translateZ(0); /* Promote to its own layer */
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, filter;
 }
 
 .hobby-card:hover .hobby-emoji-large {
@@ -293,9 +295,10 @@
   color: var(--text-primary);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 0;
-  transform: translateY(0);
+  transform: translateY(0) translateZ(0); /* Promote to its own layer */
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     text-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.4s ease;
+  will-change: transform, text-shadow, color;
 }
 
 .hobby-card:hover .hobby-title {
@@ -388,8 +391,7 @@
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.4s ease;
   will-change: transform, box-shadow, background;
-  opacity: 0;
-  transform: translateY(40px) scale(1);
+  transform: translateY(40px) scale(1) translateZ(0); /* Promote to its own layer */
   animation: fadeInUpSimple 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
@@ -413,9 +415,10 @@
 .hobby-emoji-simple {
   font-size: 2rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  transform: scale(1) rotate(0deg);
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: scale(1) rotate(0deg) translateZ(0); /* Promote to its own layer */
+  will-change: transform, filter;
 }
 
 .hobby-item-simple:hover .hobby-emoji-simple {
@@ -429,7 +432,8 @@
   color: var(--text-primary);
   transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transform: translateX(0);
+  transform: translateX(0) translateZ(0); /* Promote to its own layer */
+  will-change: transform, color;
 }
 
 .hobby-item-simple:hover .hobby-label-simple {
