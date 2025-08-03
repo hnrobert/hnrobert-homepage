@@ -14,13 +14,17 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
   index,
 }) => {
   const isEven = index % 2 === 0;
+  const [cardHeight, setCardHeight] = React.useState<number>(400);
 
   return (
-    <div className="hobby-card-with-image" data-hobby-id={`hobby-${index}`}>
+    <div
+      className={`hobby-card-with-image ${cardHeight > 500 ? "tall-card" : ""}`}
+      data-hobby-id={`hobby-${index}`}
+    >
       <Parallax
         translateY={[-20, 20]}
-        opacity={[0.5, 1.5]}
-        easing={[0.78, 0, 0.22, 1]}
+        opacity={[0.9, 1.5]}
+        easing={[0.7, 0.0, 0.3, 1]}
         speed={-1}
         shouldAlwaysCompleteAnimation={true}
         disabled={false}
@@ -42,6 +46,7 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
                   const cardWidth = card.offsetWidth;
                   const minHeight = Math.max(400, cardWidth / aspectRatio);
                   card.style.minHeight = `${minHeight}px`;
+                  setCardHeight(minHeight);
                 }
               }}
             />
