@@ -1,55 +1,28 @@
 /* ===== MAIN STYLES IMPORT ===== */
 
-/* theme system */
+/* Theme system */
 @import "./theme.css";
 
-/* base */
+/* Base styles & typography */
 @import "./base.css";
 
-/* visual */
-@import "./glass.css";
-
-/* navigation */
+/* Navigation */
 @import "./navigation.css";
 
-/* title */
-@import "./typography.css";
-
-/* hero */
+/* Hero section */
 @import "./hero.css";
 
-/* cards */
+/* Cards & glass effects */
 @import "./cards.css";
 
-/* projects */
+/* Projects section */
 @import "./projects.css";
 
-/* hobbies */
+/* Hobbies section */
 @import "./hobbies.css";
 
-/* grid layouts */
-@import "./grids.css";
-
-/* interactive */
-@import "./interactive.css";
-
-/* searching */
-@import "./search-tools.css";
-
-/* filesystem */
-@import "./files.css";
-
-/* footer */
+/* Footer */
 @import "./footer.css";
 
-/* utils */
+/* Utilities & functional components */
 @import "./utilities.css";
-
-/* responsive */
-@import "./responsive.css";
-
-/* mobile optimizations */
-@import "./mobile.css";
-
-/* mobile optimizations */
-@import "./mobile.css";

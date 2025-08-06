@@ -340,3 +340,17 @@
     flex-shrink: 0;
   }
 }
+
+/* ===== NAVIGATION RESPONSIVE DESIGN ===== */
+
+/* Small screens - Navigation adjustments */
+@media (max-width: 768px) {
+  .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}

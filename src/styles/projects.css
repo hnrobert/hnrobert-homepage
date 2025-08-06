@@ -1,4 +1,13 @@
-/* ===== PROJECTS ===== */
+/* ===== PROJECTS SECTION ===== */
+
+/* Projects Grid Layout */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
 .projects-container {
   display: flex;
   overflow-x: auto;
@@ -715,4 +724,45 @@
   transform-origin: center;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+/* ===== PROJECT RESPONSIVE DESIGN ===== */
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .projects-container {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .project-card {
+    max-width: 420px;
+  }
+}
+
+/* Small screens - Project adjustments */
+@media (max-width: 768px) {
+  /* Improve touch targets */
+  .project-card {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Reduce animation intensity on mobile */
+  .project-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  /* Optimize scrolling */
+  .projects-container {
+    -webkit-overflow-scrolling: touch;
+    scroll-padding: 1rem;
+  }
+
+  .project-card {
+    scroll-snap-align: start;
+  }
 }

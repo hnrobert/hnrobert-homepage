@@ -1,4 +1,4 @@
-/* ===== BASE STYLES ===== */
+/* ===== BASE STYLES & TYPOGRAPHY ===== */
 * {
   margin: 0;
   padding: 0;
@@ -48,6 +48,51 @@ body {
   line-height: 1.6;
   color: var(--text-primary);
   background-color: var(--bg-primary);
+}
+
+/* ===== TYPOGRAPHY ===== */
+.page-title,
+.section-title {
+  font-weight: bold;
+  background: linear-gradient(135deg, #2563eb, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 1.875rem;
+  color: #1f2937;
+  margin-bottom: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #2563eb, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
 }
 
 /* ===== LAYOUT ===== */
@@ -105,5 +150,139 @@ body {
     max-width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  /* Typography responsive */
+  .page-title {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Typography responsive */
+  .page-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-size: 1.375rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Landscape mode optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .page-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* ===== GLOBAL RESPONSIVE DESIGN ===== */
+
+/* Small screens - Global adjustments */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  /* Prevent iOS zoom on input focus */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* Ultra small screens */
+@media (max-width: 360px) {
+  .main-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .main-container {
+    padding: 4rem 2rem;
+  }
+}
+
+/* Medium screens */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .main-container {
+    padding: 3rem 1.5rem;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hero-avatar-img,
+  .nav-avatar {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* iOS Safari specific */
+@supports (-webkit-touch-callout: none) {
+  .nav-link,
+  .tech-badge,
+  .project-card {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hero-avatar:hover,
+  .project-card:hover,
+  .card-hover:hover,
+  .tech-badge:hover {
+    transform: none;
+  }
+
+  .hero-avatar {
+    transition: none;
   }
 }

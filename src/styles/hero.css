@@ -96,3 +96,13 @@
     line-height: 1.4;
   }
 }
+
+/* ===== HERO RESPONSIVE DESIGN ===== */
+
+/* Small screens - Hero adjustments */
+@media (max-width: 768px) {
+  /* Reduce animation intensity on mobile */
+  .hero-avatar:hover {
+    transform: rotate(-3deg);
+  }
+}

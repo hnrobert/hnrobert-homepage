@@ -1,4 +1,4 @@
-/* ===== NEW HOBBIES SECTION STYLES ===== */
+/* ===== HOBBIES SECTION ===== */
 
 .hobbies-container {
   display: flex;
@@ -8,6 +8,15 @@
   width: 100%;
   position: relative;
   padding: 4rem 0;
+}
+
+/* Hobbies Grid Layout */
+.hobbies-grid {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 /* 有图片的爱好样式 */
