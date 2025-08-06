@@ -48,7 +48,11 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
 
         <Link href="/" className="nav-brand" onClick={closeMobileMenu}>
           <div className="nav-logo">
-            <img src="/assets/avt.jpg" alt="HNRobert" className="nav-avatar" />
+            <img
+              src="/assets/avatar.png"
+              alt="HNRobert"
+              className="nav-avatar"
+            />
           </div>
           <span className="nav-title">HNRobert</span>
         </Link>

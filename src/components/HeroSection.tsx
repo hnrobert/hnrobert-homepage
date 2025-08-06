@@ -3,7 +3,7 @@ export const HeroSection: React.FC = () => {
     <section className="hero-section">
       <div className="hero-avatar">
         <img
-          src="/assets/avt.jpg"
+          src="/assets/avatar.png"
           alt="Robert He"
           className="hero-avatar-img"
         />
