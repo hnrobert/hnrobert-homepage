@@ -1,10 +1,10 @@
 services:
   hnrobert-homepage:
     container_name: hnrobert-homepage
-    # image: ghcr.io/hnrobert/hnrobert-homepage:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/hnrobert/hnrobert-homepage:latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     ports:
       - '9970:3000'
     restart: always
