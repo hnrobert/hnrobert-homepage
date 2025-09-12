@@ -17,17 +17,6 @@ on:
     tags:
       - 'v*'
 
-  # 当创建 Pull Request 到 main 分支且源码改变时触发（仅构建，不推送）
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'next.config.js'
-      - 'Dockerfile'
-
   # 允许手动触发
   workflow_dispatch:
     inputs:
