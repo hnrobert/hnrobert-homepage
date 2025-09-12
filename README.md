@@ -27,16 +27,16 @@ A web application for managing and accessing files through WebDAV, featuring a m
 
 1. Clone this repository:
 
- ```bash
-git clone https://github.com/HNRobert/hnrobert-homepage.git
-cd hnrobert-homepage
-```
+   ```bash
+   git clone https://github.com/HNRobert/hnrobert-homepage.git
+   cd hnrobert-homepage
+   ```
 
 2. Start the services:
 
-```bash
-docker-compose up -d
-```
+   ```bash
+   docker-compose up -d
+   ```
 
 3. Access the application:
    - Web interface: `http://localhost:9970` or `https://localhost:9977` (if SSL configured)

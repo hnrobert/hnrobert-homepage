@@ -1,34 +1,37 @@
-# Build stage for React app
+# Build stage for Next.js app
 FROM node:22-alpine AS builder
 
 WORKDIR /app
+RUN npm install -g pnpm
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+COPY . ./
+RUN pnpm build
 
-# Copy package files first for better caching
-COPY hnrobert-homepage/package*.json ./
-RUN npm ci
+# Production stage - Next.js standalone server
+FROM node:22-alpine AS runner
 
-# Copy source code
-COPY hnrobert-homepage/ ./
+# Create nextjs user and group
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Build the application
-RUN npm run build:prod
+WORKDIR /app
 
-# Production stage
-FROM nginx:alpine
+# Copy built application
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Copy built static files to nginx html directory
-COPY --from=builder /app/build /usr/share/nginx/html
+USER nextjs
 
-# Install required packages
-RUN apk update && \
-    apk add --no-cache openssl && \
-    rm -rf /var/cache/apk/*
+EXPOSE 3000
 
-# Create additional required directories
-RUN mkdir -p /root/.config/ssl
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
 
-# Copy nginx configuration
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry.
+# ENV NEXT_TELEMETRY_DISABLED 1
 
-# Expose necessary ports
-EXPOSE 9970 9977
+CMD ["node", "server.js"]
