@@ -11,11 +11,11 @@ export const ThemeToggle: React.FC = () => {
     <button
       onClick={toggleTheme}
       className="theme-toggle"
-      aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
       type="button"
     >
       <div className="theme-toggle-icon">
-        {theme === "light" ? <FaMoon size={18} /> : <FaSun size={18} />}
+        {theme === 'light' ? <FaSun size={18} /> : <FaMoon size={18} />}
       </div>
     </button>
   );
