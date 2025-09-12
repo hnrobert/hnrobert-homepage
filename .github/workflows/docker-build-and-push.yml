@@ -12,7 +12,6 @@ on:
       - 'pnpm-lock.yaml'
       - 'next.config.js'
       - 'Dockerfile'
-      - 'docker-compose*.yml'
       - '.github/workflows/docker-build-and-push.yml'
     # 当推送标签时触发（用于版本发布）
     tags:
@@ -28,7 +27,6 @@ on:
       - 'pnpm-lock.yaml'
       - 'next.config.js'
       - 'Dockerfile'
-      - 'docker-compose*.yml'
 
   # 允许手动触发
   workflow_dispatch:

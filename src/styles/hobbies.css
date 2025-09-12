@@ -172,7 +172,7 @@
   transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
 }
 
-[data-theme="dark"] .image-gradient-overlay {
+[data-theme='dark'] .image-gradient-overlay {
   background: linear-gradient(
     135deg,
     rgba(0, 0, 0, 0.5) 0%,
@@ -216,7 +216,7 @@
   );
 }
 
-[data-theme="dark"] .hobby-content-area {
+[data-theme='dark'] .hobby-content-area {
   background: linear-gradient(
     to right,
     var(--hobby-gradient-start) 0%,
@@ -226,7 +226,7 @@
   );
 }
 
-[data-theme="dark"] .hobby-card.card-right .hobby-content-area {
+[data-theme='dark'] .hobby-card.card-right .hobby-content-area {
   background: linear-gradient(
     to left,
     var(--hobby-gradient-start) 0%,
@@ -257,7 +257,7 @@
   );
 }
 
-[data-theme="dark"] .hobby-card:hover .hobby-content-area {
+[data-theme='dark'] .hobby-card:hover .hobby-content-area {
   background: linear-gradient(
     to right,
     var(--hobby-gradient-hover-start) 0%,
@@ -267,7 +267,7 @@
   );
 }
 
-[data-theme="dark"] .hobby-card.card-right:hover .hobby-content-area {
+[data-theme='dark'] .hobby-card.card-right:hover .hobby-content-area {
   background: linear-gradient(
     to left,
     var(--hobby-gradient-hover-start) 0%,
@@ -586,4 +586,102 @@
   .hobby-card-without-image {
     flex-basis: 100%;
   }
+}
+
+/* ===== ENHANCED HOVER ANIMATIONS - OVERRIDES ===== */
+/* 使用更高的优先级来覆盖theme.css中的全局样式 */
+
+/* 确保主要卡片的动画效果 */
+html.theme-loaded .hobby-card {
+  transition: transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.65s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.6s ease !important;
+}
+
+/* 背景图片动画 */
+html.theme-loaded .background-img {
+  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.6s ease !important;
+}
+
+/* 背景容器动画 */
+html.theme-loaded .hobby-background-image {
+  transition: transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.6s ease !important;
+}
+
+/* 渐变叠加层动画 */
+html.theme-loaded .image-gradient-overlay {
+  transition: opacity 0.7s ease, backdrop-filter 0.7s ease !important;
+}
+
+/* 内容区域动画 */
+html.theme-loaded .hobby-content-area {
+  transition: background 0.7s ease !important;
+}
+
+/* 文字内容动画 */
+html.theme-loaded .hobby-text-content {
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.6s ease !important;
+}
+
+/* Emoji动画 */
+html.theme-loaded .hobby-emoji-large {
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  transition-delay: 50ms !important;
+}
+
+/* 标题动画 */
+html.theme-loaded .hobby-title {
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+    text-shadow 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), color 0.5s ease !important;
+  transition-delay: 30ms !important;
+}
+
+/* 简单卡片动画 */
+html.theme-loaded .hobby-item-simple {
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.5s ease !important;
+}
+
+/* 简单Emoji动画 */
+html.theme-loaded .hobby-emoji-simple {
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  transition-delay: 40ms !important;
+}
+
+/* 简单标签动画 */
+html.theme-loaded .hobby-label-simple {
+  transition: color 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  transition-delay: 60ms !important;
+}
+
+/* 增强的hover效果 */
+.hobby-card:hover .background-img {
+  transform: scale(1.08) translateZ(0) !important;
+}
+
+.hobby-card:hover .hobby-background-image {
+  transform: scale(1.01) !important;
+}
+
+.hobby-card:hover .hobby-emoji-large {
+  transform: scale(1.2) rotate(5deg) translateZ(0) !important;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35)) !important;
+}
+
+.hobby-card:hover .hobby-title {
+  transform: translateY(-5px) translateZ(0) !important;
+  text-shadow: 0 10px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+.hobby-item-simple:hover .hobby-emoji-simple {
+  transform: scale(1.25) rotate(6deg) translateZ(0) !important;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.28)) !important;
+}
+
+.hobby-item-simple:hover .hobby-label-simple {
+  transform: translateX(5px) translateZ(0) !important;
 }
