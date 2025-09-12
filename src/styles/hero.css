@@ -1,0 +1,108 @@
+/* ===== HERO & AVATAR ===== */
+.hero-section {
+  text-align: center;
+  margin-bottom: 5rem;
+  padding: 0 1rem;
+}
+
+.hero-avatar {
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+}
+
+.hero-avatar:hover {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+  transform: scale(1.1) rotate(-6deg);
+}
+
+.hero-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: #6b7280;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+/* Hero 响应式设计 */
+@media (max-width: 768px) {
+  .hero-section {
+    margin-bottom: 3rem;
+    padding: 0 0.5rem;
+  }
+
+  .hero-avatar {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-avatar {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0 0.5rem;
+  }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    margin-bottom: 2rem;
+  }
+
+  .hero-avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+}
+
+/* ===== HERO RESPONSIVE DESIGN ===== */
+
+/* Small screens - Hero adjustments */
+@media (max-width: 768px) {
+  /* Reduce animation intensity on mobile */
+  .hero-avatar:hover {
+    transform: rotate(-3deg);
+  }
+}

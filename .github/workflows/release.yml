@@ -1,0 +1,132 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '版本号 (例如: v1.0.0)'
+        required: true
+        type: string
+      create_release:
+        description: '是否创建 GitHub Release'
+        required: true
+        type: boolean
+        default: true
+
+env:
+  GHCR_REGISTRY: ghcr.io
+  GHCR_IMAGE_NAME: hnrobert/hnrobert-homepage
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置版本号
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            VERSION=${{ github.event.release.tag_name }}
+          else
+            VERSION=${{ github.event.inputs.version }}
+          fi
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "version_number=${VERSION#v}" >> $GITHUB_OUTPUT
+
+      - name: 设置 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 登录到 GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.GHCR_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 生成发布元数据
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=raw,value=${{ steps.version.outputs.version }}
+            type=raw,value=${{ steps.version.outputs.version_number }}
+            type=semver,pattern={{version}},value=${{ steps.version.outputs.version }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ steps.version.outputs.version }}
+            type=semver,pattern={{major}},value=${{ steps.version.outputs.version }}
+          labels: |
+            org.opencontainers.image.title=HNRobert Homepage
+            org.opencontainers.image.description=Personal homepage and portfolio website
+            org.opencontainers.image.url=https://github.com/${{ github.repository }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.version=${{ steps.version.outputs.version_number }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.vendor=HNRobert
+            org.opencontainers.image.licenses=MIT
+
+      - name: 构建和推送发布镜像
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 创建 GitHub Release (手动触发时)
+        if: github.event.inputs.create_release == 'true' && github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: Release ${{ steps.version.outputs.version }}
+          body: |
+            ## 🎉 版本发布 ${{ steps.version.outputs.version }}
+
+            ### 📦 Docker 镜像
+
+            ```bash
+            # GitHub Container Registry
+            docker pull ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE_NAME }}:${{ steps.version.outputs.version_number }}
+            ```
+
+            ### 🚀 快速部署
+
+            ```bash
+            # 使用 docker-compose
+            curl -o docker-compose.yml https://raw.githubusercontent.com/${{ github.repository }}/${{ steps.version.outputs.version }}/docker-compose.yml
+            docker-compose up -d
+            ```
+
+            ### 📋 更新日志
+
+            - 发布版本 ${{ steps.version.outputs.version }}
+            - Git提交: ${{ github.sha }}
+            - 构建日期: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+
+            ---
+
+            *此版本通过 GitHub Actions 自动构建和发布*
+          draft: false
+          prerelease: false
+
+      - name: 输出发布信息
+        run: |
+          echo "## 🎉 版本 ${{ steps.version.outputs.version }} 发布成功" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Docker 镜像" >> $GITHUB_STEP_SUMMARY
+          echo "- **GitHub Container Registry**: \`${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE_NAME }}:${{ steps.version.outputs.version_number }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Git提交**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY

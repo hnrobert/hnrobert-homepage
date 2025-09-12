@@ -2,28 +2,24 @@ services:
   hnrobert-homepage:
     container_name: hnrobert-homepage
     image: ghcr.io/hnrobert/hnrobert-homepage:latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     ports:
-      - 9970:9970 # HTTP port
-      - 9977:9977 # HTTPS port
+      - '9970:3000'
     restart: always
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+  
+  hnrobert-homepage-nginx:
+    container_name: hnrobert-homepage-nginx
+    image: nginx:alpine
     volumes:
-      - /volume2/docker/hnrobert-homepage/ssl:/root/.config/ssl
-      - /volume2/docker/hnrobert-homepage/nginx/nginx.conf:/etc/nginx/nginx.conf
-    command: >
-      sh -c "
-        # Create empty SSL certificates if they don't exist
-        if [ ! -f /root/.config/ssl/cert.crt ]; then
-          echo 'Creating empty SSL certificate file'
-          touch /root/.config/ssl/cert.crt
-        fi
-        
-        if [ ! -f /root/.config/ssl/cert.key ]; then
-          echo 'Creating empty SSL key file'
-          touch /root/.config/ssl/cert.key
-        fi
-        
-        # Start nginx
-        echo 'Starting Nginx...'
-        nginx -g 'daemon off;'
-      "
+      - ./ssl:/root/.config/ssl
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - hnrobert-homepage
+    restart: always
     network_mode: host

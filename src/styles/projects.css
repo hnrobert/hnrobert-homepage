@@ -1,0 +1,768 @@
+/* ===== PROJECTS SECTION ===== */
+
+/* Projects Grid Layout */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.projects-container {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 1rem;
+  padding: 1rem;
+  margin: -1rem;
+  /* 隐藏滚动条 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scroll-behavior: smooth;
+}
+
+.projects-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.project-section-title {
+  margin-bottom: 0;
+}
+
+/* 水平滚动功能 */
+#featured-projects {
+  scroll-snap-type: x mandatory;
+}
+
+.project-card {
+  /* 动态计算最小宽度以确保标题和星数不换行 */
+  min-width: max(350px, fit-content);
+  max-width: 400px;
+  padding: 2rem;
+  margin: 1rem;
+  backdrop-filter: blur(20px);
+  /* 使用CSS变量 */
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  /* 增强阴影效果 */
+  box-shadow: 0 12px 15px -8px var(--card-shadow),
+    0 15px 15px -10px var(--card-shadow);
+  transition: all 0.5s;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  color: var(--text-primary);
+  will-change: transform, box-shadow, background;
+  transform: translateZ(0);
+}
+
+.project-card:hover {
+  /* 悬停时增强阴影 */
+  box-shadow: 0 15px 20px -9px var(--card-shadow),
+    0 15px 25px -8px var(--card-shadow);
+  background: var(--card-bg);
+  transform: scale(1.05) translateY(-8px);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  /* 允许换行以适应长标题 */
+  flex-wrap: wrap;
+}
+
+.project-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+  /* 允许标题换行，但限制最大行数 */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+  min-width: 0;
+  /* 当空间不足时，标题占用100%宽度 */
+  min-width: 200px;
+}
+
+.project-status {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+  /* 当标题过长时，状态标签换行居中显示 */
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 当标题过长导致换行时的特殊样式 */
+@media (max-width: 400px) {
+  .project-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .project-title {
+    width: 100%;
+    text-align: center;
+    min-width: unset;
+  }
+
+  .project-status {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* 针对长标题的容器查询样式 */
+.project-card {
+  container-type: inline-size;
+}
+
+/* 堆叠布局样式 */
+.project-header-stacked {
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  gap: 0.75rem !important;
+}
+
+.project-header-stacked .project-title {
+  width: 100% !important;
+  text-align: center !important;
+  min-width: unset !important;
+}
+
+.project-header-stacked .project-status {
+  width: 100% !important;
+  justify-content: center !important;
+}
+
+@container (max-width: 350px) {
+  .project-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .project-title {
+    width: 100%;
+    text-align: center;
+    min-width: unset;
+  }
+
+  .project-status {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.status-stable {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.status-experimental {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-yellow);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* 项目区域响应式设计 */
+@media (max-width: 768px) {
+  .projects-container {
+    padding: 1.5rem 0.5rem 2.5rem 1rem;
+    gap: 1.5rem;
+    margin: -0.5rem;
+  }
+
+  .project-card {
+    min-width: max(300px, fit-content);
+    max-width: 340px;
+    padding: 1.5rem;
+    margin: 0.5rem;
+  }
+
+  .project-title {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-container {
+    padding: 1rem 0.25rem 2rem 0.75rem;
+    gap: 1rem;
+  }
+
+  .project-card {
+    min-width: max(280px, fit-content);
+    max-width: 320px;
+    padding: 1.25rem;
+    margin: 0.25rem;
+  }
+
+  .project-title {
+    font-size: 1rem;
+  }
+
+  .project-header {
+    gap: 0.75rem;
+  }
+
+  .status-badge {
+    font-size: 0.6875rem;
+    padding: 0.1875rem 0.375rem;
+  }
+}
+
+/* 大屏幕优化 */
+@media (min-width: 1200px) {
+  .projects-container {
+    padding: 1rem 1rem 1rem 1rem;
+    gap: 2.5rem;
+  }
+
+  .project-card {
+    min-width: max(380px, fit-content);
+    max-width: 420px;
+  }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .projects-container {
+    padding: 1rem 0.5rem 1rem 1rem;
+  }
+
+  .project-card {
+    padding: 1rem;
+    min-width: max(250px, fit-content);
+    max-width: 280px;
+  }
+}
+
+.version-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--accent-blue);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.project-description {
+  color: var(--text-secondary);
+  line-height: 1.625;
+  flex: 1;
+}
+
+.project-languages {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.languages-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.language-tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.project-tech-tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-blue);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 9999px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+.tech-more {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.project-actions {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent-blue);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-size: 0.875rem;
+}
+
+.project-link:hover {
+  color: var(--accent-blue-hover);
+  transform: translateX(4px);
+}
+
+/* Loading and Error States */
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+  gap: 1rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-color);
+  border-top: 3px solid var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  color: var(--accent-red);
+  font-weight: 600;
+}
+
+.retry-button {
+  padding: 0.5rem 1rem;
+  background: var(--accent-blue);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.retry-button:hover {
+  background: var(--accent-blue-hover);
+}
+
+/* New Badge Types */
+.stars-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--accent-yellow);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.language-more {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Project Stats */
+.project-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.stat-item {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 500;
+}
+
+/* Status Badge Variants */
+.status-active {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.status-archived {
+  background: rgba(156, 163, 175, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(156, 163, 175, 0.2);
+}
+
+/* Skeleton Loading Animations */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--border-color) 25%,
+    var(--bg-secondary) 50%,
+    var(--border-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite ease-in-out;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  width: 70%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-badge {
+  height: 1.5rem;
+  width: 4rem;
+  border-radius: 12px;
+}
+
+.skeleton-description {
+  height: 3rem;
+  width: 100%;
+  margin: 0.75rem 0;
+}
+
+.skeleton-language-tag {
+  height: 1.5rem;
+  width: 3rem;
+  border-radius: 8px;
+}
+
+.skeleton-tech-tag {
+  height: 1.5rem;
+  width: 4rem;
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+}
+
+.skeleton-stat {
+  height: 1rem;
+  width: 5rem;
+  margin-right: 0.75rem;
+}
+
+.project-card.loading {
+  opacity: 0.8;
+}
+
+/* Project Error Display */
+.project-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid var(--accent-red);
+  border-radius: 6px;
+  color: var(--accent-red);
+}
+
+.error-label {
+  font-size: 0.75rem;
+  color: #dc2626;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.error-text {
+  font-size: 0.75rem;
+  color: #7f1d1d;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* ===== NEW PARALLAX LAYOUTS ===== */
+
+/* 桌面端布局 */
+.projects-container-desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1rem;
+  width: 100%;
+}
+
+.project-pair {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.project-card-wrapper-desktop {
+  width: 100%;
+  height: 100%;
+}
+
+.project-card-wrapper-desktop .project-card {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  min-width: 300px;
+}
+
+/* 移动端布局 */
+.projects-container-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+}
+
+.project-card-wrapper-mobile {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.project-card-wrapper-mobile .project-card {
+  width: 100%;
+  max-width: 400px;
+  min-width: unset;
+}
+
+/* 加载状态布局 */
+.projects-container-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+.project-card-wrapper-loading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.project-card-wrapper-loading .project-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+  .project-pair {
+    gap: 1.5rem;
+  }
+
+  .project-card-wrapper-desktop .project-card {
+    min-width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* 在移动端隐藏桌面端布局 */
+  .projects-container-desktop {
+    display: none;
+  }
+
+  .projects-container-mobile {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .projects-container-mobile .project-card {
+    margin: 0;
+    min-width: unset;
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  .project-card-wrapper-mobile {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  /* 在桌面端隐藏移动端布局 */
+  .projects-container-mobile {
+    display: none;
+  }
+
+  .projects-container-desktop {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* ===== PARALLAX 触发动画过渡效果 ===== */
+
+/* 项目卡片包装器的过渡效果 */
+.project-card-wrapper-mobile,
+.project-card-wrapper-desktop {
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+/* 确保 Parallax 容器本身也有平滑过渡 */
+.project-card-wrapper-mobile > *,
+.project-card-wrapper-desktop > * {
+  transition: inherit;
+}
+
+/* 深色模式下增强对比度 */
+:root.dark .language-tag {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+:root.dark .project-tech-tag {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+:root.dark .status-active {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+:root.dark .status-archived {
+  background: rgba(156, 163, 175, 0.2);
+  border-color: rgba(156, 163, 175, 0.4);
+}
+
+:root.dark .stars-badge {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+:root.dark .version-badge {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+/* 深色模式下文字增强 */
+:root.dark .languages-label {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+:root.dark .project-description {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* 项目卡片的整体过渡效果 */
+.project-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow, background;
+}
+
+/* 为了确保 Parallax 动画的流畅性 */
+[data-project-id] {
+  transform-origin: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ===== PROJECT RESPONSIVE DESIGN ===== */
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .projects-container {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .project-card {
+    max-width: 420px;
+  }
+}
+
+/* Small screens - Project adjustments */
+@media (max-width: 768px) {
+  /* Improve touch targets */
+  .project-card {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Reduce animation intensity on mobile */
+  .project-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  /* Optimize scrolling */
+  .projects-container {
+    -webkit-overflow-scrolling: touch;
+    scroll-padding: 1rem;
+  }
+
+  .project-card {
+    scroll-snap-align: start;
+  }
+}

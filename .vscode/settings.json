@@ -1,9 +1,66 @@
 {
     "cSpell.words": [
+        "backface",
+        "behavior",
+        "bezier",
+        "BUILDKIT",
+        "Buildx",
         "bytemark",
-        "Craco",
+        "color",
+        "colors",
+        "dotenv",
+        "ehthumbs",
+        "elif",
+        "eslintcache",
+        "grayscale",
+        "healthcheck",
+        "jspm",
         "keepalive",
+        "letsencrypt",
+        "maxage",
+        "Microbundle",
+        "minmax",
+        "Nextdotjs",
+        "nowrap",
+        "Nuxt",
+        "oneline",
+        "opencontainers",
+        "precomposed",
+        "rgba",
+        "Roboto",
+        "Segoe",
         "sendfile",
-        "webdav"
+        "softprops",
+        "Strava",
+        "stylelintcache",
+        "Sunying",
+        "Tencentqq",
+        "webdav",
+        "Wechat"
+    ],
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "eslint.workingDirectories": [
+        "hnrobert-homepage"
+    ],
+    "debug.node.autoAttach": "disabled",
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "typescript": "typescriptreact"
+    },
+    "tailwindCSS.includeLanguages": {
+        "typescript": "typescript",
+        "typescriptreact": "typescriptreact"
+    },
+    "tailwindCSS.experimental.classRegex": [
+        [
+            "clsx\\(([^)]*)\\)",
+            "(?:'|\"|`)([^']*)(?:'|\"|`)"
+        ]
     ]
 }

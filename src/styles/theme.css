@@ -1,0 +1,365 @@
+/* ===== DARK MODE VARIABLES ===== */
+
+/* 默认使用系统偏好，防止闪烁 */
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #0f172a;
+    color: #f8fafc;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html {
+    background-color: #ffffff;
+    color: #1f2937;
+  }
+}
+
+/* 如果没有系统偏好，默认深色 */
+@media (prefers-color-scheme: no-preference) {
+  html {
+    background-color: #0f172a;
+    color: #f8fafc;
+  }
+}
+
+:root {
+  /* Light mode colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #dbeafe;
+  --bg-tertiary: #fae8ff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --border-color: #e5e7eb;
+  --border-hover: #d1d5db;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --accent-blue: #3b82f6;
+  --accent-blue-hover: #2563eb;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --accent-yellow: #f59e0b;
+  --nav-bg: rgba(255, 255, 255, 0.95);
+  --nav-border: rgba(229, 231, 235, 0.8);
+  --footer-bg: #ffffff;
+  --hero-gradient-start: #3b82f6;
+  --hero-gradient-end: #1d4ed8;
+  --hobby-gradient-start: rgba(255, 255, 255, 0.85);
+  --hobby-gradient-middle: rgba(255, 255, 255, 0.6);
+  --hobby-gradient-end: rgba(255, 255, 255, 0.2);
+  --hobby-gradient-hover-start: rgba(255, 255, 255, 0.9);
+  --hobby-gradient-hover-middle: rgba(255, 255, 255, 0.7);
+  --hobby-gradient-hover-end: rgba(255, 255, 255, 0.3);
+}
+
+/* 默认深色模式变量 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --border-hover: #475569;
+    --glass-bg: rgba(15, 23, 42, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --card-bg: #1e293b;
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --accent-blue: #60a5fa;
+    --accent-blue-hover: #3b82f6;
+    --accent-green: #34d399;
+    --accent-red: #f87171;
+    --accent-yellow: #fbbf24;
+    --nav-bg: rgba(15, 23, 42, 0.95);
+    --nav-border: rgba(51, 65, 85, 0.8);
+    --footer-bg: #1e293b;
+    --hero-gradient-start: #60a5fa;
+    --hero-gradient-end: #3b82f6;
+    --hobby-gradient-start: rgba(10, 10, 10, 0.85);
+    --hobby-gradient-middle: rgba(15, 15, 15, 0.6);
+    --hobby-gradient-end: rgba(20, 20, 20, 0.2);
+    --hobby-gradient-hover-start: rgba(5, 5, 5, 0.9);
+    --hobby-gradient-hover-middle: rgba(10, 10, 10, 0.7);
+    --hobby-gradient-hover-end: rgba(15, 15, 15, 0.3);
+  }
+}
+
+:root.light {
+  /* Light mode colors - 显式设置，覆盖媒体查询 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #dbeafe;
+  --bg-tertiary: #fae8ff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --border-color: #e5e7eb;
+  --border-hover: #d1d5db;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --accent-blue: #3b82f6;
+  --accent-blue-hover: #2563eb;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --accent-yellow: #f59e0b;
+  --nav-bg: rgba(255, 255, 255, 0.95);
+  --nav-border: rgba(229, 231, 235, 0.8);
+  --footer-bg: #ffffff;
+  --hero-gradient-start: #3b82f6;
+  --hero-gradient-end: #1d4ed8;
+  --hobby-gradient-start: rgba(255, 255, 255, 0.85);
+  --hobby-gradient-middle: rgba(255, 255, 255, 0.6);
+  --hobby-gradient-end: rgba(255, 255, 255, 0.2);
+  --hobby-gradient-hover-start: rgba(255, 255, 255, 0.9);
+  --hobby-gradient-hover-middle: rgba(255, 255, 255, 0.7);
+  --hobby-gradient-hover-end: rgba(255, 255, 255, 0.3);
+}
+
+:root.light,
+:root.light html {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+:root.dark {
+  /* Dark mode colors - 显式设置，覆盖媒体查询 */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --border-hover: #475569;
+  --glass-bg: rgba(15, 23, 42, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: #1e293b;
+  --card-shadow: rgba(0, 0, 0, 0.4);
+  --accent-blue: #60a5fa;
+  --accent-blue-hover: #3b82f6;
+  --accent-green: #34d399;
+  --accent-red: #f87171;
+  --accent-yellow: #fbbf24;
+  --nav-bg: rgba(15, 23, 42, 0.95);
+  --nav-border: rgba(51, 65, 85, 0.8);
+  --footer-bg: #1e293b;
+  --hero-gradient-start: #60a5fa;
+  --hero-gradient-end: #3b82f6;
+  --hobby-gradient-start: rgba(10, 10, 10, 0.85);
+  --hobby-gradient-middle: rgba(15, 15, 15, 0.6);
+  --hobby-gradient-end: rgba(20, 20, 20, 0.2);
+  --hobby-gradient-hover-start: rgba(5, 5, 5, 0.9);
+  --hobby-gradient-hover-middle: rgba(10, 10, 10, 0.7);
+  --hobby-gradient-hover-end: rgba(15, 15, 15, 0.3);
+}
+
+:root.dark,
+:root.dark html {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Theme transition - 只控制主题相关属性 */
+html.theme-loaded {
+  --theme-transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+html.theme-loaded * {
+  transition: var(--theme-transition);
+}
+
+/* 为已有过渡的元素保留其原有过渡，同时添加主题过渡 */
+html.theme-loaded .nav-link {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .project-card {
+  transition: all 0.5s ease, var(--theme-transition);
+}
+
+html.theme-loaded .theme-toggle {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .project-link {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .glass-card {
+  transition: all 0.3s ease-out, var(--theme-transition);
+}
+
+html.theme-loaded .interactive-item,
+html.theme-loaded .hobby-item,
+html.theme-loaded .contact-item {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .tech-badge,
+html.theme-loaded .status-badge,
+html.theme-loaded .language-tag,
+html.theme-loaded .project-tech-tag,
+html.theme-loaded .stars-badge,
+html.theme-loaded .version-badge {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .retry-button {
+  transition: background-color 0.3s ease, var(--theme-transition);
+}
+
+/* 保持hero-avatar的原有动画效果 */
+html.theme-loaded .hero-avatar {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, var(--theme-transition);
+}
+
+/* 保持移动端导航动画 */
+html.theme-loaded .nav-links {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .mobile-menu-toggle {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .hamburger-line {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+/* 保持导航品牌logo动画 */
+html.theme-loaded .nav-brand {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .nav-logo {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .nav-title {
+  transition: color 0.3s ease, var(--theme-transition);
+}
+
+/* 保持主题切换按钮动画 */
+html.theme-loaded .theme-toggle {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+html.theme-loaded .theme-toggle-icon {
+  transition: transform 0.3s ease, var(--theme-transition);
+}
+
+/* 保持导航链接动画 */
+html.theme-loaded .nav-link {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+/* 保持项目卡片动画 */
+html.theme-loaded .project-card {
+  transition: all 0.5s ease, var(--theme-transition);
+}
+
+/* 保持项目链接动画 */
+html.theme-loaded .project-link {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+/* 保持交互元素动画 */
+html.theme-loaded .interactive-item,
+html.theme-loaded .hobby-item,
+html.theme-loaded .contact-item {
+  transition: all 0.3s ease, var(--theme-transition);
+}
+
+/* 保持卡片动画 */
+html.theme-loaded .glass-card,
+html.theme-loaded .card-hover {
+  transition: all 0.3s ease-out, var(--theme-transition);
+}
+
+/* 保持图标动画 */
+html.theme-loaded .footer-icon {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    var(--theme-transition);
+}
+
+/* 确保在主题加载前，只禁用主题相关的过渡效果 */
+html:not(.theme-loaded) * {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease,
+    backdrop-filter 0.3s ease !important;
+}
+
+/* 立即启用过渡，用于手动主题切换 */
+html.theme-manual-change * {
+  transition: all 0.3s ease !important;
+}
+
+/* Theme toggle button styles */
+.theme-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+}
+
+.theme-toggle:hover {
+  background: var(--card-bg);
+  border-color: var(--border-hover);
+  transform: scale(1.05);
+}
+
+.theme-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-toggle-icon {
+  transform: rotate(15deg);
+}
+
+/* Apply theme variables to existing elements */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Scrollbar theming */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-secondary);
+}

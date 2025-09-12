@@ -1,0 +1,258 @@
+/* ===== CARDS & GLASS EFFECTS ===== */
+.card-base,
+.glass-card,
+.glass-nav {
+  backdrop-filter: blur(20px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px var(--card-shadow);
+  transition: all 0.3s ease-out;
+  width: 100%;
+  overflow: visible;
+}
+
+.glass-card {
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px var(--card-shadow);
+}
+
+.glass-nav {
+  backdrop-filter: blur(40px);
+  background: var(--nav-bg);
+  border-radius: 0;
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.glass-card:hover {
+  background: var(--card-bg);
+  box-shadow: 0 35px 60px -12px var(--card-shadow);
+  transform: translateY(-4px);
+}
+
+.card-hover:hover {
+  background: var(--card-bg);
+  transform: scale(1.05) translateY(-4px);
+  box-shadow: 0 20px 25px -5px var(--card-shadow);
+}
+
+/* Contact & Interactive Items */
+.contact-item,
+.interactive-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease-out;
+  box-shadow: 0 10px 15px -3px var(--card-shadow);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-primary);
+  min-height: 120px;
+  justify-content: center;
+}
+
+.contact-item:hover,
+.interactive-item:hover {
+  background: var(--card-bg);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px var(--card-shadow);
+}
+
+.item-icon,
+.contact-icon {
+  font-size: 1.875rem;
+  margin-bottom: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.contact-item:hover .contact-icon,
+.interactive-item:hover .item-icon {
+  transform: scale(1.1);
+}
+
+.item-label,
+.contact-label {
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+/* Contact Grid Layout */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+/* Tech Stack */
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.tech-badge {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2),
+    rgba(139, 92, 246, 0.2)
+  );
+  color: var(--text-primary);
+  border-radius: 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 15px -3px var(--card-shadow);
+  transition: all 0.3s ease-out;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Dark mode tech badges */
+:root.dark .tech-badge {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.8),
+    rgba(30, 41, 59, 0.8)
+  );
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: var(--text-primary);
+}
+
+.tech-badge:hover {
+  box-shadow: 0 20px 25px -5px var(--card-shadow);
+  transform: scale(1.05);
+}
+
+:root.dark .tech-badge:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.9),
+    rgba(30, 41, 59, 0.9)
+  );
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .tech-badges {
+    gap: 0.75rem;
+    padding: 0 0.5rem;
+  }
+
+  .tech-badge {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 0 0.25rem;
+  }
+
+  .contact-item {
+    min-height: 90px;
+    padding: 1rem;
+  }
+
+  .tech-badges {
+    gap: 0.5rem;
+    padding: 0 0.25rem;
+  }
+
+  .tech-badge {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 360px) {
+  .glass-card {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    padding: 0;
+  }
+
+  .contact-item {
+    min-height: 80px;
+  }
+}
+
+/* ===== CARDS RESPONSIVE DESIGN ===== */
+
+/* Small screens - Cards adjustments */
+@media (max-width: 768px) {
+  /* Improve touch targets */
+  .tech-badge,
+  .card-hover {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Reduce animation intensity on mobile */
+  .card-hover:hover {
+    transform: translateY(-2px);
+  }
+
+  .tech-badge:hover {
+    transform: scale(1.02);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .contact-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  .contact-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

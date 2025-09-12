@@ -1,0 +1,356 @@
+/* ===== NAVIGATION ===== */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  position: relative;
+  min-height: 60px;
+  background: var(--nav-bg);
+  overflow: visible;
+}
+
+/* 移动端布局调整 */
+@media (max-width: 768px) {
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .mobile-menu-toggle {
+    order: 1;
+    flex: 0 0 auto;
+  }
+
+  .nav-brand {
+    order: 2;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .theme-toggle {
+    order: 3;
+    flex: 0 0 auto;
+  }
+
+  .nav-links {
+    order: 4;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+  }
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.nav-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.nav-brand:hover .nav-logo {
+  transform: scale(1.1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.nav-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+
+.nav-brand:hover .nav-title {
+  color: var(--accent-blue);
+}
+
+/* 移动端菜单按钮 */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  z-index: 1001;
+}
+
+.mobile-menu-toggle:hover {
+  background: var(--glass-bg);
+}
+
+.hamburger-line {
+  width: 100%;
+  height: 3px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.mobile-menu-toggle:hover .hamburger-line {
+  background: var(--accent-blue);
+}
+
+/* 汉堡菜单动画 */
+.hamburger-line.active:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-line.active:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-line.active:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.5rem 0.5rem;
+  position: relative;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s;
+  white-space: nowrap;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(4px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px -2px var(--card-shadow);
+}
+
+.nav-link.active {
+  color: var(--accent-blue);
+  font-weight: 600;
+  background: var(--card-bg);
+  box-shadow: 0 4px 6px -1px var(--card-shadow),
+    0 2px 4px -1px var(--card-shadow);
+  position: relative;
+  z-index: 10;
+  border: 1px solid var(--glass-border);
+}
+
+/* Medium screen adjustments */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .nav-links {
+    gap: 0.25rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Desktop navigation */
+@media (min-width: 769px) {
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+
+  .nav-links {
+    position: static;
+    background: transparent;
+    backdrop-filter: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    flex-direction: row;
+    padding: 0.5rem 0.5rem;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+}
+
+/* 移动端导航优化 */
+@media (max-width: 768px) {
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    position: relative;
+    min-height: 60px;
+  }
+
+  .nav-brand {
+    order: 2;
+    flex: 1 1 auto;
+    justify-content: center;
+    min-width: 0; /* 允许收缩 */
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+    order: 1;
+    flex: 0 0 auto;
+  }
+
+  .theme-toggle {
+    order: 3;
+    flex: 0 0 auto;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 10px 15px -3px var(--card-shadow);
+    border: 1px solid var(--glass-border);
+    border-top: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    overflow: visible;
+  }
+
+  .nav-links::before {
+    display: none;
+  }
+
+  .nav-links.mobile-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+
+  .nav-link.active {
+    background: var(--card-bg);
+    box-shadow: 0 4px 6px -1px var(--card-shadow),
+      0 2px 4px -1px var(--card-shadow);
+    border: 1px solid var(--glass-border);
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-container {
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .nav-brand {
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: center;
+  }
+
+  .nav-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-title {
+    font-size: 1.125rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mobile-menu-toggle {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+  }
+}
+
+/* ===== NAVIGATION RESPONSIVE DESIGN ===== */
+
+/* Small screens - Navigation adjustments */
+@media (max-width: 768px) {
+  .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}

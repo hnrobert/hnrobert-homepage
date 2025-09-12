@@ -1,0 +1,189 @@
+name: Docker Build and Push
+
+on:
+  # 当推送到 main/develop 分支且源码改变时触发
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'next.config.js'
+      - 'Dockerfile'
+      - '.github/workflows/docker-build-and-push.yml'
+    # 当推送标签时触发（用于版本发布）
+    tags:
+      - 'v*'
+
+  # 允许手动触发
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '自定义标签 (可选)'
+        required: false
+        default: ''
+
+env:
+  # GitHub Container Registry 相关配置
+  GHCR_REGISTRY: ghcr.io
+  GHCR_IMAGE_NAME: hnrobert/hnrobert-homepage
+
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      should-build: ${{ steps.changes.outputs.should-build }}
+      source-changed: ${{ steps.changes.outputs.source-changed }}
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: 检查源码变更
+        id: changes
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "should-build=true" >> $GITHUB_OUTPUT
+            echo "source-changed=manual" >> $GITHUB_OUTPUT
+            echo "🔧 手动触发，将进行构建"
+          elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            echo "should-build=true" >> $GITHUB_OUTPUT
+            echo "source-changed=tag" >> $GITHUB_OUTPUT
+            echo "🏷️ 标签推送，将进行构建"
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "should-build=true" >> $GITHUB_OUTPUT
+            echo "source-changed=pr" >> $GITHUB_OUTPUT
+            echo "📋 PR创建，将进行构建（仅构建不推送）"
+          else
+            # 检查源码是否有变更
+            if git diff --name-only HEAD~1 | grep -E "(src/|package\.json|pnpm-lock\.yaml|next\.config\.js|Dockerfile|docker-compose.*\.yml)" > /dev/null; then
+              echo "should-build=true" >> $GITHUB_OUTPUT
+              echo "source-changed=true" >> $GITHUB_OUTPUT
+              echo "✅ 检测到源码变更，将进行构建"
+              echo "变更的文件:"
+              git diff --name-only HEAD~1 | grep -E "(src/|package\.json|pnpm-lock\.yaml|next\.config\.js|Dockerfile|docker-compose.*\.yml)"
+            else
+              echo "should-build=false" >> $GITHUB_OUTPUT
+              echo "source-changed=false" >> $GITHUB_OUTPUT
+              echo "ℹ️ 未检测到源码变更，跳过构建"
+            fi
+          fi
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: check-changes
+    if: needs.check-changes.outputs.should-build == 'true'
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 登录到 GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.GHCR_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 生成元数据
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE_NAME }}
+          tags: |
+            # 为分支设置标签
+            type=ref,event=branch
+            # 为 PR 设置标签
+            type=ref,event=pr
+            # 为标签设置版本号
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            # 为 main 分支设置 latest 标签
+            type=raw,value=latest,enable={{is_default_branch}}
+            # 自定义标签（手动触发时）
+            type=raw,value=${{ github.event.inputs.tag }},enable=${{ github.event.inputs.tag != '' }}
+            # add short SHA for all builds
+            type=sha,prefix={{branch}}-,format=short
+          labels: |
+            org.opencontainers.image.title=HNRobert Homepage
+            org.opencontainers.image.description=Personal homepage and portfolio website
+            org.opencontainers.image.url=https://github.com/${{ github.repository }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.vendor=HNRobert
+            org.opencontainers.image.licenses=MIT
+
+      - name: 构建和推送 Docker 镜像
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+
+      - name: 生成构建证明
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE_NAME}}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
+
+      - name: 输出镜像信息
+        run: |
+          echo "## 🐳 Docker 镜像构建完成" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📋 镜像信息" >> $GITHUB_STEP_SUMMARY
+          echo "- **镜像标签**: \`${{ steps.meta.outputs.tags }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Git提交**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚀 使用方法" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+          echo "# 从 GitHub Container Registry 拉取" >> $GITHUB_STEP_SUMMARY
+          echo "docker pull ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+  # 部署通知作业
+  notify:
+    runs-on: ubuntu-latest
+    needs: [check-changes, build-and-push]
+    if: always() && github.event_name != 'pull_request' && needs.check-changes.outputs.should-build == 'true'
+
+    steps:
+      - name: 发送部署通知
+        run: |
+          if [[ "${{ needs.build-and-push.result }}" == "success" ]]; then
+            echo "🎉 Docker 镜像构建完成！"
+            echo "📦 镜像已发布到："
+            echo "  - GitHub Container Registry: ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE_NAME }}"
+            echo "📋 变更原因: ${{ needs.check-changes.outputs.source-changed }}"
+          elif [[ "${{ needs.build-and-push.result }}" == "failure" ]]; then
+            echo "❌ Docker 镜像构建失败！"
+            echo "📋 请检查构建日志"
+          elif [[ "${{ needs.build-and-push.result }}" == "skipped" ]]; then
+            echo "⏭️ Docker 镜像构建被跳过"
+            echo "📋 原因: 未检测到源码变更"
+          fi
