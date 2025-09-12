@@ -32,20 +32,30 @@ export const TechStackSection: React.FC = () => {
         </div>
 
         <div className="tech-badges">
-          {techStackEntries.map(([tech, proficiency], index) => (
-            <span
-              key={index}
-              className="tech-badge"
-              style={{
-                borderColor: getProficiencyBorderColor(proficiency),
-                borderWidth: '2px',
-                borderStyle: 'solid',
-              }}
-              title={`${tech}: ${Math.round(proficiency * 100)}% proficiency`}
-            >
-              {tech}
-            </span>
-          ))}
+          {techStackEntries.map(([tech, proficiency], index) => {
+            const href = `https://www.google.com/search?q=${encodeURIComponent(
+              tech
+            )}`;
+            return (
+                <a
+                key={index}
+                className="tech-badge"
+                style={{
+                  borderColor: getProficiencyBorderColor(proficiency),
+                  borderWidth: '2px',
+                  borderStyle: 'solid',
+                  display: 'inline-block',
+                  textDecoration: 'none',
+                }}
+                title={tech}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+                {tech}
+                </a>
+            );
+          })}
         </div>
       </div>
     </section>
