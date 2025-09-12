@@ -2,7 +2,7 @@
 
 A personal homepage and portfolio website built with Next.js, featuring a modern React-based interface.
 
-> Visit [My Actual Home Page](https://hnrobert.space) to see the effect
+> Visit [My Home Page](https://hnrobert.space) to see the effect
 
 ## Project Structure
 
@@ -15,7 +15,7 @@ A personal homepage and portfolio website built with Next.js, featuring a modern
 │   ├── styles/             # CSS styles
 │   └── types/              # TypeScript type definitions
 ├── public/                 # Static assets
-├── nginx/                  # Nginx configuration (legacy)
+├── nginx/                  # Nginx ssl configuration
 ├── Dockerfile             # Docker container definition
 └── docker-compose.yml    # Docker Compose configuration
 ```
@@ -35,7 +35,7 @@ A personal homepage and portfolio website built with Next.js, featuring a modern
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/HNRobert/hnrobert-homepage.git
+   git clone https://github.com/hnrobert/hnrobert-homepage.git
    cd hnrobert-homepage
    ```
 
@@ -85,14 +85,14 @@ A personal homepage and portfolio website built with Next.js, featuring a modern
 2. Run the container:
 
    ```bash
-   docker run -p 3000:3000 hnrobert-homepage
+   docker run -p 9970:3000 hnrobert-homepage
    ```
 
 ### Using Pre-built Image
 
 ```bash
 docker pull ghcr.io/hnrobert/hnrobert-homepage:latest
-docker run -p 3000:3000 ghcr.io/hnrobert/hnrobert-homepage:latest
+docker run -p 9970:3000 ghcr.io/hnrobert/hnrobert-homepage:latest
 ```
 
 ## Environment Variables
@@ -100,15 +100,17 @@ docker run -p 3000:3000 ghcr.io/hnrobert/hnrobert-homepage:latest
 Create a `.env` file in the root directory for customization:
 
 ```env
-# Application Settings
-PORT=3000
-HOSTNAME=0.0.0.0
+# GitHub Personal Access Token (required for API endpoints)
+# Get your token from: https://github.com/settings/tokens
+# Required scopes: repo (for private repos), public_repo (for public repos)
+GITHUB_TOKEN=your_github_personal_access_token_here
 
-# Next.js Settings
+# Next.js Configuration
+NODE_ENV=production
 NEXT_TELEMETRY_DISABLED=1
 
-# Production/Development Mode
-NODE_ENV=production
+# Optional: GitHub API configuration
+GITHUB_API_CACHE_TTL=600  # Cache time in seconds (10 minutes)
 ```
 
 ## Troubleshooting

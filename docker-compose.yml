@@ -17,8 +17,8 @@ services:
     container_name: hnrobert-homepage-nginx
     image: nginx:alpine
     volumes:
-      - /volume2/docker/hnrobert-homepage/ssl:/root/.config/ssl
-      - /volume2/docker/hnrobert-homepage/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/root/.config/ssl
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - hnrobert-homepage
     restart: always
