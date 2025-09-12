@@ -104,6 +104,40 @@
   padding: 0 1rem;
 }
 
+/* 熟练程度指示条 */
+.proficiency-indicator {
+  margin: 1.5rem 2rem 2rem 2rem;
+  position: relative;
+}
+
+.proficiency-gradient {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    hsl(45, 90%, 55%) 0%,
+    /* 黄色 - 初学者 */ hsl(80, 85%, 45%) 30%,
+    /* 黄绿色 - 初级 */ hsl(100, 90%, 40%) 60%,
+    /* 中绿色 - 中级 */ hsl(120, 80%, 35%) 90%,
+    /* 绿色 - 高级 */ hsl(120, 100%, 25%) 100% /* 深绿色 - 专家 */
+  );
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.proficiency-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.proficiency-label-start,
+.proficiency-label-end {
+  padding: 0 0.5rem;
+}
+
 .tech-badge {
   padding: 0.5rem 1rem;
   background: linear-gradient(
@@ -117,14 +151,16 @@
   font-weight: 500;
   border: 1px solid rgba(59, 130, 246, 0.4);
   backdrop-filter: blur(12px);
-  box-shadow: 0 10px 15px -3px var(--card-shadow);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-out;
   text-align: center;
   white-space: nowrap;
+  cursor: help;
+  /* 边框颜色由组件动态设置 */
 }
 
 /* Dark mode tech badges */
-:root.dark .tech-badge {
+[data-theme='dark'] .tech-badge {
   background: linear-gradient(
     135deg,
     rgba(15, 23, 42, 0.8),
@@ -135,11 +171,11 @@
 }
 
 .tech-badge:hover {
-  box-shadow: 0 20px 25px -5px var(--card-shadow);
-  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05) translateY(-2px);
 }
 
-:root.dark .tech-badge:hover {
+[data-theme='dark'] .tech-badge:hover {
   background: linear-gradient(
     135deg,
     rgba(15, 23, 42, 0.9),
@@ -163,6 +199,14 @@
   .tech-badges {
     gap: 0.75rem;
     padding: 0 0.5rem;
+  }
+
+  .proficiency-indicator {
+    margin: 1rem 1rem 1.5rem 1rem;
+  }
+
+  .proficiency-labels {
+    font-size: 0.7rem;
   }
 
   .tech-badge {
@@ -190,6 +234,19 @@
   .tech-badges {
     gap: 0.5rem;
     padding: 0 0.25rem;
+  }
+
+  .proficiency-indicator {
+    margin: 0.75rem 0.5rem 1rem 0.5rem;
+  }
+
+  .proficiency-gradient {
+    height: 6px;
+  }
+
+  .proficiency-labels {
+    font-size: 0.65rem;
+    margin-top: 0.375rem;
   }
 
   .tech-badge {
