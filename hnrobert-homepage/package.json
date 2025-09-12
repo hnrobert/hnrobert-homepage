@@ -1,0 +1,47 @@
+{
+  "name": "hnrobert-homepage",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
+    "@types/node": "^16.18.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "axios": "^1.3.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.4.0",
+    "react-scripts": "^5.0.1",
+    "stream-browserify": "^3.0.0",
+    "typescript": "3.9.10",
+    "webdav": "^5.7.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^5.9.0"
+  },
+  "scripts": {
+    "start": "DISABLE_WEBSOCKET=true FAST_REFRESH=false PORT=9970 craco start",
+    "start:dev": "REACT_APP_ENV=development DISABLE_WEBSOCKET=true FAST_REFRESH=false PORT=9970 craco start",
+    "start:prod": "REACT_APP_ENV=production DISABLE_WEBSOCKET=true FAST_REFRESH=false PORT=9970 craco start",
+    "build": "craco build",
+    "build:dev": "REACT_APP_ENV=development craco build",
+    "build:prod": "REACT_APP_ENV=production craco build"
+  },
+  "resolutions": {
+    "typescript": "3.9.10"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:5005"
+}
