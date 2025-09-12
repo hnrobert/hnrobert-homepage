@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "Avalonia",
         "backface",
         "behavior",
         "bezier",
@@ -26,8 +27,10 @@
         "oneline",
         "opencontainers",
         "precomposed",
+        "rclpy",
         "rgba",
         "Roboto",
+        "rospy",
         "Segoe",
         "sendfile",
         "softprops",
