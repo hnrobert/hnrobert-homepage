@@ -106,7 +106,7 @@ export const TechStackSection: React.FC = () => {
                   borderStyle: 'solid',
                   display: 'inline-block',
                   textDecoration: 'none',
-                  cursor: isLoading ? 'wait' : 'pointer',
+                  cursor: isLoading ? 'wait' : 'help',
                 }}
                 title={`${tech}: ${Math.round(
                   Number(proficiency) * 100
