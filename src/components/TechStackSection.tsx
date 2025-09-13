@@ -1,18 +1,37 @@
 import React from 'react';
 import configData from '../configs/config.json';
 
-// 根据熟练程度计算边框颜色
-const getProficiencyBorderColor = (proficiency: number): string => {
-  if (proficiency >= 0.95) {
-    // 100%熟练度使用更深的绿色
-    return 'hsl(120, 100%, 25%)'; // 深绿色
+// 根据熟练程度计算边框颜色 (绿-蓝-紫配色)
+const getProficiencyBorderColor = (
+  proficiency: number,
+  isDark: boolean = false
+): string => {
+  // 绿色(120°) -> 蓝色(240°) -> 紫色(280°)
+  let hue: number;
+  let saturation: number;
+  let lightness: number;
+
+  if (proficiency <= 0.5) {
+    // 0-50%: 绿色到蓝色
+    hue = 120 + proficiency * 2 * 120; // 120° -> 240°
+    saturation = 70 + proficiency * 20; // 70% -> 90%
+  } else {
+    // 50-100%: 蓝色到紫色
+    hue = 240 + (proficiency - 0.5) * 2 * 40; // 240° -> 280°
+    saturation = 85 + (proficiency - 0.5) * 15; // 85% -> 100%
   }
-  // 黄色到绿色的渐变
-  // 黄色: hsl(45, 100%, 50%) -> 绿色: hsl(120, 80%, 35%)
-  const hue = 45 + proficiency * 75; // 45度(黄) 到 120度(绿)
-  const saturation = 90 + proficiency * 10; // 90% 到 100%
-  const lightness = 55 - proficiency * 20; // 55% 到 35%
+
+  lightness = 35 + proficiency * 25;
+
   return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+// 检测当前主题模式
+const isDarkMode = (): boolean => {
+  if (typeof window !== 'undefined') {
+    return document.documentElement.getAttribute('data-theme') === 'dark';
+  }
+  return false;
 };
 
 const checkUrl = (url: string, timeout = 1000): Promise<boolean> =>
@@ -49,6 +68,7 @@ const checkUrl = (url: string, timeout = 1000): Promise<boolean> =>
 
 export const TechStackSection: React.FC = () => {
   const techStackEntries = Object.entries(configData.techStack);
+  const [loadingTech, setLoadingTech] = React.useState<string | null>(null);
 
   return (
     <section className="section">
@@ -69,36 +89,47 @@ export const TechStackSection: React.FC = () => {
             const googleSearch = `https://www.google.com/search?q=${query}`;
             const bingSearch = `https://cn.bing.com/search?q=${query}&ensearch=1`;
             const pingGoogle = 'https://www.google.com/favicon.ico';
+            const isLoading = loadingTech === tech;
 
             return (
               <a
                 key={index}
-                className="tech-badge"
+                className={`tech-badge ${
+                  isLoading ? 'tech-badge-loading' : ''
+                }`}
                 style={{
-                  borderColor: getProficiencyBorderColor(Number(proficiency)),
+                  borderColor: getProficiencyBorderColor(
+                    Number(proficiency),
+                    isDarkMode()
+                  ),
                   borderWidth: '2px',
                   borderStyle: 'solid',
                   display: 'inline-block',
                   textDecoration: 'none',
+                  cursor: isLoading ? 'wait' : 'pointer',
                 }}
-                // 显示在常规 tooltip（靠近元素），并避免默认 hover 状态栏显示为 Bing 链接
-                title={`Search ${tech} on Search Engine`}
-                href=''
+                title={`${tech}: ${Math.round(
+                  Number(proficiency) * 100
+                )}% - Click to search`}
+                href=""
                 onClick={async (e) => {
                   e.preventDefault();
-                  // 只 ping Google；若 Google 不可用直接打开 Bing（不再 ping Bing）
-                  const googleAvailable = await checkUrl(pingGoogle, 1000);
-                  if (googleAvailable) {
-                    window.open(googleSearch, '_blank', 'noopener');
-                    return;
+                  setLoadingTech(tech);
+
+                  try {
+                    // 只 ping Google；若 Google 不可用直接打开 Bing
+                    const googleAvailable = await checkUrl(pingGoogle, 1000);
+                    if (googleAvailable) {
+                      window.open(googleSearch, '_blank', 'noopener');
+                    } else {
+                      // Google 不可用则直接打开 Bing
+                      window.open(bingSearch, '_blank', 'noopener');
+                    }
+                  } finally {
+                    setLoadingTech(null);
                   }
-                  // Google 不可用则直接打开 Bing
-                  window.open(bingSearch, '_blank', 'noopener');
                 }}
-                // 支持键盘与无 JS 的场景：保留 href 为 Google 搜索（当 JS 被禁用时可以直接跳转）
                 onAuxClick={(e) => {
-                  // 处理中键等，防止默认锚点行为并在新标签打开（中键）
-                  // 注意：不同浏览器对中键行为略有差异，这里尝试兼容处理
                   e.preventDefault();
                   const mouseEvent = e as React.MouseEvent;
                   if (mouseEvent.button === 1) {
