@@ -31,10 +31,15 @@ export const ContactSection: React.FC = () => {
             <SiWechat className="contact-icon" style={{ color: "#22c55e" }} />
             <span className="contact-label">HNRobert</span>
           </div>
-          <div className="contact-item">
+          <a
+            href="https://discord.gg/5dVbWhEbQc"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-item"
+          >
             <SiDiscord className="contact-icon" style={{ color: "#6366f1" }} />
             <span className="contact-label">hnrobert</span>
-          </div>
+          </a>
           <a
             href="https://space.bilibili.com/523023049"
             target="_blank"

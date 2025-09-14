@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Parallax } from "react-scroll-parallax";
-import { HobbyData } from "./types";
+import React from 'react';
+import { Parallax } from 'react-scroll-parallax';
+import { HobbyData } from './types';
 
 interface HobbyCardWithImageProps {
   hobby: HobbyData;
@@ -18,7 +18,7 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
 
   return (
     <div
-      className={`hobby-card-with-image ${cardHeight > 500 ? "tall-card" : ""}`}
+      className={`hobby-card-with-image ${cardHeight > 500 ? 'tall-card' : ''}`}
       data-hobby-id={`hobby-${index}`}
     >
       <Parallax
@@ -28,9 +28,9 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
         speed={-1}
         shouldAlwaysCompleteAnimation={true}
         disabled={false}
-        style={{ width: "100%" }}
+        style={{ width: '100%' }}
       >
-        <div className={`hobby-card ${isEven ? "card-left" : "card-right"}`}>
+        <div className={`hobby-card ${isEven ? 'card-left' : 'card-right'}`}>
           {/* 背景图片 */}
           <div className="hobby-background-image">
             <img
@@ -40,7 +40,7 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
               loading="lazy"
               onLoad={(e) => {
                 const img = e.target as HTMLImageElement;
-                const card = img.closest(".hobby-card") as HTMLElement;
+                const card = img.closest('.hobby-card') as HTMLElement;
                 if (card && img.naturalHeight > 0) {
                   const aspectRatio = img.naturalWidth / img.naturalHeight;
                   const cardWidth = card.offsetWidth;
@@ -50,7 +50,11 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
                 }
               }}
             />
-            <div className="image-gradient-overlay"></div>
+            <div
+              className={`image-gradient-overlay ${
+                isEven ? 'card-left' : 'card-right'
+              }"`}
+            ></div>
           </div>
 
           {/* 内容区域 */}
