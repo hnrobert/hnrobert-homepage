@@ -20,6 +20,7 @@
     "Node.js": 0.8,
     "Next.js": 0.8,
     "Vue": 0.7,
+    "Express.js": 0.6,
     "Electron": 0.8,
     "VSCode Extensions": 0.75,
     "Docker": 0.9,
