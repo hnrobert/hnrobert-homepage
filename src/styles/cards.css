@@ -69,15 +69,26 @@
 .contact-icon {
   font-size: 1.875rem;
   margin-bottom: 0.75rem;
-  transition: transform 0.3s ease;
+  display: inline-block;
+  transform-origin: center center;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: all 0.3s ease;
 }
 
 .contact-item:hover .contact-icon,
 .interactive-item:hover .item-icon {
-  transform: scale(1.1);
+  transform: translateZ(0) scale(1.2) rotate(5deg);
+  transition: transform 0.3s ease;
 }
 
-.item-label,
+.contact-item:not(:hover) .contact-icon,
+.interactive-item:not(:hover) .item-icon {
+  transform: translateZ(0) scale(1) rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
 .contact-label {
   font-weight: 500;
   font-size: 0.875rem;
