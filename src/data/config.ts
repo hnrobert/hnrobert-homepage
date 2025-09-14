@@ -1,8 +1,8 @@
 import configData from "../configs/config.json";
 
 export interface ConfigData {
-  techStack: string[];
-  featuredProjects: any[];
+  techStack: Record<string, number>;
+  featuredProjects: string[];
   hobbies: string[];
   fileSourceLink: string;
 }
@@ -15,10 +15,14 @@ class ConfigService {
   }
 
   getTechStack(): string[] {
+    return Object.keys(this.config.techStack);
+  }
+
+  getTechStackWithLevels(): Record<string, number> {
     return this.config.techStack;
   }
 
-  getFeaturedProjects(): any[] {
+  getFeaturedProjects(): string[] {
     return this.config.featuredProjects;
   }
 
