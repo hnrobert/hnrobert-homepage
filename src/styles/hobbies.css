@@ -23,7 +23,7 @@
 .hobbies-with-images-section {
   display: flex;
   flex-direction: column;
-  gap: 0; /* 移除固定gap，改用动态margin */
+  gap: 0;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -33,19 +33,13 @@
 
 .hobby-card-with-image {
   width: 100%;
-  margin-bottom: clamp(
-    6rem,
-    15vh,
-    12rem
-  ); /* 基础间距，为parallax动画预留空间 */
+  margin-bottom: clamp(6rem, 15vh, 12rem);
 }
 
-/* 根据图片高度调整间距 */
 .hobby-card-with-image.tall-card {
-  margin-bottom: 50vh; /* 为高图片预留更多空间 */
+  margin-bottom: 50vh;
 }
 
-/* 最后一个卡片不需要下边距 */
 .hobby-card-with-image:last-child {
   margin-bottom: clamp(2rem, 5vh, 4rem);
 }
@@ -54,58 +48,43 @@
   margin-bottom: clamp(3rem, 20vh, 6rem);
 }
 
+/* 动画延迟 */
 .hobby-card-with-image:nth-child(1) .hobby-card {
   animation-delay: 0.2s;
 }
-
 .hobby-card-with-image:nth-child(2) .hobby-card {
   animation-delay: 0.4s;
 }
-
 .hobby-card-with-image:nth-child(3) .hobby-card {
   animation-delay: 0.6s;
 }
-
 .hobby-card-with-image:nth-child(4) .hobby-card {
   animation-delay: 0.8s;
 }
-
 .hobby-card-with-image:nth-child(5) .hobby-card {
   animation-delay: 1s;
 }
 
+/* ===== 主要卡片样式 ===== */
 .hobby-card {
   position: relative;
   min-height: 400px;
   height: auto;
   width: 100%;
   max-width: calc(100% - 2rem);
-  margin: 0 auto; /* 移除垂直margin，改用父容器控制 */
+  margin: 0 auto;
   border-radius: 24px;
   overflow: hidden;
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.4s ease;
   will-change: transform, box-shadow, background;
-  transform: translateZ(0); /* Promote to its own layer */
+  transform: translateZ(0);
   opacity: 0;
   animation: fadeInUpWithOpacity 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   display: flex;
   flex-direction: column;
-}
-
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @keyframes fadeInUpWithOpacity {
@@ -123,12 +102,6 @@
   }
 }
 
-.hobby-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-  background: var(--card-bg);
-}
-
 /* 背景图片容器 */
 .hobby-background-image {
   position: absolute;
@@ -144,46 +117,37 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transform: scale(1) translateZ(0); /* Promote to its own layer */
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: scale(1) translateZ(0);
   will-change: transform;
 }
 
-.hobby-card:hover .background-img {
-  transform: scale(1.05);
-}
-
-/* 渐变叠加层 */
 .image-gradient-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(0, 0, 0, 0.1) 40%,
-    rgba(255, 255, 255, 0.1) 60%,
-    rgba(255, 255, 255, 0.3) 100%
-  );
-  backdrop-filter: blur(2px);
-  opacity: 0.6;
-  transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
-}
-
-[data-theme='dark'] .image-gradient-overlay {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.5) 0%,
-    rgba(0, 0, 0, 0.3) 40%,
-    rgba(20, 20, 20, 0.2) 60%,
-    rgba(40, 40, 40, 0.4) 100%
-  );
-}
-
-.hobby-card:hover .image-gradient-overlay {
+  justify-content: flex-start;
+  backdrop-filter: blur(0px);
   opacity: 0.8;
+  background: linear-gradient(
+    to right,
+    var(--hobby-gradient-start) 0%,
+    var(--hobby-gradient-middle) 30%,
+    var(--hobby-gradient-end) 50%,
+    transparent 90%
+  );
+}
+
+.card-right .image-gradient-overlay  {
+
+  background: linear-gradient(
+    to left,
+    var(--hobby-gradient-start) 0%,
+    var(--hobby-gradient-middle) 30%,
+    var(--hobby-gradient-end) 50%,
+    transparent 60%
+  );
 }
 
 /* 内容区域 */
@@ -194,87 +158,11 @@
   align-items: center;
   justify-content: flex-start;
   padding: 3rem;
-  background: linear-gradient(
-    to right,
-    var(--hobby-gradient-start) 0%,
-    var(--hobby-gradient-middle) 30%,
-    var(--hobby-gradient-end) 50%,
-    transparent 60%
-  );
   flex-grow: 1;
-  transition: background 0.4s ease;
 }
 
 .hobby-card.card-right .hobby-content-area {
   justify-content: flex-end;
-  background: linear-gradient(
-    to left,
-    var(--hobby-gradient-start) 0%,
-    var(--hobby-gradient-middle) 30%,
-    var(--hobby-gradient-end) 50%,
-    transparent 60%
-  );
-}
-
-[data-theme='dark'] .hobby-content-area {
-  background: linear-gradient(
-    to right,
-    var(--hobby-gradient-start) 0%,
-    var(--hobby-gradient-middle) 30%,
-    var(--hobby-gradient-end) 50%,
-    transparent 60%
-  );
-}
-
-[data-theme='dark'] .hobby-card.card-right .hobby-content-area {
-  background: linear-gradient(
-    to left,
-    var(--hobby-gradient-start) 0%,
-    var(--hobby-gradient-middle) 30%,
-    var(--hobby-gradient-end) 50%,
-    transparent 60%
-  );
-}
-
-/* 悬停时内容区域的效果 */
-.hobby-card:hover .hobby-content-area {
-  background: linear-gradient(
-    to right,
-    var(--hobby-gradient-hover-start) 0%,
-    var(--hobby-gradient-hover-middle) 30%,
-    var(--hobby-gradient-hover-end) 50%,
-    transparent 60%
-  );
-}
-
-.hobby-card.card-right:hover .hobby-content-area {
-  background: linear-gradient(
-    to left,
-    var(--hobby-gradient-hover-start) 0%,
-    var(--hobby-gradient-hover-middle) 30%,
-    var(--hobby-gradient-hover-end) 50%,
-    transparent 60%
-  );
-}
-
-[data-theme='dark'] .hobby-card:hover .hobby-content-area {
-  background: linear-gradient(
-    to right,
-    var(--hobby-gradient-hover-start) 0%,
-    var(--hobby-gradient-hover-middle) 30%,
-    var(--hobby-gradient-hover-end) 50%,
-    transparent 60%
-  );
-}
-
-[data-theme='dark'] .hobby-card.card-right:hover .hobby-content-area {
-  background: linear-gradient(
-    to left,
-    var(--hobby-gradient-hover-start) 0%,
-    var(--hobby-gradient-hover-middle) 30%,
-    var(--hobby-gradient-hover-end) 50%,
-    transparent 60%
-  );
 }
 
 /* 文本内容 */
@@ -288,13 +176,6 @@
   padding-left: 1rem;
 }
 
-.hobby-card.card-left .hobby-text-content {
-  align-items: flex-start;
-  text-align: left;
-  padding-left: 1rem;
-  padding-right: 0;
-}
-
 .hobby-card.card-right .hobby-text-content {
   align-items: flex-end;
   text-align: right;
@@ -305,15 +186,8 @@
 .hobby-emoji-large {
   font-size: 4rem;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-  transform: scale(1) rotate(0deg) translateZ(0); /* Promote to its own layer */
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: scale(1) rotate(0deg) translateZ(0);
   will-change: transform, filter;
-}
-
-.hobby-card:hover .hobby-emoji-large {
-  transform: scale(1.2) rotate(6deg);
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
 }
 
 .hobby-title {
@@ -322,18 +196,11 @@
   color: var(--text-primary);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 0;
-  transform: translateY(0) translateZ(0); /* Promote to its own layer */
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    text-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.4s ease;
+  transform: translateY(0) translateZ(0);
   will-change: transform, text-shadow, color;
 }
 
-.hobby-card:hover .hobby-title {
-  transform: translateY(-4px);
-  text-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-}
-
-/* 无图片的爱好样式 */
+/* ===== 无图片的爱好样式 ===== */
 .hobbies-without-images-section {
   margin-top: 2rem;
   margin-bottom: 0;
@@ -351,56 +218,27 @@
   width: 100%;
 }
 
-/* 在较大屏幕上确保最多显示合适的列数 */
-@media (min-width: 1400px) {
-  .simple-hobbies-grid {
-    max-width: 1200px;
-  }
-}
-
-@media (min-width: 1200px) and (max-width: 1399px) {
-  .simple-hobbies-grid {
-    max-width: 100%;
-  }
-}
-
-@media (min-width: 900px) and (max-width: 1199px) {
-  .simple-hobbies-grid {
-    max-width: 100%;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 899px) {
-  .simple-hobbies-grid {
-    max-width: 100%;
-  }
-}
-
 .hobby-card-without-image {
   flex: 1 1 200px;
   min-width: 200px;
 }
 
+/* 动画延迟 */
 .hobby-card-without-image:nth-child(1) .hobby-item-simple {
   animation-delay: 0.1s;
 }
-
 .hobby-card-without-image:nth-child(2) .hobby-item-simple {
   animation-delay: 0.2s;
 }
-
 .hobby-card-without-image:nth-child(3) .hobby-item-simple {
   animation-delay: 0.3s;
 }
-
 .hobby-card-without-image:nth-child(4) .hobby-item-simple {
   animation-delay: 0.4s;
 }
-
 .hobby-card-without-image:nth-child(5) .hobby-item-simple {
   animation-delay: 0.5s;
 }
-
 .hobby-card-without-image:nth-child(6) .hobby-item-simple {
   animation-delay: 0.6s;
 }
@@ -415,10 +253,8 @@
   backdrop-filter: blur(8px);
   border: 1px solid var(--glass-border);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.4s ease;
   will-change: transform, box-shadow, background;
-  transform: translateY(40px) scale(1) translateZ(0); /* Promote to its own layer */
+  transform: translateY(40px) scale(1) translateZ(0);
   animation: fadeInUpSimple 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
@@ -433,42 +269,113 @@
   }
 }
 
-.hobby-item-simple:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-  background: var(--card-bg);
-}
-
 .hobby-emoji-simple {
   font-size: 2rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    filter 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transform: scale(1) rotate(0deg) translateZ(0); /* Promote to its own layer */
+  transform: scale(1) rotate(0deg) translateZ(0);
   will-change: transform, filter;
-}
-
-.hobby-item-simple:hover .hobby-emoji-simple {
-  transform: scale(1.2) rotate(8deg);
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .hobby-label-simple {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
-  transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transform: translateX(0) translateZ(0); /* Promote to its own layer */
+  transform: translateX(0) translateZ(0);
   will-change: transform, color;
 }
 
-.hobby-item-simple:hover .hobby-label-simple {
-  color: var(--text-accent);
-  transform: translateX(4px);
+/* ===== 动画覆盖 - 修复theme.css冲突 ===== */
+html.theme-loaded .hobby-card,
+html.theme-loaded .hobby-item-simple {
+  transition: transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.65s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.6s ease !important;
 }
 
-/* 响应式设计 */
+html.theme-loaded .background-img {
+  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.6s ease !important;
+}
+
+html.theme-loaded .hobby-background-image {
+  transition: transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.6s ease !important;
+}
+
+html.theme-loaded .image-gradient-overlay {
+  transition: opacity 0.7s ease, backdrop-filter 0.7s ease !important;
+}
+
+html.theme-loaded .hobby-content-area {
+  transition: background 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+}
+
+html.theme-loaded .hobby-text-content {
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.6s ease !important;
+}
+
+html.theme-loaded .hobby-emoji-large,
+html.theme-loaded .hobby-emoji-simple {
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+}
+
+html.theme-loaded .hobby-title {
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+    text-shadow 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), color 0.5s ease !important;
+}
+
+html.theme-loaded .hobby-label-simple {
+  transition: color 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+}
+
+/* ===== HOVER效果 ===== */
+.hobby-card:hover {
+  /* transform: translateY(-10px) scale(1.02) !important; */
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15) !important;
+  background: var(--card-bg) !important;
+}
+
+.hobby-card:hover .background-img {
+  transform: scale(1.08) translateZ(0) !important;
+}
+
+.hobby-card:hover .hobby-background-image {
+  transform: scale(1.01) !important;
+}
+
+.hobby-card:hover .image-gradient-overlay {
+  opacity: 1 !important;
+  backdrop-filter: blur(2px);
+}
+
+.hobby-card:hover .hobby-emoji-large {
+  transform: scale(1.2) rotate(5deg) translateZ(0) !important;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35)) !important;
+}
+
+.hobby-card:hover .hobby-title {
+  transform: translateY(-5px) translateZ(0) !important;
+  text-shadow: 0 10px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+.hobby-item-simple:hover {
+  transform: translateY(-8px) scale(1.03) !important;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2) !important;
+  background: var(--card-bg) !important;
+}
+
+.hobby-item-simple:hover .hobby-emoji-simple {
+  transform: scale(1.25) rotate(6deg) translateZ(0) !important;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.28)) !important;
+}
+
+.hobby-item-simple:hover .hobby-label-simple {
+  transform: translateX(5px) translateZ(0) !important;
+  color: var(--text-accent) !important;
+}
+
+/* ===== 响应式设计 ===== */
 @media (max-width: 768px) {
   .hobbies-with-images-section {
     padding: 0 1rem;
@@ -586,102 +493,4 @@
   .hobby-card-without-image {
     flex-basis: 100%;
   }
-}
-
-/* ===== ENHANCED HOVER ANIMATIONS - OVERRIDES ===== */
-/* 使用更高的优先级来覆盖theme.css中的全局样式 */
-
-/* 确保主要卡片的动画效果 */
-html.theme-loaded .hobby-card {
-  transition: transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
-    box-shadow 0.65s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.6s ease !important;
-}
-
-/* 背景图片动画 */
-html.theme-loaded .background-img {
-  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.6s ease !important;
-}
-
-/* 背景容器动画 */
-html.theme-loaded .hobby-background-image {
-  transition: transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
-    opacity 0.6s ease !important;
-}
-
-/* 渐变叠加层动画 */
-html.theme-loaded .image-gradient-overlay {
-  transition: opacity 0.7s ease, backdrop-filter 0.7s ease !important;
-}
-
-/* 内容区域动画 */
-html.theme-loaded .hobby-content-area {
-  transition: background 0.7s ease !important;
-}
-
-/* 文字内容动画 */
-html.theme-loaded .hobby-text-content {
-  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
-    opacity 0.6s ease !important;
-}
-
-/* Emoji动画 */
-html.theme-loaded .hobby-emoji-large {
-  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
-    filter 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
-  transition-delay: 50ms !important;
-}
-
-/* 标题动画 */
-html.theme-loaded .hobby-title {
-  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
-    text-shadow 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), color 0.5s ease !important;
-  transition-delay: 30ms !important;
-}
-
-/* 简单卡片动画 */
-html.theme-loaded .hobby-item-simple {
-  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
-    box-shadow 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.5s ease !important;
-}
-
-/* 简单Emoji动画 */
-html.theme-loaded .hobby-emoji-simple {
-  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
-    filter 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
-  transition-delay: 40ms !important;
-}
-
-/* 简单标签动画 */
-html.theme-loaded .hobby-label-simple {
-  transition: color 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
-  transition-delay: 60ms !important;
-}
-
-/* 增强的hover效果 */
-.hobby-card:hover .background-img {
-  transform: scale(1.08) translateZ(0) !important;
-}
-
-.hobby-card:hover .hobby-background-image {
-  transform: scale(1.01) !important;
-}
-
-.hobby-card:hover .hobby-emoji-large {
-  transform: scale(1.2) rotate(5deg) translateZ(0) !important;
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35)) !important;
-}
-
-.hobby-card:hover .hobby-title {
-  transform: translateY(-5px) translateZ(0) !important;
-  text-shadow: 0 10px 20px rgba(0, 0, 0, 0.35) !important;
-}
-
-.hobby-item-simple:hover .hobby-emoji-simple {
-  transform: scale(1.25) rotate(6deg) translateZ(0) !important;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.28)) !important;
-}
-
-.hobby-item-simple:hover .hobby-label-simple {
-  transform: translateX(5px) translateZ(0) !important;
 }

@@ -151,8 +151,8 @@
   --footer-bg: #1e293b;
   --hero-gradient-start: #60a5fa;
   --hero-gradient-end: #3b82f6;
-  --hobby-gradient-start: rgba(10, 10, 10, 0.85);
-  --hobby-gradient-middle: rgba(15, 15, 15, 0.6);
+  --hobby-gradient-start: rgba(0, 0, 0, 1);
+  --hobby-gradient-middle: rgba(15, 15, 15, 0.8);
   --hobby-gradient-end: rgba(20, 20, 20, 0.2);
   --hobby-gradient-hover-start: rgba(5, 5, 5, 0.9);
   --hobby-gradient-hover-middle: rgba(10, 10, 10, 0.7);
