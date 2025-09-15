@@ -31,6 +31,7 @@
         "opencontainers",
         "precomposed",
         "rclpy",
+        "retag",
         "rgba",
         "Roboto",
         "rospy",
