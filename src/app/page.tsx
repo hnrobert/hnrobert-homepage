@@ -1,28 +1,33 @@
-"use client";
+'use client';
 
-import React, { useState, Suspense, lazy } from "react";
-import { ParallaxProvider } from "react-scroll-parallax";
-import { Navigation } from "../components/Navigation";
-import { Footer } from "../components/Footer";
-import { HeroSection } from "../components/HeroSection";
+import React, { useState, Suspense, lazy } from 'react';
+import { ParallaxProvider } from 'react-scroll-parallax';
+import { Navigation } from '../components/Navigation';
+import { Footer } from '../components/Footer';
+import { HeroSection } from '../components/HeroSection';
 
 const TechStackSection = lazy(() =>
-  import("../components/TechStackSection").then((m) => ({
+  import('../components/TechStackSection').then((m) => ({
     default: m.TechStackSection,
   }))
 );
+const GitHubStatsSection = lazy(() =>
+  import('../components/GitHubStatsSection').then((m) => ({
+    default: m.GitHubStatsSection,
+  }))
+);
 const ProjectsSection = lazy(() =>
-  import("../components/ProjectsSection").then((m) => ({
+  import('../components/ProjectsSection').then((m) => ({
     default: m.ProjectsSection,
   }))
 );
 const HobbiesSection = lazy(() =>
-  import("../components/HobbiesSection").then((m) => ({
+  import('../components/HobbiesSection').then((m) => ({
     default: m.HobbiesSection,
   }))
 );
 const ContactSection = lazy(() =>
-  import("../components/ContactSection").then((m) => ({
+  import('../components/ContactSection').then((m) => ({
     default: m.ContactSection,
   }))
 );
@@ -40,7 +45,7 @@ const SectionSkeleton = () => (
 );
 
 export default function Page() {
-  const [activeSection, setActiveSection] = useState("me");
+  const [activeSection, setActiveSection] = useState('me');
 
   return (
     <ParallaxProvider>
@@ -52,6 +57,10 @@ export default function Page() {
 
           <Suspense fallback={<SectionSkeleton />}>
             <TechStackSection />
+          </Suspense>
+
+          <Suspense fallback={<SectionSkeleton />}>
+            <GitHubStatsSection username="hnrobert" />
           </Suspense>
 
           <Suspense fallback={<SectionSkeleton />}>

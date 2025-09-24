@@ -41,7 +41,7 @@ export interface ProjectInfo {
   stars: number;
   forks: number;
   lastUpdated: string;
-  status: "active" | "archived" | "experimental";
+  status: 'active' | 'archived' | 'experimental';
   loading?: boolean;
   error?: string;
 }
@@ -97,47 +97,24 @@ class InternalGitHubAPIService {
     );
   }
 
-  async getUserRepositories(
-    username: string,
-    options: {
-      type?: "owner" | "member" | "all";
-      sort?: "created" | "updated" | "pushed" | "full_name";
-      direction?: "asc" | "desc";
-      per_page?: number;
-      page?: number;
-    } = {}
-  ): Promise<{ repositories: GitHubRepo[]; pagination: any }> {
-    const params = new URLSearchParams();
-    Object.entries(options).forEach(([key, value]) => {
-      if (value !== undefined) {
-        params.append(key, value.toString());
-      }
-    });
-
-    const endpoint = `/api/github/users/${username}/repos${
-      params.toString() ? "?" + params.toString() : ""
-    }`;
-    return this.fetchWithCache(endpoint);
-  }
-
   async enrichProject(url: string): Promise<ProjectInfo> {
     const parsed = this.parseGitHubUrl(url);
     if (!parsed) {
-      throw new Error("Invalid GitHub URL format");
+      throw new Error('Invalid GitHub URL format');
     }
 
     try {
       const repoData = await this.getRepository(parsed.owner, parsed.repo);
 
       // 确定项目状态
-      let status: "active" | "archived" | "experimental" = "active";
+      let status: 'active' | 'archived' | 'experimental' = 'active';
       if (repoData.archived) {
-        status = "archived";
+        status = 'archived';
       } else if (
-        repoData.topics.includes("experimental") ||
-        repoData.topics.includes("beta")
+        repoData.topics.includes('experimental') ||
+        repoData.topics.includes('beta')
       ) {
-        status = "experimental";
+        status = 'experimental';
       }
 
       // 提取主要编程语言
@@ -147,10 +124,10 @@ class InternalGitHubAPIService {
 
       return {
         id: `${parsed.owner}/${parsed.repo}`,
-        title: repoData.name.replace(/-/g, " "),
-        description: repoData.description || "No description available",
+        title: repoData.name.replace(/-/g, ' '),
+        description: repoData.description || 'No description available',
         repository: url,
-        language: repoData.language || "Unknown",
+        language: repoData.language || 'Unknown',
         languages: mainLanguages,
         topics: repoData.topics,
         stars: repoData.stargazers_count,
@@ -160,20 +137,20 @@ class InternalGitHubAPIService {
       };
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
+        error instanceof Error ? error.message : 'Unknown error occurred';
 
       return {
         id: `${parsed.owner}/${parsed.repo}`,
-        title: parsed.repo.replace(/-/g, " "),
-        description: "Failed to load project information",
+        title: parsed.repo.replace(/-/g, ' '),
+        description: 'Failed to load project information',
         repository: url,
-        language: "Unknown",
+        language: 'Unknown',
         languages: [],
         topics: [],
         stars: 0,
         forks: 0,
         lastUpdated: new Date().toISOString(),
-        status: "active",
+        status: 'active',
         error: errorMessage,
       };
     }
@@ -185,24 +162,24 @@ class InternalGitHubAPIService {
     );
 
     return results.map((result, index) => {
-      if (result.status === "fulfilled") {
+      if (result.status === 'fulfilled') {
         return result.value;
       } else {
         // 处理失败的情况
         const parsed = this.parseGitHubUrl(urls[index]);
         return {
           id: parsed ? `${parsed.owner}/${parsed.repo}` : urls[index],
-          title: parsed ? parsed.repo.replace(/-/g, " ") : "Unknown Project",
-          description: "Failed to load project information",
+          title: parsed ? parsed.repo.replace(/-/g, ' ') : 'Unknown Project',
+          description: 'Failed to load project information',
           repository: urls[index],
-          language: "Unknown",
+          language: 'Unknown',
           languages: [],
           topics: [],
           stars: 0,
           forks: 0,
           lastUpdated: new Date().toISOString(),
-          status: "active" as const,
-          error: result.reason?.message || "Failed to load project",
+          status: 'active' as const,
+          error: result.reason?.message || 'Failed to load project',
         };
       }
     });
@@ -214,54 +191,18 @@ class InternalGitHubAPIService {
 
     return {
       id: parsed ? `${parsed.owner}/${parsed.repo}` : url,
-      title: parsed ? parsed.repo.replace(/-/g, " ") : "Loading...",
-      description: "Loading project information...",
+      title: parsed ? parsed.repo.replace(/-/g, ' ') : 'Loading...',
+      description: 'Loading project information...',
       repository: url,
-      language: "Loading...",
+      language: 'Loading...',
       languages: [],
       topics: [],
       stars: 0,
       forks: 0,
       lastUpdated: new Date().toISOString(),
-      status: "active",
+      status: 'active',
       loading: true,
     };
-  }
-
-  // 使用内部API进行通用GitHub API调用
-  async makeGitHubAPICall(
-    endpoint: string,
-    method: "GET" | "POST" = "GET",
-    body?: any
-  ): Promise<any> {
-    const apiEndpoint = "/api/github";
-
-    if (method === "GET") {
-      const params = new URLSearchParams({ endpoint });
-      return this.fetchWithCache(`${apiEndpoint}?${params.toString()}`);
-    } else {
-      const response = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          endpoint,
-          method,
-          body,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.error ||
-            `API error: ${response.status} ${response.statusText}`
-        );
-      }
-
-      return response.json();
-    }
   }
 }
 
