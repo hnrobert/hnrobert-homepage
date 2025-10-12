@@ -203,16 +203,29 @@
   .stats-main-grid {
     grid-template-columns: 1fr 1fr;
   }
-  
+
   .stat-box-wide {
     grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 768px) {
+  .github-stats-section {
+    padding: 3rem 0;
+  }
+
+  .github-stats-section .section-title {
+    font-size: 2rem;
+  }
+
+  /* 保持2-1布局 */
   .stats-main-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
+  }
+
+  .stat-box-wide {
+    grid-column: 1 / -1;
   }
 
   .stat-box {
@@ -246,11 +259,23 @@
   }
 }
 
+@media (max-width: 600px) {
+  /* 在更小的屏幕上才切换到单列 */
+  .stats-main-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-box-wide {
+    grid-column: 1;
+  }
+}
+
 @media (max-width: 480px) {
   .stats-main-grid {
     gap: 0.75rem;
   }
-  
+
   .stat-box {
     padding: 1rem;
   }

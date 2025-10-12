@@ -31,7 +31,7 @@ export const Footer: React.FC = () => {
         {/* Social links */}
         <div className="footer-links">
           <a
-            href="https://github.com/HNRobert"
+            href="https://github.com/hnrobert"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-link group"
@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
             <div className={iconContainerClass}>
               <FaGithub size={iconSize} color={getIconColor("#000")} />
             </div>
-            HNRobert
+            hnrobert
           </a>
           <a
             href="https://space.bilibili.com/523023049"

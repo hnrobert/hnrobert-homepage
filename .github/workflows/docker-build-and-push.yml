@@ -275,7 +275,7 @@ jobs:
             org.opencontainers.image.url=https://github.com/${{ github.repository }}
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.vendor=HNRobert
+            org.opencontainers.image.vendor=hnrobert
             org.opencontainers.image.licenses=MIT
 
       - name: 构建和推送 Docker 镜像

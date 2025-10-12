@@ -117,7 +117,7 @@ export const GitHubStatsSection: React.FC<GitHubStatsProps> = ({
     return null;
   }
 
-  const topLanguages = stats.stats.languageStats.slice(0, 5);
+  const topLanguages = stats.stats.languageStats.slice(0, 8);
   const contributionData = stats.stats.yearlyContributions;
 
   return (

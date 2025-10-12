@@ -59,7 +59,7 @@ export const ContactSection: React.FC = () => {
               className="contact-icon"
               style={{ color: getGithubIconColor() }}
             />
-            <span className="contact-label">HNRobert</span>
+            <span className="contact-label">hnrobert</span>
           </a>
           <a
             href="http://strava.com/athletes/hnrobert"

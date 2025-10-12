@@ -7,7 +7,7 @@ export const metadata = {
   description: "Personal website of HNRobert",
   robots: "index, follow",
   keywords: "HNRobert, developer, full-stack, portfolio, website",
-  authors: [{ name: "HNRobert" }],
+  authors: [{ name: "hnrobert" }],
   icons: {
     icon: [
       {

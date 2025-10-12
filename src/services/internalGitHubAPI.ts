@@ -119,7 +119,7 @@ class InternalGitHubAPIService {
 
       // 提取主要编程语言
       const mainLanguages = repoData.languages
-        .slice(0, 5) // 只取前5种语言
+        .slice(0, 8)
         .map((lang) => lang.name);
 
       return {

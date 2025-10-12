@@ -12,7 +12,7 @@ const TechStackSection = lazy(() =>
   }))
 );
 const GitHubStatsSection = lazy(() =>
-  import('../components/GitHubStatsSection').then((m) => ({
+  import('../components/github-stats').then((m) => ({
     default: m.GitHubStatsSection,
   }))
 );
