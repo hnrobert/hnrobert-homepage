@@ -14,11 +14,12 @@
   gap: 1.5rem;
 }
 
-.footer-icp {
+.footer-records {
   margin: auto;
   justify-content: center;
   display: flex;
   color: var(--text-secondary);
+  gap: 0.75rem;
 }
 
 .footer-links,

@@ -275,13 +275,15 @@ jobs:
             org.opencontainers.image.url=https://github.com/${{ github.repository }}
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.vendor=HNRobert
+            org.opencontainers.image.vendor=hnrobert
             org.opencontainers.image.licenses=MIT
 
       - name: 构建和推送 Docker 镜像
         id: build
         uses: docker/build-push-action@v5
         with:
+          provenance: false # Disable provenance to avoid unknown/unknown
+          sbom: false # Disable sbom to avoid unknown/unknown
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
@@ -290,7 +292,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          provenance: false
           build-args: |
             BUILDKIT_INLINE_CACHE=1
 

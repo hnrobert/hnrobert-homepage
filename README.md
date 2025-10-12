@@ -61,7 +61,7 @@ A personal homepage and portfolio website built with Next.js, featuring a modern
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/HNRobert/hnrobert-homepage.git
+   git clone https://github.com/hnrobert/hnrobert-homepage.git
    cd hnrobert-homepage
    ```
 

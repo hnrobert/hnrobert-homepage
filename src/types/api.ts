@@ -58,28 +58,14 @@ export interface GitHubAPIEndpoints {
   // 获取单个仓库信息
   getRepository: {
     path: `/api/github/repos/${string}/${string}`;
-    method: "GET";
+    method: 'GET';
     response: GitHubRepositoryData;
-  };
-
-  // 获取用户仓库列表
-  getUserRepositories: {
-    path: `/api/github/users/${string}/repos`;
-    method: "GET";
-    params?: {
-      type?: "owner" | "member" | "all";
-      sort?: "created" | "updated" | "pushed" | "full_name";
-      direction?: "asc" | "desc";
-      per_page?: number;
-      page?: number;
-    };
-    response: GitHubRepositoriesResponse;
   };
 
   // 通用GitHub API代理
   genericAPI: {
-    path: "/api/github";
-    method: "GET" | "POST";
+    path: '/api/github';
+    method: 'GET' | 'POST';
     params?: {
       endpoint?: string;
     };
@@ -112,4 +98,49 @@ export interface APIClientConfig {
   defaultCacheTime?: number;
   defaultRetries?: number;
   timeout?: number;
+}
+
+// GitHub用户统计数据类型
+export interface GitHubUserStats {
+  user: {
+    login: string;
+    name: string | null;
+    avatar_url: string;
+    bio: string | null;
+    blog: string | null;
+    location: string | null;
+    email: string | null;
+    company: string | null;
+    public_repos: number;
+    public_gists: number;
+    followers: number;
+    following: number;
+    created_at: string;
+    updated_at: string;
+  };
+  stats: {
+    totalStars: number;
+    totalForks: number;
+    totalCommits: number;
+    contributedRepos: number;
+    languageStats: Array<{
+      language: string;
+      count: number;
+      percentage: number;
+    }>;
+    yearlyContributions: {
+      year: number;
+      total: number;
+      commits: number;
+      issues: number;
+      pullRequests: number;
+      reviews: number;
+      weeks: Array<{
+        contributionDays: Array<{
+          contributionCount: number;
+          date: string;
+        }>;
+      }>;
+    };
+  };
 }

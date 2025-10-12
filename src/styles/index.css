@@ -1,28 +1,31 @@
 /* ===== MAIN STYLES IMPORT ===== */
 
 /* Theme system */
-@import "./theme.css";
+@import './theme.css';
 
 /* Base styles & typography */
-@import "./base.css";
+@import './base.css';
 
 /* Navigation */
-@import "./navigation.css";
+@import './navigation.css';
 
 /* Hero section */
-@import "./hero.css";
+@import './hero.css';
 
 /* Cards & glass effects */
-@import "./cards.css";
+@import './cards.css';
 
 /* Projects section */
-@import "./projects.css";
+@import './projects.css';
+
+/* GitHub Stats section */
+@import './github-stats.css';
 
 /* Hobbies section */
-@import "./hobbies.css";
+@import './hobbies.css';
 
 /* Footer */
-@import "./footer.css";
+@import './footer.css';
 
 /* Utilities & functional components */
-@import "./utilities.css";
+@import './utilities.css';

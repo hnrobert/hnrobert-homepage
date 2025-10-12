@@ -4,7 +4,6 @@ export interface ConfigData {
   techStack: Record<string, number>;
   featuredProjects: string[];
   hobbies: string[];
-  fileSourceLink: string;
 }
 
 class ConfigService {
@@ -28,10 +27,6 @@ class ConfigService {
 
   getHobbies(): string[] {
     return this.config.hobbies;
-  }
-
-  getFileSourceLink(): string {
-    return this.config.fileSourceLink;
   }
 
 }
