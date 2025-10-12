@@ -50,7 +50,7 @@ export const ContactSection: React.FC = () => {
             <span className="contact-label">HNRobert</span>
           </a>
           <a
-            href="https://github.com/HNRobert"
+            href="https://github.com/hnrobert"
             target="_blank"
             rel="noopener noreferrer"
             className="contact-item contact-item-span"
