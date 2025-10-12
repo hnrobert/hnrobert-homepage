@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { FaGithub, FaReact } from "react-icons/fa";
 import { SiBilibili, SiTencentqq, SiNextdotjs } from "react-icons/si";
 import { useTheme } from "../contexts/ThemeContext";
@@ -16,8 +17,22 @@ export const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        {/* ICP info */}
-        <div className="footer-icp">
+        {/* Public security & ICP info */}
+        <div className="footer-records">
+          <a
+            href="https://beian.mps.gov.cn/#/query/webSearch?code=33021202003929"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            <Image
+              src="/assets/beian.png"
+              alt="浙公网安备图标"
+              width={16}
+              height={16}
+            />
+            浙公网安备33021202003929号
+          </a>
           <a
             href="https://beian.miit.gov.cn/"
             target="_blank"
@@ -31,7 +46,7 @@ export const Footer: React.FC = () => {
         {/* Social links */}
         <div className="footer-links">
           <a
-            href="https://github.com/HNRobert"
+            href="https://github.com/hnrobert"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-link group"
@@ -39,7 +54,7 @@ export const Footer: React.FC = () => {
             <div className={iconContainerClass}>
               <FaGithub size={iconSize} color={getIconColor("#000")} />
             </div>
-            HNRobert
+            hnrobert
           </a>
           <a
             href="https://space.bilibili.com/523023049"

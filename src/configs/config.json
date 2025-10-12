@@ -68,5 +68,19 @@
     "📽️ Watching Movies",
     "✂️ Video Editing"
   ],
-  "fileSourceLink": "http://ug.link/hnrobert-nas/filemgr/share-download/?id=b1843754fa994c53b23615db8e6a4e79"
+  "githubStats": {
+    "languageUse": {
+      "excludeLanguages": ["HTML", "Jupyter Notebook", "CSS", "AngelScript"],
+      "excludeRepos": [
+        "hnrobert/Vision-VSCode-Radar-2025",
+        "unnc-aim/Vision-VSCode-Radar-2025",
+        "unnc-aim/RAW-RM-VISION"
+      ]
+    },
+    "contributionStats": {
+      "excludeRepos": [
+        "hnrobert/Vision-VSCode-Radar-2025"
+      ]
+    }
+  }
 }
