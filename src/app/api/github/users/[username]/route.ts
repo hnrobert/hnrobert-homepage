@@ -2,6 +2,62 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GitHubUserStats } from '../../../../../types/api';
 import config from '../../../../../configs/config.json';
 
+// 缓存接口定义
+interface CacheEntry {
+  data: any;
+  timestamp: number;
+  expiresAt: number;
+}
+
+// 内存缓存存储
+const yearlyDataCache = new Map<string, CacheEntry>();
+
+// 缓存配置
+const CACHE_DURATION = {
+  HISTORICAL_YEARS: 24 * 60 * 60 * 1000, // 历史年份数据缓存24小时
+  CURRENT_YEAR: 5 * 60 * 1000, // 当前年份缓存5分钟
+};
+
+// 缓存辅助函数
+function getCacheKey(username: string, year: number): string {
+  return `${username}:${year}`;
+}
+
+function getCachedData(key: string): any | null {
+  const entry = yearlyDataCache.get(key);
+  if (!entry) return null;
+
+  if (Date.now() > entry.expiresAt) {
+    yearlyDataCache.delete(key);
+    return null;
+  }
+
+  return entry.data;
+}
+
+function setCachedData(key: string, data: any, ttl: number): void {
+  const now = Date.now();
+  yearlyDataCache.set(key, {
+    data,
+    timestamp: now,
+    expiresAt: now + ttl,
+  });
+}
+
+// 定期清理过期缓存
+setInterval(() => {
+  const now = Date.now();
+  const keysToDelete: string[] = [];
+
+  yearlyDataCache.forEach((entry, key) => {
+    if (now > entry.expiresAt) {
+      keysToDelete.push(key);
+    }
+  });
+
+  keysToDelete.forEach((key) => yearlyDataCache.delete(key));
+}, 60 * 60 * 1000); // 每小时清理一次
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { username: string } }
@@ -27,16 +83,16 @@ export async function GET(
     config.githubStats?.contributionStats?.excludeRepos || []
   );
 
-  console.log('\n=== Configuration ===');
-  console.log('Excluded languages:', Array.from(excludeLanguages));
-  console.log(
-    'Excluded repos for language stats:',
-    Array.from(excludeReposForLanguage)
-  );
-  console.log(
-    'Excluded repos for contribution stats:',
-    Array.from(excludeReposForContribution)
-  );
+  // console.log('\n=== Configuration ===');
+  // console.log('Excluded languages:', Array.from(excludeLanguages));
+  // console.log(
+  //   'Excluded repos for language stats:',
+  //   Array.from(excludeReposForLanguage)
+  // );
+  // console.log(
+  //   'Excluded repos for contribution stats:',
+  //   Array.from(excludeReposForContribution)
+  // );
 
   try {
     // 验证用户名格式
@@ -97,9 +153,9 @@ export async function GET(
     oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
     const fromDate = oneYearAgo.toISOString();
 
-    console.log(`\n=== Fetching GitHub Stats ===`);
-    console.log(`Last year contributions: from ${fromDate} to now`);
-    console.log(`Will also fetch yearly data for cumulative commits`);
+    // console.log(`\n=== Fetching GitHub Stats ===`);
+    // console.log(`Last year contributions: from ${fromDate} to now`);
+    // console.log(`Will also fetch yearly data for cumulative commits`);
 
     // 使用 GraphQL API 获取更详细的统计信息
     // 我们将查询多个年份的数据以累加总commit数
@@ -284,16 +340,25 @@ export async function GET(
     const lastYearStats = graphqlUser.lastYearContributions;
     const userCreatedAt = new Date(graphqlUser.createdAt);
 
-    console.log('\n=== User Account Info ===');
-    console.log('Account created:', userCreatedAt.toISOString());
-    console.log('Years active:', currentYear - userCreatedAt.getFullYear() + 1);
+    // console.log('\n=== User Account Info ===');
+    // console.log('Account created:', userCreatedAt.toISOString());
+    // console.log('Years active:', currentYear - userCreatedAt.getFullYear() + 1);
 
     // 逐年获取commit统计以累加总数
-    console.log('\n=== Fetching Year-by-Year Commits ===');
+    // console.log('\n=== Fetching Year-by-Year Commits ===');
     const yearlyCommits: { year: number; commits: number }[] = [];
     const startYear = userCreatedAt.getFullYear();
 
     for (let year = startYear; year <= currentYear; year++) {
+      // 检查缓存
+      const cacheKey = getCacheKey(username, year);
+      const cachedData = getCachedData(cacheKey);
+      if (cachedData) {
+        yearlyCommits.push(cachedData);
+        // console.log(`  ${year}: ${cachedData.commits} commits (from cache)`);
+        continue;
+      }
+
       const yearStart = new Date(`${year}-01-01T00:00:00Z`).toISOString();
       const yearEnd = new Date(`${year}-12-31T23:59:59Z`).toISOString();
 
@@ -345,15 +410,28 @@ export async function GET(
             if (excludeReposForContribution.has(repoName)) {
               const commits = repo.contributions?.totalCount || 0;
               excludedCommits += commits;
-              console.log(`    Excluding ${repoName}: ${commits} commits`);
+              // console.log(`    Excluding ${repoName}: ${commits} commits`);
             }
           });
 
           const adjustedCommits = totalCommits - excludedCommits;
-          yearlyCommits.push({ year, commits: adjustedCommits });
-          console.log(
-            `  ${year}: ${totalCommits} commits (${excludedCommits} excluded) = ${adjustedCommits} counted`
-          );
+          const yearResult = { year, commits: adjustedCommits };
+
+          // 存储到缓存，非当前年使用24小时TTL，当前年使用5分钟TTL
+          const isCurrentYear = year === currentYear;
+          const ttl = isCurrentYear
+            ? CACHE_DURATION.CURRENT_YEAR
+            : CACHE_DURATION.HISTORICAL_YEARS;
+          setCachedData(cacheKey, yearResult, ttl);
+
+          yearlyCommits.push(yearResult);
+          // console.log(
+          //   `  ${year}: ${totalCommits} commits (${excludedCommits} excluded) = ${adjustedCommits} counted${
+          //     isCurrentYear
+          //       ? ' (current year, 5min cache)'
+          //       : ' (historical, 24h cache)'
+          //   }`
+          // );
         } else {
           console.warn(
             `  ${year}: Failed to fetch (status ${yearResponse.status})`
@@ -370,33 +448,33 @@ export async function GET(
       (sum, y) => sum + y.commits,
       0
     );
-    console.log(`Total commits (cumulative): ${cumulativeTotalCommits}`);
+    // console.log(`Total commits (cumulative): ${cumulativeTotalCommits}`);
 
     // 计算统计信息（只统计自己拥有的仓库）
     // 添加详细的日志以便在终端看到计算过程
-    console.log(`Computing totals for user: ${username}`);
+    // console.log(`Computing totals for user: ${username}`);
 
     const totalStars = ownRepositories.reduce((sum: number, repo: any) => {
       const val = repo.stargazerCount || 0;
-      console.log(`  repo owner=${repo.owner?.login || 'unknown'} star=${val}`);
+      // console.log(`  repo owner=${repo.owner?.login || 'unknown'} star=${val}`);
       return sum + val;
     }, 0);
 
     const totalForks = ownRepositories.reduce((sum: number, repo: any) => {
       const val = repo.forkCount || 0;
-      console.log(
-        `  repo owner=${repo.owner?.login || 'unknown'} forks=${val}`
-      );
+      // console.log(
+      //   `  repo owner=${repo.owner?.login || 'unknown'} forks=${val}`
+      // );
       return sum + val;
     }, 0);
 
     // 统计语言使用情况（只计算与用户commit相关的代码）
     const languageMap = new Map<string, number>();
 
-    console.log('\n=== Language Statistics (based on commits) ===');
+    // console.log('\n=== Language Statistics (based on commits) ===');
 
     // 1. 统计自己拥有的仓库（这些仓库的代码都是你自己写的，使用完整统计）
-    console.log('\n1. Own repositories (100% attribution):');
+    // console.log('\n1. Own repositories (100% attribution):');
     ownRepositories.forEach((repo: any) => {
       const repoName = `${repo.owner?.login || 'unknown'}/${
         repo.name || 'unknown'
@@ -404,30 +482,30 @@ export async function GET(
 
       // 检查是否在排除列表中
       if (excludeReposForLanguage.has(repoName)) {
-        console.log(`  Repo: ${repoName} [EXCLUDED from language stats]`);
+        // console.log(`  Repo: ${repoName} [EXCLUDED from language stats]`);
         return;
       }
 
       if (repo.languages && repo.languages.edges) {
-        console.log(`  Repo: ${repoName}`);
+        // console.log(`  Repo: ${repoName}`);
         repo.languages.edges.forEach((edge: any) => {
           const language = edge.node.name;
 
           // 检查语言是否在排除列表中
           if (excludeLanguages.has(language)) {
-            console.log(`    - ${language}: ${edge.size} bytes [EXCLUDED]`);
+            // console.log(`    - ${language}: ${edge.size} bytes [EXCLUDED]`);
             return;
           }
 
           const size = edge.size;
-          console.log(`    - ${language}: ${size} bytes`);
+          // console.log(`    - ${language}: ${size} bytes`);
           languageMap.set(language, (languageMap.get(language) || 0) + size);
         });
       }
     });
 
     // 2. 统计贡献过的其他仓库（根据commit占比来计算代码量）
-    console.log('\n2. Contributed repositories (weighted by commit ratio):');
+    // console.log('\n2. Contributed repositories (weighted by commit ratio):');
     if (lastYearStats && lastYearStats.commitContributionsByRepository) {
       lastYearStats.commitContributionsByRepository.forEach((contrib: any) => {
         if (
@@ -442,9 +520,9 @@ export async function GET(
 
           // 检查是否在排除列表中
           if (excludeReposForLanguage.has(repoName)) {
-            console.log(
-              `  Repo: ${repoName} (${commitCount} commits) [EXCLUDED from language stats]`
-            );
+            // console.log(
+            //   `  Repo: ${repoName} (${commitCount} commits) [EXCLUDED from language stats]`
+            // );
             return;
           }
 
@@ -455,27 +533,27 @@ export async function GET(
 
           // 只统计有实际commit的仓库
           if (commitCount > 0) {
-            console.log(
-              `  Repo: ${repoName} (${commitCount} commits, estimated contribution: ${(
-                estimatedWeight * 100
-              ).toFixed(1)}%)`
-            );
+            // console.log(
+            //   `  Repo: ${repoName} (${commitCount} commits, estimated contribution: ${(
+            //     estimatedWeight * 100
+            //   ).toFixed(1)}%)`
+            // );
             contrib.repository.languages.edges.forEach((edge: any) => {
               const language = edge.node.name;
 
               // 检查语言是否在排除列表中
               if (excludeLanguages.has(language)) {
-                console.log(`    - ${language}: ${edge.size} bytes [EXCLUDED]`);
+                // console.log(`    - ${language}: ${edge.size} bytes [EXCLUDED]`);
                 return;
               }
 
               const rawSize = edge.size;
               const weightedSize = rawSize * estimatedWeight;
-              console.log(
-                `    - ${language}: ${rawSize} bytes × ${estimatedWeight.toFixed(
-                  2
-                )} = ${weightedSize.toFixed(0)} weighted bytes`
-              );
+              // console.log(
+              //   `    - ${language}: ${rawSize} bytes × ${estimatedWeight.toFixed(
+              //     2
+              //   )} = ${weightedSize.toFixed(0)} weighted bytes`
+              // );
               languageMap.set(
                 language,
                 (languageMap.get(language) || 0) + weightedSize
@@ -504,21 +582,21 @@ export async function GET(
       .sort((a, b) => b.count - a.count)
       .slice(0, 8); // 只取前8种语言
 
-    console.log('\n=== Total Language Distribution ===');
-    languageStats.forEach((stat) => {
-      console.log(
-        `${stat.language}: ${stat.count.toFixed(0)} bytes (${stat.percentage}%)`
-      );
-    });
+    // console.log('\n=== Total Language Distribution ===');
+    // languageStats.forEach((stat) => {
+    //   console.log(
+    //     `${stat.language}: ${stat.count.toFixed(0)} bytes (${stat.percentage}%)`
+    //   );
+    // });
 
     // 额外：为 totalCommits 和 contributedRepos 提供可追踪的计算和回退逻辑
-    console.log('\n=== Final Commit Statistics ===');
-    console.log('Cumulative commits from yearly data:', cumulativeTotalCommits);
-    console.log('Last year commits:', lastYearStats?.totalCommitContributions);
-    console.log(
-      'Last year repos:',
-      lastYearStats?.totalRepositoriesWithContributedCommits
-    );
+    // console.log('\n=== Final Commit Statistics ===');
+    // console.log('Cumulative commits from yearly data:', cumulativeTotalCommits);
+    // console.log('Last year commits:', lastYearStats?.totalCommitContributions);
+    // console.log(
+    //   'Last year repos:',
+    //   lastYearStats?.totalRepositoriesWithContributedCommits
+    // );
 
     // 使用累加的年度提交数作为总提交数
     let derivedTotalCommits = cumulativeTotalCommits;
@@ -531,11 +609,11 @@ export async function GET(
         ? lastYearStats.commitContributionsByRepository.length
         : 0);
 
-    console.log('Final derived totals:', {
-      derivedTotalCommits,
-      derivedContributedRepos,
-    });
-    console.log('=================================\n');
+    // console.log('Final derived totals:', {
+    //   derivedTotalCommits,
+    //   derivedContributedRepos,
+    // });
+    // console.log('=================================\n');
 
     // 构建返回数据
     const result: GitHubUserStats = {
@@ -576,7 +654,7 @@ export async function GET(
     // 设置缓存头
     const headers = new Headers({
       'Content-Type': 'application/json',
-      // 'Cache-Control': 's-maxage=300, stale-while-revalidate=150', // 5分钟缓存
+      'Cache-Control': 's-maxage=300, stale-while-revalidate=150', // 5分钟缓存
     });
 
     return new NextResponse(JSON.stringify(result), {
