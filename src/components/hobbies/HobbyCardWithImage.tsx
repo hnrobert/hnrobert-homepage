@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Parallax } from 'react-scroll-parallax';
+import { ParallaxMotion } from '../ParallaxMotion';
 import { HobbyData } from './types';
 
 interface HobbyCardWithImageProps {
@@ -21,13 +21,11 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
       className={`hobby-card-with-image ${cardHeight > 500 ? 'tall-card' : ''}`}
       data-hobby-id={`hobby-${index}`}
     >
-      <Parallax
-        translateY={[-20, 20]}
+      <ParallaxMotion
+        translateY={[-90, 90]}
         opacity={[0.9, 1.5]}
         easing={[0.7, 0.0, 0.3, 1]}
-        speed={-1}
-        shouldAlwaysCompleteAnimation={true}
-        disabled={false}
+        speed={1}
         style={{ width: '100%' }}
       >
         <div className={`hobby-card ${isEven ? 'card-left' : 'card-right'}`}>
@@ -51,9 +49,8 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
               }}
             />
             <div
-              className={`image-gradient-overlay ${
-                isEven ? 'card-left' : 'card-right'
-              }"`}
+              className={`image-gradient-overlay ${isEven ? 'card-left' : 'card-right'
+                }"`}
             ></div>
           </div>
 
@@ -65,7 +62,7 @@ export const HobbyCardWithImage: React.FC<HobbyCardWithImageProps> = ({
             </div>
           </div>
         </div>
-      </Parallax>
+      </ParallaxMotion>
     </div>
   );
 };
