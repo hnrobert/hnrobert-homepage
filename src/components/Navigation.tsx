@@ -50,14 +50,14 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
           <div className="nav-logo">
             <img
               src="/assets/avatar.png"
-              alt="HNRobert"
+              alt="HNRobert's Homepage"
               className="nav-avatar"
             />
           </div>
-          <span className="nav-title">HNRobert</span>
+          <span className="nav-title">HNRobert's Homepage</span>
         </Link>
 
-        <div className={`nav-links ${isMobileMenuOpen ? "mobile-open" : ""}`}>
+        <div className={`nav-links${isMobileMenuOpen ? " mobile-open" : ""}`}>
           <Link
             href="/"
             className={`nav-link ${isActive("/") ? "active" : ""}`}

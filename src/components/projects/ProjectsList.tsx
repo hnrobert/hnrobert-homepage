@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Parallax } from "react-scroll-parallax";
+import { ParallaxMotion } from "../ParallaxMotion";
 import { type WebProject } from "../../data/projects";
 import { ProjectCard } from "./ProjectCard";
 
@@ -80,13 +80,11 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                 marginBottom: "0.8rem",
               }}
             >
-              <Parallax
+              <ParallaxMotion
                 translateX={index % 2 === 0 ? [-120, 0] : [120, 0]}
                 opacity={[0, 1]}
                 easing={[0.5, 1, 0, 1]}
-                speed={-3}
-                shouldAlwaysCompleteAnimation={true}
-                disabled={false}
+                speed={1}
                 style={{
                   width: "100%",
                 }}
@@ -94,7 +92,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                 <div className="project-card-wrapper-mobile">
                   <ProjectCard project={project} />
                 </div>
-              </Parallax>
+              </ParallaxMotion>
             </div>
           );
         })}
@@ -126,13 +124,11 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                     maxWidth: "calc(50% - 1rem)",
                   }}
                 >
-                  <Parallax
+                  <ParallaxMotion
                     translateX={index === 0 ? [-150, 0] : [150, 0]}
                     opacity={[0, 1]}
                     easing={[0.5, 1, 0, 1]}
-                    speed={-3}
-                    shouldAlwaysCompleteAnimation={true}
-                    disabled={false}
+                    speed={1}
                     style={{
                       width: "100%",
                     }}
@@ -140,7 +136,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
                     <div className="project-card-wrapper-desktop">
                       <ProjectCard project={project} />
                     </div>
-                  </Parallax>
+                  </ParallaxMotion>
                 </div>
               );
             })}
@@ -152,7 +148,7 @@ export const ProjectsList: React.FC<ProjectsListProps> = ({ projects }) => {
 
   // 在客户端挂载之前，使用默认布局避免 hydration 错误
   if (!isClient || isMobile === null) {
-    // 在加载状态下也使用 Parallax 效果，但不依赖 intersection observer
+    // 在加载状态下也使用 framer-motion 视差效果
     // 默认假设为桌面端，客户端挂载后会自动切换到正确的布局
     return renderDesktopProjects(projects);
   }

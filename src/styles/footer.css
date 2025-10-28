@@ -18,8 +18,18 @@
   margin: auto;
   justify-content: center;
   display: flex;
+  flex-wrap: wrap;
   color: var(--text-secondary);
   gap: 0.75rem;
+}
+
+/* 在小屏幕上让备案信息换行显示 */
+@media (max-width: 640px) {
+  .footer-records {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
 }
 
 .footer-links,

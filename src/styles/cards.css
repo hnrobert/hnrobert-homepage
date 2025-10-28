@@ -23,6 +23,9 @@
   background: var(--nav-bg);
   border-radius: 0;
   border-bottom: 1px solid var(--nav-border);
+  position: sticky;
+  top: 0;
+  z-index: 10000; /* 确保导航栏在最上层 */
 }
 
 .glass-card:hover {
@@ -126,11 +129,11 @@
   border-radius: 4px;
   background: linear-gradient(
     to right,
-    hsl(120, 70%, 45%) 0%,     /* 绿色 - 初学者 */
-    hsl(160, 75%, 40%) 25%,    /* 蓝绿色 - 入门 */
-    hsl(200, 80%, 45%) 50%,    /* 蓝色 - 中级 */
-    hsl(240, 85%, 50%) 75%,    /* 深蓝色 - 高级 */
-    hsl(280, 90%, 55%) 100%    /* 紫色 - 专家 */
+    hsl(120, 70%, 45%) 0%,
+    /* 绿色 - 初学者 */ hsl(160, 75%, 40%) 25%,
+    /* 蓝绿色 - 入门 */ hsl(200, 80%, 45%) 50%,
+    /* 蓝色 - 中级 */ hsl(240, 85%, 50%) 75%,
+    /* 深蓝色 - 高级 */ hsl(280, 90%, 55%) 100% /* 紫色 - 专家 */
   );
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

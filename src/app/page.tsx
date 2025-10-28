@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, Suspense, lazy } from 'react';
-import { ParallaxProvider } from 'react-scroll-parallax';
 import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 import { HeroSection } from '../components/HeroSection';
@@ -48,36 +47,34 @@ export default function Page() {
   const [activeSection, setActiveSection] = useState('me');
 
   return (
-    <ParallaxProvider>
-      <div className="page-layout">
-        <Navigation activeSection={activeSection} />
+    <div className="page-layout">
+      <Navigation activeSection={activeSection} />
 
-        <main className="main-container">
-          <HeroSection />
+      <main className="main-container">
+        <HeroSection />
 
-          <Suspense fallback={<SectionSkeleton />}>
-            <TechStackSection />
-          </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <TechStackSection />
+        </Suspense>
 
-          <Suspense fallback={<SectionSkeleton />}>
-            <GitHubStatsSection username="hnrobert" />
-          </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <GitHubStatsSection username="hnrobert" />
+        </Suspense>
 
-          <Suspense fallback={<SectionSkeleton />}>
-            <ProjectsSection />
-          </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <ProjectsSection />
+        </Suspense>
 
-          <Suspense fallback={<SectionSkeleton />}>
-            <HobbiesSection />
-          </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <HobbiesSection />
+        </Suspense>
 
-          <Suspense fallback={<SectionSkeleton />}>
-            <ContactSection />
-          </Suspense>
-        </main>
+        <Suspense fallback={<SectionSkeleton />}>
+          <ContactSection />
+        </Suspense>
+      </main>
 
-        <Footer />
-      </div>
-    </ParallaxProvider>
+      <Footer />
+    </div>
   );
 }

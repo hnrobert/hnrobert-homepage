@@ -2,7 +2,7 @@
 .nav-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start; /* 改为靠左对齐 */
   padding: 1rem 1.5rem;
   flex-wrap: nowrap;
   gap: 1rem;
@@ -30,8 +30,9 @@
 
   .nav-brand {
     order: 2;
-    flex: 1 1 auto;
+
     justify-content: center;
+    margin-right: 0;
   }
 
   .theme-toggle {
@@ -56,6 +57,7 @@
   text-decoration: none;
   transition: all 0.3s;
   flex-shrink: 0;
+  margin-right: auto; /* 在宽屏时，theme toggle 推到最右边 */
 }
 
 .nav-logo {
@@ -130,15 +132,16 @@
 }
 
 /* 汉堡菜单动画 */
-.hamburger-line.active:nth-child(1) {
+.mobile-menu-toggle .hamburger-line:nth-child(1).active {
   transform: rotate(45deg) translate(6px, 6px);
 }
 
-.hamburger-line.active:nth-child(2) {
+.mobile-menu-toggle .hamburger-line:nth-child(2).active {
   opacity: 0;
+  transform: scaleX(0);
 }
 
-.hamburger-line.active:nth-child(3) {
+.mobile-menu-toggle .hamburger-line:nth-child(3).active {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
@@ -153,6 +156,7 @@
   -ms-overflow-style: none;
   padding: 0.5rem 0.5rem;
   position: relative;
+  flex-shrink: 0; /* 防止链接被压缩 */
 }
 
 .nav-links::-webkit-scrollbar {
@@ -275,7 +279,7 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    z-index: 1000;
+    z-index: 9999; /* 提高 z-index，确保在所有内容之上 */
     overflow: visible;
   }
 
