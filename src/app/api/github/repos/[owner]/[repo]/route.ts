@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { cacheManager, CACHE_TTL } from '../../../../../../lib/cache';
 
 export async function GET(
   request: NextRequest,
@@ -9,26 +10,46 @@ export async function GET(
 
   if (!githubToken) {
     return NextResponse.json(
-      { error: "GitHub token not configured" },
+      { error: 'GitHub token not configured' },
       { status: 500 }
     );
   }
 
   try {
+    // 生成缓存键
+    const cacheKey = cacheManager.getRepoKey(owner, repo);
+
+    // 检查缓存
+    const cachedData = cacheManager.get(cacheKey);
+    if (cachedData) {
+      console.log(`[Cache HIT] Repository: ${owner}/${repo}`);
+      return NextResponse.json(cachedData, {
+        status: 200,
+        headers: {
+          'X-Cache': 'HIT',
+          'Cache-Control': 'public, max-age=7200', // 客户端也缓存2小时
+        },
+      });
+    }
+
+    console.log(
+      `[Cache MISS] Repository: ${owner}/${repo} - Fetching from GitHub`
+    );
+
     // 并行获取仓库信息和语言信息
     const [repoResponse, languagesResponse] = await Promise.all([
       fetch(`https://api.github.com/repos/${owner}/${repo}`, {
         headers: {
-          Accept: "application/vnd.github.v3+json",
+          Accept: 'application/vnd.github.v3+json',
           Authorization: `Bearer ${githubToken}`,
-          "User-Agent": "hnrobert-homepage",
+          'User-Agent': 'hnrobert-homepage',
         },
       }),
       fetch(`https://api.github.com/repos/${owner}/${repo}/languages`, {
         headers: {
-          Accept: "application/vnd.github.v3+json",
+          Accept: 'application/vnd.github.v3+json',
           Authorization: `Bearer ${githubToken}`,
-          "User-Agent": "hnrobert-homepage",
+          'User-Agent': 'hnrobert-homepage',
         },
       }),
     ]);
@@ -59,7 +80,7 @@ export async function GET(
         name: language,
         bytes,
         percentage:
-          totalBytes > 0 ? ((bytes / totalBytes) * 100).toFixed(1) : "0",
+          totalBytes > 0 ? ((bytes / totalBytes) * 100).toFixed(1) : '0',
       }))
       .sort((a, b) => b.bytes - a.bytes);
 
@@ -88,20 +109,22 @@ export async function GET(
       watchers_count: repoData.watchers_count,
     };
 
-    // 设置缓存头
-    const headers = new Headers({
-      "Content-Type": "application/json",
-      "Cache-Control": "s-maxage=600, stale-while-revalidate=300", // 10分钟缓存
-    });
+    // 存入缓存（2小时）
+    cacheManager.set(cacheKey, result, CACHE_TTL.TWO_HOURS);
+    console.log(`[Cache SET] Repository: ${owner}/${repo}`);
 
-    return new NextResponse(JSON.stringify(result), {
+    // 返回数据
+    return NextResponse.json(result, {
       status: 200,
-      headers,
+      headers: {
+        'X-Cache': 'MISS',
+        'Cache-Control': 'public, max-age=7200', // 客户端也缓存2小时
+      },
     });
   } catch (error) {
-    console.error("GitHub repository API error:", error);
+    console.error('GitHub repository API error:', error);
     return NextResponse.json(
-      { error: "Failed to fetch repository information" },
+      { error: 'Failed to fetch repository information' },
       { status: 500 }
     );
   }

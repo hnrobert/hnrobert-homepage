@@ -1,62 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GitHubUserStats } from '../../../../../types/api';
 import config from '../../../../../configs/config.json';
-
-// 缓存接口定义
-interface CacheEntry {
-  data: any;
-  timestamp: number;
-  expiresAt: number;
-}
-
-// 内存缓存存储
-const yearlyDataCache = new Map<string, CacheEntry>();
-
-// 缓存配置
-const CACHE_DURATION = {
-  HISTORICAL_YEARS: 24 * 60 * 60 * 1000, // 历史年份数据缓存24小时
-  CURRENT_YEAR: 5 * 60 * 1000, // 当前年份缓存5分钟
-};
-
-// 缓存辅助函数
-function getCacheKey(username: string, year: number): string {
-  return `${username}:${year}`;
-}
-
-function getCachedData(key: string): any | null {
-  const entry = yearlyDataCache.get(key);
-  if (!entry) return null;
-
-  if (Date.now() > entry.expiresAt) {
-    yearlyDataCache.delete(key);
-    return null;
-  }
-
-  return entry.data;
-}
-
-function setCachedData(key: string, data: any, ttl: number): void {
-  const now = Date.now();
-  yearlyDataCache.set(key, {
-    data,
-    timestamp: now,
-    expiresAt: now + ttl,
-  });
-}
-
-// 定期清理过期缓存
-setInterval(() => {
-  const now = Date.now();
-  const keysToDelete: string[] = [];
-
-  yearlyDataCache.forEach((entry, key) => {
-    if (now > entry.expiresAt) {
-      keysToDelete.push(key);
-    }
-  });
-
-  keysToDelete.forEach((key) => yearlyDataCache.delete(key));
-}, 60 * 60 * 1000); // 每小时清理一次
+import { cacheManager, CACHE_TTL } from '../../../../../lib/cache';
 
 export async function GET(
   request: NextRequest,
@@ -71,6 +16,23 @@ export async function GET(
       { status: 500 }
     );
   }
+
+  // 检查完整用户数据缓存
+  const userCacheKey = cacheManager.getUserKey(username);
+  const cachedUserData = cacheManager.get(userCacheKey);
+
+  if (cachedUserData) {
+    console.log(`[Cache HIT] User stats: ${username}`);
+    return NextResponse.json(cachedUserData, {
+      status: 200,
+      headers: {
+        'X-Cache': 'HIT',
+        'Cache-Control': 'public, max-age=7200', // 客户端也缓存2小时
+      },
+    });
+  }
+
+  console.log(`[Cache MISS] User stats: ${username} - Fetching from GitHub`);
 
   // 读取配置
   const excludeLanguages = new Set(
@@ -351,11 +313,14 @@ export async function GET(
 
     for (let year = startYear; year <= currentYear; year++) {
       // 检查缓存
-      const cacheKey = getCacheKey(username, year);
-      const cachedData = getCachedData(cacheKey);
-      if (cachedData) {
-        yearlyCommits.push(cachedData);
-        // console.log(`  ${year}: ${cachedData.commits} commits (from cache)`);
+      const yearCacheKey = cacheManager.getUserYearKey(username, year);
+      const cachedYearData = cacheManager.get<{
+        year: number;
+        commits: number;
+      }>(yearCacheKey);
+      if (cachedYearData) {
+        yearlyCommits.push(cachedYearData);
+        // console.log(`  ${year}: ${cachedYearData.commits} commits (from cache)`);
         continue;
       }
 
@@ -417,18 +382,18 @@ export async function GET(
           const adjustedCommits = totalCommits - excludedCommits;
           const yearResult = { year, commits: adjustedCommits };
 
-          // 存储到缓存，非当前年使用24小时TTL，当前年使用5分钟TTL
+          // 存储到缓存，非当前年使用24小时TTL，当前年使用2小时TTL
           const isCurrentYear = year === currentYear;
-          const ttl = isCurrentYear
-            ? CACHE_DURATION.CURRENT_YEAR
-            : CACHE_DURATION.HISTORICAL_YEARS;
-          setCachedData(cacheKey, yearResult, ttl);
+          const ttl = isCurrentYear ? CACHE_TTL.TWO_HOURS : 24 * 60 * 60 * 1000; // 24小时
+
+          const yearCacheKey = cacheManager.getUserYearKey(username, year);
+          cacheManager.set(yearCacheKey, yearResult, ttl);
 
           yearlyCommits.push(yearResult);
           // console.log(
           //   `  ${year}: ${totalCommits} commits (${excludedCommits} excluded) = ${adjustedCommits} counted${
           //     isCurrentYear
-          //       ? ' (current year, 5min cache)'
+          //       ? ' (current year, 2h cache)'
           //       : ' (historical, 24h cache)'
           //   }`
           // );
@@ -651,15 +616,17 @@ export async function GET(
       },
     };
 
-    // 设置缓存头
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-      'Cache-Control': 's-maxage=300, stale-while-revalidate=150', // 5分钟缓存
-    });
+    // 将结果存入缓存（2小时）
+    cacheManager.set(userCacheKey, result, CACHE_TTL.TWO_HOURS);
+    console.log(`[Cache SET] User stats: ${username}`);
 
-    return new NextResponse(JSON.stringify(result), {
+    // 返回数据
+    return NextResponse.json(result, {
       status: 200,
-      headers,
+      headers: {
+        'X-Cache': 'MISS',
+        'Cache-Control': 'public, max-age=7200', // 客户端也缓存2小时
+      },
     });
   } catch (error) {
     console.error('GitHub user stats API error:', error);
