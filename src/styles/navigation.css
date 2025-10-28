@@ -132,15 +132,16 @@
 }
 
 /* 汉堡菜单动画 */
-.hamburger-line.active:nth-child(1) {
+.mobile-menu-toggle .hamburger-line:nth-child(1).active {
   transform: rotate(45deg) translate(6px, 6px);
 }
 
-.hamburger-line.active:nth-child(2) {
+.mobile-menu-toggle .hamburger-line:nth-child(2).active {
   opacity: 0;
+  transform: scaleX(0);
 }
 
-.hamburger-line.active:nth-child(3) {
+.mobile-menu-toggle .hamburger-line:nth-child(3).active {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
